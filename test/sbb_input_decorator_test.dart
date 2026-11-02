@@ -1,3 +1,5 @@
+// Frame-sampled widget tests instead of goldens: the behaviour under test is the color of the
+// border and label at single frames of a running transition, which a settled golden cannot show.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -8,79 +10,89 @@ const _themeSwitch = kThemeAnimationDuration;
 /// Frames at which the theme lerp is sampled, as fractions of [_themeSwitch].
 const _sampleFractions = [0.0, 0.25, 0.5, 0.75, 1.0];
 
+/// Halfway through the 168 ms state transition of the decorator.
+const _midTransition = Duration(milliseconds: 84);
+
 void main() {
   group('theme switch', () {
-    testWidgets('standalone bottom line follows the theme lerp frame by frame', (tester) async {
-      await tester.pumpWidget(
-        _ThemeSwitchHost(
-          child: SBBTextInput(
-            decoration: SBBInputDecoration(labelText: 'Label', borderType: .standalone),
-          ),
+    for (final c in [
+      _LockstepCase(
+        'standalone bottom line',
+        (focusNode) => SBBTextInput(
+          focusNode: focusNode,
+          decoration: SBBInputDecoration(labelText: 'Label', borderType: .standalone),
         ),
-      );
-      await tester.pumpAndSettle();
-      expect(_borderColorOf(tester), SBBColors.cloud);
-
-      _switchToDark(tester);
-      await _expectAtEveryFrame(tester, (t) {
-        expect(_borderColorOf(tester), _closeTo(_lerped(SBBColors.cloud, SBBColors.iron, t)), reason: 'at t=$t');
-      });
-    });
-
-    testWidgets('label color follows the theme lerp frame by frame', (tester) async {
-      await tester.pumpWidget(
-        _ThemeSwitchHost(
-          child: SBBTextInput(
-            decoration: SBBInputDecoration(labelText: 'Label', borderType: .standalone),
-          ),
+        read: _borderColorOf,
+        light: SBBColors.cloud,
+        dark: SBBColors.iron,
+      ),
+      _LockstepCase(
+        'standalone label',
+        (focusNode) => SBBTextInput(
+          focusNode: focusNode,
+          decoration: SBBInputDecoration(labelText: 'Label', borderType: .standalone),
         ),
-      );
-      await tester.pumpAndSettle();
-      expect(_labelColorOf(tester), SBBColors.granite);
-
-      _switchToDark(tester);
-      await _expectAtEveryFrame(tester, (t) {
-        expect(_labelColorOf(tester), _closeTo(_lerped(SBBColors.granite, SBBColors.graphite, t)), reason: 'at t=$t');
-      });
-    });
-
-    testWidgets('focused bottom line follows the theme lerp frame by frame', (tester) async {
-      final focusNode = FocusNode();
-      addTearDown(focusNode.dispose);
-      await tester.pumpWidget(
-        _ThemeSwitchHost(
-          child: SBBTextInput(
-            focusNode: focusNode,
-            decoration: SBBInputDecoration(labelText: 'Label', borderType: .standalone),
-          ),
+        read: _labelColorOf,
+        light: SBBColors.granite,
+        dark: SBBColors.graphite,
+      ),
+      _LockstepCase(
+        'focused standalone bottom line',
+        (focusNode) => SBBTextInput(
+          focusNode: focusNode,
+          decoration: SBBInputDecoration(labelText: 'Label', borderType: .standalone),
         ),
-      );
-      focusNode.requestFocus();
-      await tester.pumpAndSettle();
-      expect(_borderColorOf(tester), SBBColors.black);
-
-      _switchToDark(tester);
-      await _expectAtEveryFrame(tester, (t) {
-        expect(_borderColorOf(tester), _closeTo(_lerped(SBBColors.black, SBBColors.white, t)), reason: 'at t=$t');
-      });
-    });
-
-    testWidgets('boxed border with error follows the theme lerp frame by frame', (tester) async {
-      await tester.pumpWidget(
-        _ThemeSwitchHost(
-          child: SBBTextInputBoxed(
-            decoration: SBBInputDecoration(labelText: 'Label', errorText: 'Error'),
-          ),
+        focus: true,
+        read: _borderColorOf,
+        light: SBBColors.black,
+        dark: SBBColors.white,
+      ),
+      _LockstepCase(
+        'focused standalone label',
+        (focusNode) => SBBTextInput(
+          focusNode: focusNode,
+          decoration: SBBInputDecoration(labelText: 'Label', borderType: .standalone),
         ),
-      );
-      await tester.pumpAndSettle();
-      expect(_borderColorOf(tester), SBBColors.error);
+        focus: true,
+        read: _labelColorOf,
+        light: SBBColors.granite,
+        dark: SBBColors.graphite,
+      ),
+      _LockstepCase(
+        'boxed border with error',
+        (focusNode) => SBBTextInputBoxed(
+          focusNode: focusNode,
+          decoration: SBBInputDecoration(labelText: 'Label', errorText: 'Error'),
+        ),
+        read: _borderColorOf,
+        light: SBBColors.error,
+        dark: SBBColors.errorDark,
+      ),
+      _LockstepCase(
+        'boxed label',
+        (focusNode) => SBBTextInputBoxed(
+          focusNode: focusNode,
+          decoration: SBBInputDecoration(labelText: 'Label'),
+        ),
+        read: _labelColorOf,
+        light: SBBColors.granite,
+        dark: SBBColors.graphite,
+      ),
+    ]) {
+      testWidgets('${c.name} follows the theme lerp frame by frame', (tester) async {
+        final focusNode = FocusNode();
+        addTearDown(focusNode.dispose);
+        await tester.pumpWidget(_ThemeSwitchHost(child: c.build(focusNode)));
+        if (c.focus) focusNode.requestFocus();
+        await tester.pumpAndSettle();
+        expect(c.read(tester), c.light);
 
-      _switchToDark(tester);
-      await _expectAtEveryFrame(tester, (t) {
-        expect(_borderColorOf(tester), _closeTo(_lerped(SBBColors.error, SBBColors.errorDark, t)), reason: 'at t=$t');
+        _switchToDark(tester);
+        await _expectAtEveryFrame(tester, (t) {
+          expect(c.read(tester), isSameColorAs(Color.lerp(c.light, c.dark, t)!), reason: 'at t=$t');
+        });
       });
-    });
+    }
   });
 
   group('state change', () {
@@ -97,20 +109,16 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      focusNode.requestFocus();
-      await tester.pump(); // applies the focus change
-      await tester.pump(); // rebuilds with the focused state and starts the transition
-      await tester.pump(const Duration(milliseconds: 84));
+      await _changeFocus(tester, focusNode, focused: true);
+      await tester.pump(_midTransition);
       final midway = _borderColorOf(tester);
-      expect(midway, isNot(SBBColors.cloud));
-      expect(midway, isNot(SBBColors.black));
       expect(midway.r, inExclusiveRange(SBBColors.black.r, SBBColors.cloud.r));
 
       await tester.pumpAndSettle();
       expect(_borderColorOf(tester), SBBColors.black);
     });
 
-    testWidgets('losing focus midway continues from the color on screen', (tester) async {
+    testWidgets('bottom line losing focus midway continues from the color on screen', (tester) async {
       final focusNode = FocusNode();
       addTearDown(focusNode.dispose);
       await tester.pumpWidget(
@@ -123,25 +131,71 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      focusNode.requestFocus();
-      await tester.pump(); // applies the focus change
-      await tester.pump(); // rebuilds with the focused state and starts the transition
-      await tester.pump(const Duration(milliseconds: 84));
+      await _changeFocus(tester, focusNode, focused: true);
+      await tester.pump(_midTransition);
       final beforeBlur = _borderColorOf(tester);
 
-      focusNode.unfocus();
-      await tester.pump(); // applies the focus change
-      await tester.pump(); // rebuilds with the unfocused state and restarts the transition
+      await _changeFocus(tester, focusNode, focused: false);
       expect(_borderColorOf(tester), beforeBlur);
 
       await tester.pumpAndSettle();
       expect(_borderColorOf(tester), SBBColors.cloud);
     });
+
+    testWidgets('label losing focus midway continues from the color on screen', (tester) async {
+      final focusNode = FocusNode();
+      addTearDown(focusNode.dispose);
+      await tester.pumpWidget(
+        _ThemeSwitchHost(
+          child: SBBTextInput(
+            focusNode: focusNode,
+            decoration: SBBInputDecoration(
+              labelText: 'Label',
+              labelForegroundColor: WidgetStateProperty.fromMap({
+                WidgetState.focused: SBBColors.red,
+                WidgetState.any: SBBColors.granite,
+              }),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await _changeFocus(tester, focusNode, focused: true);
+      await tester.pump(_midTransition);
+      final beforeBlur = _labelColorOf(tester);
+      expect(beforeBlur!.r, inExclusiveRange(SBBColors.granite.r, SBBColors.red.r));
+
+      await _changeFocus(tester, focusNode, focused: false);
+      expect(_labelColorOf(tester), beforeBlur);
+
+      await tester.pumpAndSettle();
+      expect(_labelColorOf(tester), SBBColors.granite);
+    });
   });
 }
 
+/// One sampled color of one decorated input through a light to dark theme switch.
+class _LockstepCase {
+  const _LockstepCase(
+    this.name,
+    this.build, {
+    this.focus = false,
+    required this.read,
+    required this.light,
+    required this.dark,
+  });
+
+  final String name;
+  final Widget Function(FocusNode focusNode) build;
+  final bool focus;
+  final Color? Function(WidgetTester tester) read;
+  final Color light;
+  final Color dark;
+}
+
 /// Pumps one frame at [fraction] × [_themeSwitch] for every fraction in [_sampleFractions]
-/// and runs [check] with the fraction, once the first frame of the switch has been built.
+/// and runs [check] with the fraction.
 Future<void> _expectAtEveryFrame(WidgetTester tester, void Function(double t) check) async {
   var elapsed = Duration.zero;
   for (final fraction in _sampleFractions) {
@@ -152,28 +206,16 @@ Future<void> _expectAtEveryFrame(WidgetTester tester, void Function(double t) ch
   }
 }
 
-Color _lerped(Color a, Color b, double t) => Color.lerp(a, b, t)!;
-
-/// Matches a color whose channels are within floating point noise of [expected].
-Matcher _closeTo(Color expected) => _ColorCloseTo(expected);
-
-class _ColorCloseTo extends Matcher {
-  const _ColorCloseTo(this.expected);
-
-  final Color expected;
-  static const _tolerance = 1e-6;
-
-  @override
-  bool matches(Object? item, Map<dynamic, dynamic> matchState) {
-    if (item is! Color) return false;
-    return (item.a - expected.a).abs() < _tolerance &&
-        (item.r - expected.r).abs() < _tolerance &&
-        (item.g - expected.g).abs() < _tolerance &&
-        (item.b - expected.b).abs() < _tolerance;
+/// Changes focus and pumps until the decorator has rebuilt with the new state and started its
+/// transition: one frame applies the focus change, the next rebuilds with the new states.
+Future<void> _changeFocus(WidgetTester tester, FocusNode focusNode, {required bool focused}) async {
+  if (focused) {
+    focusNode.requestFocus();
+  } else {
+    focusNode.unfocus();
   }
-
-  @override
-  Description describe(Description description) => description.add('a color within $_tolerance of $expected');
+  await tester.pump();
+  await tester.pump();
 }
 
 /// The painted border color of the decorator's container slot under the single [SBBTextInput].
@@ -196,6 +238,9 @@ void _switchToDark(WidgetTester tester) {
   tester.state<_ThemeSwitchHostState>(find.byType(_ThemeSwitchHost)).switchToDark();
 }
 
+/// A [MaterialApp] with the SBB themes whose [ThemeMode] can be switched while mounted.
+///
+/// Not [TestApp] from test_app.dart, which has no theme mode and is tuned for goldens.
 class _ThemeSwitchHost extends StatefulWidget {
   const _ThemeSwitchHost({required this.child});
 

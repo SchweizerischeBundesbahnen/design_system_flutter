@@ -90,6 +90,9 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with TickerProvid
 
   /// Colors captured when a state change interrupted a running transition, so the new
   /// transition starts from what is on screen instead of jumping to the previous target.
+  ///
+  /// Unlike the resolved ends, a frozen begin is not re-resolved against the theme, so a theme
+  /// change during an interrupted transition keeps its stale begin for at most one transition.
   Color? _frozenBeginBorderColor;
   Color? _frozenBeginLabelColor;
 
@@ -107,11 +110,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with TickerProvid
       value: _shouldFloat ? 1.0 : 0.0,
     );
     _floatingLabelController.addListener(_handleAnimationChange);
-    _floatingLabelAnimation = CurvedAnimation(
-      parent: _floatingLabelController,
-      curve: _kTransitionCurve,
-      reverseCurve: _kTransitionCurve.flipped,
-    );
+    _floatingLabelAnimation = CurvedAnimation(parent: _floatingLabelController, curve: _kTransitionCurve);
     _stateTransitionController = AnimationController(duration: _kTransitionDuration, vsync: this, value: 1.0)
       ..addListener(_handleAnimationChange);
   }
@@ -150,7 +149,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with TickerProvid
     Color? frozenBeginBorderColor;
     Color? frozenBeginLabelColor;
     if (_stateTransitionController.isAnimating) {
-      final decoration = _themedDecoration(context);
+      final decoration = _themedDecoration();
       frozenBeginBorderColor = _transitionedBorderColor(decoration, previousStates);
       frozenBeginLabelColor = _transitionedLabelColor(decoration, previousStates);
     }
@@ -189,16 +188,16 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with TickerProvid
 
   void _handleAnimationChange() {
     setState(() {
-      // The _floatingLabelController's value has changed.
+      // The value of _floatingLabelController or _stateTransitionController has changed.
     });
   }
 
-  SBBInputDecoration _themedDecoration(BuildContext context) =>
+  SBBInputDecoration _themedDecoration() =>
       widget.decoration.applyThemeValues(Theme.of(context).sbbInputDecorationTheme);
 
   @override
   Widget build(BuildContext context) {
-    final decoration = _themedDecoration(context);
+    final decoration = _themedDecoration();
 
     final textScaler = MediaQuery.textScalerOf(context);
 
@@ -390,19 +389,20 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with TickerProvid
   }
 
   /// The border color for [states] at the current progress of the state transition.
-  ///
-  /// Both ends are resolved from the current theme on every call, so a theme change during a
-  /// transition still lands together with the theme.
-  Color _transitionedBorderColor(SBBInputDecoration decoration, Set<WidgetState> states) {
-    final end = _resolvedBorderColor(decoration, states);
-    final begin = _frozenBeginBorderColor ?? _resolvedBorderColor(decoration, _previousStates ?? states);
-    return _lerpColor(begin, end, _stateTransitionController.value)!;
-  }
+  Color _transitionedBorderColor(SBBInputDecoration decoration, Set<WidgetState> states) =>
+      _transitionedColor(states, _frozenBeginBorderColor, (s) => _resolvedBorderColor(decoration, s))!;
 
   /// The label color for [states] at the current progress of the state transition.
-  Color? _transitionedLabelColor(SBBInputDecoration decoration, Set<WidgetState> states) {
-    final end = decoration.labelForegroundColor?.resolve(states);
-    final begin = _frozenBeginLabelColor ?? decoration.labelForegroundColor?.resolve(_previousStates ?? states);
+  Color? _transitionedLabelColor(SBBInputDecoration decoration, Set<WidgetState> states) =>
+      _transitionedColor(states, _frozenBeginLabelColor, (s) => decoration.labelForegroundColor?.resolve(s));
+
+  /// Lerps from the color of the previous states (or [frozenBegin]) to the color of [states].
+  ///
+  /// Both ends are resolved through [resolve] on every call, so a theme change during a
+  /// transition still lands together with the theme.
+  Color? _transitionedColor(Set<WidgetState> states, Color? frozenBegin, Color? Function(Set<WidgetState>) resolve) {
+    final end = resolve(states);
+    final begin = frozenBegin ?? resolve(_previousStates ?? states);
     return _lerpColor(begin, end, _stateTransitionController.value);
   }
 
