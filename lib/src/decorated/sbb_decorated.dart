@@ -255,20 +255,20 @@ class _SBBDecoratedState extends State<SBBDecorated> {
 
 /// The boxed variant of [SBBDecorated].
 ///
-/// This variant applies default padding and special border styling for a contained
-/// appearance. Specifically:
-/// * If no [decoration.contentPadding] is provided, applies symmetric horizontal padding
-///   of [SBBSpacing.medium]
-/// * The border only displays when in an error state, showing a surrounding box
+/// This variant applies special border styling for a contained appearance:
+/// the border only displays when in an error state, showing a surrounding box.
+///
+/// The content padding is resolved from [decoration.contentPadding], falling back
+/// to [SBBInputDecorationThemeData.contentPadding].
 ///
 /// This is useful for creating grouped form-like layouts with consistent spacing.
 class SBBDecoratedBoxed extends SBBDecorated {
-  SBBDecoratedBoxed({
+  const SBBDecoratedBoxed({
     super.key,
     required super.child,
     super.isEmpty,
     super.onTap,
-    SBBInputDecoration? decoration,
+    super.decoration,
     super.focusNode,
     super.autofocus,
     super.minContentHeight,
@@ -276,13 +276,7 @@ class SBBDecoratedBoxed extends SBBDecorated {
     super.topAlignAffixes,
     super.style,
     this.margin,
-  }) : super(
-         decoration: decoration?.contentPadding != null
-             ? decoration
-             : (decoration ?? SBBInputDecoration()).copyWith(
-                 contentPadding: .symmetric(horizontal: SBBSpacing.medium),
-               ),
-       );
+  });
 
   /// The margin of the content box surrounding the [SBBDecorated].
   final EdgeInsetsGeometry? margin;

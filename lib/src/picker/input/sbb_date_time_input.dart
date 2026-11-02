@@ -146,8 +146,8 @@ class SBBDateTimeInput extends StatelessWidget {
 
     return SBBDecoratedText(
       value: _formattedValue(context),
-      decoration: triggerDecoration,
-      style: triggerStyle,
+      decoration: _effectiveTriggerDecoration(context),
+      style: _effectiveTriggerStyle(context),
       maxLines: triggerConfig.maxLines,
       minLines: triggerConfig.minLines,
       expands: triggerConfig.expands,
@@ -171,6 +171,16 @@ class SBBDateTimeInput extends StatelessWidget {
             }
           : null,
     );
+  }
+
+  SBBDecoratedTextStyle _effectiveTriggerStyle(BuildContext context) {
+    final themeTriggerStyle = Theme.of(context).sbbPickerTheme.triggerStyle!;
+    return themeTriggerStyle.merge(triggerStyle);
+  }
+
+  SBBInputDecoration _effectiveTriggerDecoration(BuildContext context) {
+    final themeDecoration = Theme.of(context).sbbPickerTheme.triggerDecorationTheme!;
+    return (triggerDecoration ?? const SBBInputDecoration()).applyThemeValues(themeDecoration);
   }
 
   String _formattedValue(BuildContext context) {

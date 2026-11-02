@@ -12,6 +12,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Fixed
 
 - apply theme-wide input decoration to all decorated components like `SBBTextInput`
+- `SBBTextInputBoxed`, `SBBDecoratedBoxed` and `SBBDecoratedTextBoxed` now respect `SBBInputDecorationThemeData.contentPadding` instead of forcing a horizontal padding
+- `SBBDateInput`, `SBBTimeInput` and `SBBDateTimeInput` now apply `SBBPickerThemeData.triggerDecorationTheme`, `triggerStyle` and `sheetStyle`
 
 ## [5.2.0] - 2026-09-25
 

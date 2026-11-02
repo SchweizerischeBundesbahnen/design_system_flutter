@@ -675,11 +675,10 @@ class _SBBTextInputState extends State<SBBTextInput>
 ///
 /// The border of the input decoration will only show if it has an error and in a surrounding manner.
 class SBBTextInputBoxed extends SBBTextInput {
-  SBBTextInputBoxed({
+  const SBBTextInputBoxed({
     super.key,
     super.groupId,
     super.controller,
-    SBBInputDecoration? decoration,
     super.focusNode,
     super.keyboardType,
     super.textInputAction,
@@ -711,14 +710,9 @@ class SBBTextInputBoxed extends SBBTextInput {
     super.inputTextStyle,
     super.inputForegroundColor,
     super.enableClearButton,
+    super.decoration,
     this.margin,
-  }) : super(
-         decoration: decoration?.contentPadding != null
-             ? decoration
-             : (decoration ?? SBBInputDecoration()).copyWith(
-                 contentPadding: .symmetric(horizontal: SBBSpacing.medium),
-               ),
-       );
+  });
 
   /// The margin of the content box surrounding the [SBBTextInput].
   final EdgeInsetsGeometry? margin;
