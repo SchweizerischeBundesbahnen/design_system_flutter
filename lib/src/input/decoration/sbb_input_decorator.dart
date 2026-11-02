@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' show lerpDouble;
 
+import 'package:flutter/foundation.dart' show setEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -9,7 +10,9 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decor
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 const Duration _kTransitionDuration = Duration(milliseconds: 168);
-const Curve _kTransitionCurve = Curves.fastOutSlowIn;
+
+/// All transitions of the decorator share one linear curve.
+const Curve _kTransitionCurve = Curves.linear;
 
 /// The SBBInputDecorator is responsible for the label animation ticker, resolving
 /// theme and WidgetProperty values and building the consequent RenderObjectWidget (_SBBDecorator).
@@ -68,10 +71,27 @@ class SBBInputDecorator extends StatefulWidget {
   State<SBBInputDecorator> createState() => _SBBInputDecoratorState();
 }
 
-class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTickerProviderStateMixin {
+class _SBBInputDecoratorState extends State<SBBInputDecorator> with TickerProviderStateMixin {
   late final AnimationController _floatingLabelController;
   late final CurvedAnimation _floatingLabelAnimation;
   SBBFloatingLabelBehavior _inheritedFloatingLabelBehavior = .auto;
+
+  /// Drives the border and label color transitions between two sets of [SBBInputDecorator.states].
+  ///
+  /// It is started only when the states change. A theme change without a state change does not
+  /// animate here, so the colors follow the theme transition of [AnimatedTheme] frame by frame
+  /// instead of chasing it.
+  late final AnimationController _stateTransitionController;
+
+  /// The states the running state transition animates away from.
+  ///
+  /// Null until the first transition; colors are then resolved for the current states only.
+  Set<WidgetState>? _previousStates;
+
+  /// Colors captured when a state change interrupted a running transition, so the new
+  /// transition starts from what is on screen instead of jumping to the previous target.
+  Color? _frozenBeginBorderColor;
+  Color? _frozenBeginLabelColor;
 
   // Provide unique sort keys to avoid mixing up sort order with sibling input decorators.
   late final _leadingSemanticsSortOrder = OrdinalSortKey(0, name: hashCode.toString());
@@ -92,6 +112,8 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       curve: _kTransitionCurve,
       reverseCurve: _kTransitionCurve.flipped,
     );
+    _stateTransitionController = AnimationController(duration: _kTransitionDuration, vsync: this, value: 1.0)
+      ..addListener(_handleAnimationChange);
   }
 
   bool get _shouldFloat {
@@ -118,6 +140,24 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
         _floatingLabelController.reverse();
       }
     }
+
+    if (!setEquals(widget.states, oldWidget.states)) {
+      _startStateTransition(oldWidget.states);
+    }
+  }
+
+  void _startStateTransition(Set<WidgetState> previousStates) {
+    Color? frozenBeginBorderColor;
+    Color? frozenBeginLabelColor;
+    if (_stateTransitionController.isAnimating) {
+      final decoration = _themedDecoration(context);
+      frozenBeginBorderColor = _transitionedBorderColor(decoration, previousStates);
+      frozenBeginLabelColor = _transitionedLabelColor(decoration, previousStates);
+    }
+    _frozenBeginBorderColor = frozenBeginBorderColor;
+    _frozenBeginLabelColor = frozenBeginLabelColor;
+    _previousStates = previousStates;
+    _stateTransitionController.forward(from: 0.0);
   }
 
   @override
@@ -143,6 +183,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   void dispose() {
     _floatingLabelController.dispose();
     _floatingLabelAnimation.dispose();
+    _stateTransitionController.dispose();
     super.dispose();
   }
 
@@ -152,9 +193,12 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     });
   }
 
+  SBBInputDecoration _themedDecoration(BuildContext context) =>
+      widget.decoration.applyThemeValues(Theme.of(context).sbbInputDecorationTheme);
+
   @override
   Widget build(BuildContext context) {
-    final decoration = widget.decoration.applyThemeValues(Theme.of(context).sbbInputDecorationTheme);
+    final decoration = _themedDecoration(context);
 
     final textScaler = MediaQuery.textScalerOf(context);
 
@@ -166,23 +210,21 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       label = Text(decoration.labelText!, maxLines: 1, overflow: .ellipsis);
     }
     if (label != null) {
-      final Color? resolvedColor = decoration.labelForegroundColor?.resolve(
-        widget.states,
-      );
+      final Color? resolvedColor = _transitionedLabelColor(decoration, widget.states);
       final textStyle = decoration.labelTextStyle;
       final floatingTextStyle = decoration.floatingLabelTextStyle;
 
+      // The style follows the floating label animation, the color the state transition.
       final resolvedTextStyle =
-          (_shouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
+          TextStyle.lerp(textStyle, floatingTextStyle, _floatingLabelAnimation.value)?.copyWith(color: resolvedColor) ??
           TextStyle(color: resolvedColor);
 
       if (decoration.labelText != null && textStyle?.fontSize != null && textStyle?.height != null) {
         maxLabelTextHeight = textStyle!.fontSize! * textStyle.height!;
       }
 
-      label = AnimatedDefaultTextStyle(
+      label = DefaultTextStyle(
         style: resolvedTextStyle,
-        duration: _kTransitionDuration,
         child: IconTheme.merge(
           data: IconThemeData(color: resolvedColor),
           child: label,
@@ -194,10 +236,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     final placeholder = _placeholder(decoration);
     final error = _errorWidget(textScaler, decoration);
 
-    final container = AnimatedContainer(
-      duration: _kTransitionDuration,
-      decoration: _effectiveBoxDecoration(context, decoration),
-    );
+    final container = Container(decoration: _effectiveBoxDecoration(decoration));
 
     Widget? input = widget.child;
     if (input != null) {
@@ -285,6 +324,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     if (placeholder == null && decoration.placeholderText != null) {
       placeholder = AnimatedOpacity(
         duration: _kTransitionDuration * 1.25,
+        curve: _kTransitionCurve,
         opacity: widget.isEmpty ? 1 : 0,
         child: Text(decoration.placeholderText!),
       );
@@ -327,13 +367,16 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     }
     error = AnimatedSwitcher(
       duration: _kTransitionDuration,
+      switchInCurve: _kTransitionCurve,
+      switchOutCurve: _kTransitionCurve,
       child: error ?? SizedBox.shrink(),
     );
     return error;
   }
 
-  BoxDecoration _effectiveBoxDecoration(BuildContext context, SBBInputDecoration decoration) {
-    final effectiveStates = Set<WidgetState>.from(widget.states);
+  /// The border color for [states] in the current theme, without any transition applied.
+  Color _resolvedBorderColor(SBBInputDecoration decoration, Set<WidgetState> states) {
+    final effectiveStates = Set<WidgetState>.from(states);
     if (widget.isBoxed) effectiveStates.remove(WidgetState.focused);
 
     var resolvedBorderColor = decoration.borderColor?.resolve(effectiveStates) ?? SBBColors.transparent;
@@ -343,6 +386,28 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
       resolvedBorderColor = colorScheme.strokeSeparator ?? SBBColors.transparent;
     }
+    return resolvedBorderColor;
+  }
+
+  /// The border color for [states] at the current progress of the state transition.
+  ///
+  /// Both ends are resolved from the current theme on every call, so a theme change during a
+  /// transition still lands together with the theme.
+  Color _transitionedBorderColor(SBBInputDecoration decoration, Set<WidgetState> states) {
+    final end = _resolvedBorderColor(decoration, states);
+    final begin = _frozenBeginBorderColor ?? _resolvedBorderColor(decoration, _previousStates ?? states);
+    return _lerpColor(begin, end, _stateTransitionController.value)!;
+  }
+
+  /// The label color for [states] at the current progress of the state transition.
+  Color? _transitionedLabelColor(SBBInputDecoration decoration, Set<WidgetState> states) {
+    final end = decoration.labelForegroundColor?.resolve(states);
+    final begin = _frozenBeginLabelColor ?? decoration.labelForegroundColor?.resolve(_previousStates ?? states);
+    return _lerpColor(begin, end, _stateTransitionController.value);
+  }
+
+  BoxDecoration _effectiveBoxDecoration(SBBInputDecoration decoration) {
+    final resolvedBorderColor = _transitionedBorderColor(decoration, widget.states);
 
     final resolvedBorder = widget.isBoxed
         ? Border.all(color: resolvedBorderColor)
@@ -351,6 +416,13 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
           );
 
     return BoxDecoration(borderRadius: widget.isBoxed ? SBBContentBoxStyle.radius : null, border: resolvedBorder);
+  }
+
+  /// [Color.lerp] that returns the exact endpoints at the ends of the transition.
+  static Color? _lerpColor(Color? begin, Color? end, double t) {
+    if (t <= 0.0) return begin;
+    if (t >= 1.0) return end;
+    return Color.lerp(begin, end, t);
   }
 
   // Gap resolution methods
