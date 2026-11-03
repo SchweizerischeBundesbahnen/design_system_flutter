@@ -15,6 +15,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - `SBBTextInputBoxed`, `SBBDecoratedBoxed` and `SBBDecoratedTextBoxed` now respect `SBBInputDecorationThemeData.contentPadding` instead of forcing a horizontal padding
 - `SBBDateInput`, `SBBTimeInput` and `SBBDateTimeInput` now apply `SBBPickerThemeData.triggerDecorationTheme`, `triggerStyle` and `sheetStyle`
 
+### Changed
+
+- (auto): updated icon lib to version 1.8.37
+
 ## [5.2.0] - 2026-09-25
 
 ### Changed
