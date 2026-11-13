@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
@@ -129,11 +129,9 @@ class _SBBDefaultToast extends SlottedMultiChildRenderObjectWidget<_ToastSlot, R
 class _RenderSBBDefaultToast extends RenderBox with SlottedContainerRenderObjectMixin<_ToastSlot, RenderBox> {
   _RenderSBBDefaultToast({
     required double gap,
-    required double verticalGap,
-    required double overflowThreshold,
-  }) : _horizontalGap = gap,
-       _verticalGap = verticalGap,
-       _overflowThreshold = overflowThreshold;
+    required this._verticalGap,
+    required this._overflowThreshold,
+  }) : _horizontalGap = gap;
 
   double _horizontalGap;
 
