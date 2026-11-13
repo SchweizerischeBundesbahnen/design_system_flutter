@@ -10,17 +10,18 @@ import 'package:http/http.dart';
 import 'package:version/version.dart';
 
 const repository = 'sbb-design-systems/sbb-icons';
-const sizes = ['small', 'medium', 'large'];
 const retries = 3;
 
-/// A failed check that stops the update. Its message names what went wrong.
+/// Failed checks that stop the update. Each message names one thing that went wrong.
 class UpdateFailure implements Exception {
-  UpdateFailure(this.message);
+  UpdateFailure(String message) : messages = [message];
 
-  final String message;
+  UpdateFailure.all(this.messages);
+
+  final List<String> messages;
 
   @override
-  String toString() => message;
+  String toString() => messages.join('\n');
 }
 
 Future<void> main() async {
@@ -28,7 +29,10 @@ Future<void> main() async {
   try {
     await update(client);
   } on UpdateFailure catch (e) {
-    print('Update failed: $e');
+    print('Update failed:');
+    for (final message in e.messages) {
+      print('  - $message');
+    }
     exitCode = 1;
   } finally {
     client.close();
@@ -52,11 +56,18 @@ Future<void> update(Client client) async {
 
   print('Downloading icons v$newVersion');
   final files = await downloadArchive(client, newVersion);
-  final index = jsonDecode(utf8.decode(files['icons/index.json']!)) as Map<String, dynamic>;
-  final icons = index['icons'] as List<dynamic>;
+  final indexFile = files['icons/index.json'];
+  if (indexFile == null) throw UpdateFailure('The archive of v$newVersion has no icons/index.json');
+  final index = jsonDecode(utf8.decode(indexFile)) as Map<String, dynamic>;
+  final svgNames = {
+    for (final path in files.keys)
+      if (path.startsWith('icons/') && path.endsWith('.svg'))
+        path.substring('icons/'.length, path.length - '.svg'.length),
+  };
+  final failures = checkIndex(index, newVersion, svgNames);
 
   for (final size in sizes) {
-    await prepareIcons(size, icons, files);
+    await prepareIcons(size, iconNames(index, size), files);
     await Directory('icons/$size').create(recursive: true);
   }
 
@@ -64,6 +75,8 @@ Future<void> update(Client client) async {
   await Process.run('npm', ['install'], runInShell: true);
   await Process.run('npm', ['run', 'fix'], runInShell: true);
   await Process.run('npm', ['run', 'generate'], runInShell: true);
+  if (failures.isNotEmpty) throw UpdateFailure.all(failures);
+
   print('Generating dart files');
   await createFlutterFontMap();
 
@@ -135,11 +148,9 @@ Future<Response> getWithRetry(Client client, Uri uri, {Map<String, String>? head
   }
 }
 
-Future<void> prepareIcons(String size, List<dynamic> icons, Map<String, List<int>> files) async {
-  final filter = icons.where((e) => e['tags'].contains('Size=$size'));
+Future<void> prepareIcons(String size, Set<String> names, Map<String, List<int>> files) async {
   final dir = await Directory('icons/$size-tmp').create(recursive: true);
-  for (final icon in filter) {
-    final name = icon['name'] as String;
+  for (final name in names) {
     final svg = files['icons/$name.svg'];
     if (svg == null) continue;
     await File('${dir.path}/${name.replaceAll('-', '_')}.svg').writeAsBytes(svg);

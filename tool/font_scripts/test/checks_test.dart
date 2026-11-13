@@ -20,4 +20,84 @@ void main() {
       expect(latestVersionTag(['latest', 'main']), isNull);
     });
   });
+
+  group('iconNames', () {
+    test('returns the unique names tagged with the size', () {
+      final index = {
+        'icons': [
+          {
+            'name': 'arrow-turn-right-small',
+            'tags': ['Size=small'],
+          },
+          {
+            'name': 'arrow-turn-right-small',
+            'tags': ['Size=small'],
+          },
+          {
+            'name': 'bike-small',
+            'tags': ['Size=small', 'Bike'],
+          },
+          {
+            'name': 'bike-medium',
+            'tags': ['Size=medium'],
+          },
+          {
+            'name': 'sbb-logo',
+            'tags': ['Logo'],
+          },
+        ],
+      };
+
+      expect(iconNames(index, 'small'), {'arrow-turn-right-small', 'bike-small'});
+      expect(iconNames(index, 'medium'), {'bike-medium'});
+      expect(iconNames(index, 'large'), isEmpty);
+    });
+  });
+
+  group('checkIndex', () {
+    final index = {
+      'version': '1.8.38',
+      'icons': [
+        {
+          'name': 'bike-small',
+          'tags': ['Size=small'],
+        },
+        {
+          'name': 'bike-medium',
+          'tags': ['Size=medium'],
+        },
+        {
+          'name': 'bike-large',
+          'tags': ['Size=large'],
+        },
+        {
+          'name': 'sbb-logo',
+          'tags': ['Logo'],
+        },
+      ],
+    };
+
+    test('passes when the version matches and every sized icon has an SVG', () {
+      final svgs = {'bike-small', 'bike-medium', 'bike-large'};
+
+      expect(checkIndex(index, Version(1, 8, 38), svgs), isEmpty);
+    });
+
+    test('reports a version that differs from the tag', () {
+      final svgs = {'bike-small', 'bike-medium', 'bike-large'};
+
+      expect(checkIndex(index, Version(1, 8, 39), svgs), [
+        'index.json has version 1.8.38, expected 1.8.39 from the tag',
+      ]);
+    });
+
+    test('reports sized icons without an SVG per size', () {
+      final svgs = {'bike-medium'};
+
+      expect(checkIndex(index, Version(1, 8, 38), svgs), [
+        'small: no SVG in the archive for bike-small',
+        'large: no SVG in the archive for bike-large',
+      ]);
+    });
+  });
 }
