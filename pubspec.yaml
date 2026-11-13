@@ -21,9 +21,9 @@ dependencies:
   # https://pub.dev/packages/collection
   collection: ^1.19.1
   # https://pub.dev/packages/material_ui
-  material_ui: 1.11.0
+  material_ui: ^1.0.0
   # https://pub.dev/packages/cupertino_ui
-  cupertino_ui: ^1.1.6
+  cupertino_ui: ^1.0.0
 
 dev_dependencies:
   flutter_test:
