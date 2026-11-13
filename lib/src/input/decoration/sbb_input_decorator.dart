@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' show lerpDouble;
 
+import 'package:flutter/foundation.dart' show setEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -73,6 +74,11 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   late final CurvedAnimation _floatingLabelAnimation;
   SBBFloatingLabelBehavior _inheritedFloatingLabelBehavior = .auto;
 
+  /// A theme switch reaches the decorator as a series of rebuilds with unchanged states
+  /// and must be applied immediately: [AnimatedTheme] already animates it, and an implicit
+  /// animation on top would trail behind it (#763).
+  bool _animateNextBuild = false;
+
   // Provide unique sort keys to avoid mixing up sort order with sibling input decorators.
   late final _leadingSemanticsSortOrder = OrdinalSortKey(0, name: hashCode.toString());
   late final _inputSemanticsSortOrder = OrdinalSortKey(1, name: hashCode.toString());
@@ -118,6 +124,8 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
         _floatingLabelController.reverse();
       }
     }
+
+    _animateNextBuild = newShouldFloat != oldShouldFloat || !setEquals(widget.states, oldWidget.states);
   }
 
   @override
@@ -155,6 +163,8 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   @override
   Widget build(BuildContext context) {
     final decoration = widget.decoration.applyThemeValues(Theme.of(context).sbbInputDecorationTheme);
+    final transitionDuration = _animateNextBuild ? _kTransitionDuration : Duration.zero;
+    _animateNextBuild = false;
 
     final textScaler = MediaQuery.textScalerOf(context);
 
@@ -182,7 +192,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
       label = AnimatedDefaultTextStyle(
         style: resolvedTextStyle,
-        duration: _kTransitionDuration,
+        duration: transitionDuration,
         child: IconTheme.merge(
           data: IconThemeData(color: resolvedColor),
           child: label,
@@ -195,7 +205,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     final error = _errorWidget(textScaler, decoration);
 
     final container = AnimatedContainer(
-      duration: _kTransitionDuration,
+      duration: transitionDuration,
       decoration: _effectiveBoxDecoration(context, decoration),
     );
 
