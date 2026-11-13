@@ -1,106 +1,184 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:console_bars/console_bars.dart';
+import 'package:archive/archive.dart';
+import 'package:font_script/checks.dart';
 import 'package:http/http.dart';
 import 'package:version/version.dart';
 
-final baseUri = Uri.https('icons.app.sbb.ch');
-final basePath = ['icons'];
+const repository = 'sbb-design-systems/sbb-icons';
+const retries = 3;
 
-late FillingBar progress;
+/// Failed checks that stop the update. Each message names one thing that went wrong.
+class UpdateFailure implements Exception {
+  UpdateFailure(String message) : messages = [message];
+
+  UpdateFailure.all(this.messages);
+
+  final List<String> messages;
+
+  @override
+  String toString() => messages.join('\n');
+}
 
 Future<void> main() async {
-  final uri = makeUrlUri('index.json');
-  final response = await get(uri);
-  final decoded = utf8.decode(response.bodyBytes);
-  final responseJson = jsonDecode(decoded);
+  final client = Client();
+  try {
+    await update(client);
+  } on UpdateFailure catch (e) {
+    print('Update failed:');
+    for (final message in e.messages) {
+      print('  - $message');
+    }
+    exitCode = 1;
+  } finally {
+    client.close();
+  }
+}
+
+Future<void> update(Client client) async {
+  final newVersion = await fetchLatestVersion(client);
   final versionFile = File('icons/.version');
-  final newVersion = responseJson['version'];
 
   if (await versionFile.exists()) {
-    final oldVersion = await versionFile.readAsString();
+    final oldVersion = Version.parse(await versionFile.readAsString());
     print('Remote Version: $newVersion - Local Version: $oldVersion');
-    if (Version.parse(oldVersion) >= Version.parse(newVersion)) {
+    if (oldVersion >= newVersion) {
       print('All up to date!');
       return;
     } else {
       print('Starting update process...');
     }
   }
+  await setOutput('new_version', newVersion.toString());
 
-  final icons = responseJson['icons'] as List<dynamic>;
-  final total = icons
-      .cast<Map<String, dynamic>>()
-      .where((e) => (e['tags'] as List).cast<String>().any((t) => t.contains('Size=')))
-      .length;
-  progress = FillingBar(total: total + 4, width: 10, desc: 'Downloading icons');
+  print('Downloading icons v$newVersion');
+  final files = await downloadArchive(client, newVersion);
+  final indexFile = files['icons/index.json'];
+  if (indexFile == null) throw UpdateFailure('The archive of v$newVersion has no icons/index.json');
+  final index = jsonDecode(utf8.decode(indexFile)) as Map<String, dynamic>;
+  final svgNames = {
+    for (final path in files.keys)
+      if (path.startsWith('icons/') && path.endsWith('.svg'))
+        path.substring('icons/'.length, path.length - '.svg'.length),
+  };
+  final failures = checkIndex(index, newVersion, svgNames);
 
-  await prepareIcons('small', icons);
-  await prepareIcons('medium', icons);
-  await prepareIcons('large', icons);
+  for (final size in sizes) {
+    await prepareIcons(size, iconNames(index, size), files);
+    await Directory('icons/$size').create(recursive: true);
+  }
 
-  await Directory('icons/small').create(recursive: true);
-  await Directory('icons/medium').create(recursive: true);
-  await Directory('icons/large').create(recursive: true);
-
-  progress.desc = 'Preparing ttf files';
-  await Process.run('npm', ['install'], runInShell: true);
-  progress.increment();
-  await Process.run('npm', ['run', 'fix'], runInShell: true);
-  progress.increment();
-  await Process.run('npm', ['run', 'generate'], runInShell: true);
-  progress.increment();
-  progress.desc = 'Generating dart files';
-  await createFlutterFontMap();
-  progress.increment();
-
-  await File('icons/.version').writeAsString(newVersion);
-  await Directory('icons/small').delete(recursive: true);
-  await Directory('icons/small-tmp').delete(recursive: true);
-  await Directory('icons/medium').delete(recursive: true);
-  await Directory('icons/medium-tmp').delete(recursive: true);
-  await Directory('icons/large').delete(recursive: true);
-  await Directory('icons/large-tmp').delete(recursive: true);
-  await File('icons/sbb_icons_small.json').delete();
-  await File('icons/sbb_icons_medium.json').delete();
-  await File('icons/sbb_icons_large.json').delete();
-}
-
-Uri makeUrlUri(String path) {
-  final uri = Uri(pathSegments: basePath.followedBy([path]));
-  return baseUri.resolveUri(uri);
-}
-
-Future<void> prepareIcons(String type, List<dynamic> icons) async {
-  final filter = icons.where((e) => e['tags'].contains('Size=$type'));
-  final dir = await Directory('icons/$type-tmp').create(recursive: true);
-  final List<Future<void>> futures = [];
-  final client = Client();
-  var i = 1;
-  try {
-    for (final icon in filter) {
-      final name = icon['name'];
-      final fileName = '$name.svg';
-      final svgUri = makeUrlUri(fileName);
-
-      futures.add(
-        downloadSvg(svgUri, fileName.replaceAll('-', '_'), dir.path, client).then((_) => progress.increment()),
-      );
-      if (i % 20 == 0) await Future.wait(futures); // otherwise host closes connection
-      i++;
+  print('Preparing ttf files');
+  if (await npm(['install']) != 0) failures.add('npm install failed');
+  if (await npm(['run', 'fix']) != 0) failures.add('npm run fix failed');
+  if (await npm(['run', 'generate']) != 0) failures.add('npm run generate failed');
+  for (final size in sizes) {
+    final glyphMap = File('icons/sbb_icons_$size.json');
+    if (!await glyphMap.exists()) {
+      failures.add('$size: fantasticon wrote no glyph map');
+      continue;
     }
-    await Future.wait(futures);
-  } finally {
-    client.close();
+    final glyphs = (jsonDecode(await glyphMap.readAsString()) as Map<String, dynamic>).keys;
+    failures.addAll(checkGlyphs(size, iconNames(index, size), glyphs));
+  }
+  if (failures.isNotEmpty) throw UpdateFailure.all(failures);
+
+  print('Generating dart files');
+  await createFlutterFontMap();
+
+  await File('icons/.version').writeAsString(newVersion.toString());
+  for (final size in sizes) {
+    await Directory('icons/$size').delete(recursive: true);
+    await Directory('icons/$size-tmp').delete(recursive: true);
+    await File('icons/sbb_icons_$size.json').delete();
   }
 }
 
-Future<void> downloadSvg(Uri uri, String fileName, String path, Client client) async {
-  final svg = await client.get(uri);
-  await File('$path/$fileName').writeAsBytes(svg.bodyBytes);
+/// Sets a step output when running in GitHub Actions.
+Future<void> setOutput(String name, String value) async {
+  final path = Platform.environment['GITHUB_OUTPUT'];
+  if (path == null) return;
+  await File(path).writeAsString('$name=$value\n', mode: FileMode.append);
+}
+
+Map<String, String> get githubHeaders {
+  final token = Platform.environment['GITHUB_TOKEN'];
+  return {
+    'Accept': 'application/vnd.github+json',
+    if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
+  };
+}
+
+/// Returns the highest `vX.Y.Z` tag of the icon repository, following the pagination of the tags API.
+Future<Version> fetchLatestVersion(Client client) async {
+  final tagNames = <String>[];
+  Uri? uri = Uri.https('api.github.com', '/repos/$repository/tags', {'per_page': '100'});
+  while (uri != null) {
+    final response = await getWithRetry(client, uri, headers: githubHeaders);
+    final tags = jsonDecode(response.body) as List<dynamic>;
+    tagNames.addAll(tags.map((tag) => tag['name'] as String));
+    uri = nextPage(response.headers['link']);
+  }
+  final latest = latestVersionTag(tagNames);
+  if (latest == null) throw UpdateFailure('No vX.Y.Z tag found in $repository');
+  return latest;
+}
+
+Uri? nextPage(String? linkHeader) {
+  final match = RegExp(r'<([^>]+)>;\s*rel="next"').firstMatch(linkHeader ?? '');
+  return match == null ? null : Uri.parse(match[1]!);
+}
+
+/// Downloads the tagged archive and returns its files keyed by their path inside the repository.
+Future<Map<String, List<int>>> downloadArchive(Client client, Version version) async {
+  final uri = Uri.https('github.com', '/$repository/archive/refs/tags/v$version.zip');
+  final response = await getWithRetry(client, uri);
+  final archive = ZipDecoder().decodeBytes(response.bodyBytes);
+  return {
+    for (final file in archive.files)
+      if (file.isFile) file.name.substring(file.name.indexOf('/') + 1): file.content,
+  };
+}
+
+/// GETs [uri], retrying network errors and 5xx responses with exponential backoff.
+/// Throws an [UpdateFailure] if the final response is not 200.
+Future<Response> getWithRetry(Client client, Uri uri, {Map<String, String>? headers}) async {
+  for (var attempt = 0; ; attempt++) {
+    String problem;
+    try {
+      final response = await client.get(uri, headers: headers).timeout(const Duration(minutes: 2));
+      if (response.statusCode == 200) return response;
+      if (response.statusCode < 500) throw UpdateFailure('GET $uri failed with HTTP ${response.statusCode}');
+      problem = 'HTTP ${response.statusCode}';
+    } on Exception catch (e) {
+      if (e is! ClientException && e is! SocketException && e is! TimeoutException && e is! HttpException) rethrow;
+      problem = e.toString();
+    }
+    if (attempt >= retries) throw UpdateFailure('GET $uri failed after ${retries + 1} attempts: $problem');
+    final delay = Duration(seconds: 2 << attempt);
+    print('GET $uri failed ($problem), retrying in ${delay.inSeconds}s');
+    await Future<void>.delayed(delay);
+  }
+}
+
+/// Runs npm with its output streamed into this process's output and returns its exit code.
+Future<int> npm(List<String> arguments) async {
+  print('> npm ${arguments.join(' ')}');
+  final process = await Process.start('npm', arguments, runInShell: true, mode: ProcessStartMode.inheritStdio);
+  return process.exitCode;
+}
+
+Future<void> prepareIcons(String size, Set<String> names, Map<String, List<int>> files) async {
+  final dir = await Directory('icons/$size-tmp').create(recursive: true);
+  for (final name in names) {
+    final svg = files['icons/$name.svg'];
+    if (svg == null) continue;
+    await File('${dir.path}/${glyphName(name)}.svg').writeAsBytes(svg);
+  }
 }
 
 Future<void> createFlutterFontMap() async {

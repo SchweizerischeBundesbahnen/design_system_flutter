@@ -1,5 +1,8 @@
-# This workflow updates the icon font used by this package to match the version found at https://icons.app.sbb.ch.
-# If there is a new version, it will create / update a pull request.
+# This workflow updates the icon font used by this package to the latest vX.Y.Z tag of
+# https://github.com/sbb-design-systems/sbb-icons.
+# If there is a new version, it opens an issue labeled icon-lib-update and creates / updates a pull request closing it.
+# If the update fails, no pull request is created or updated, a comment linking the run is added
+# on the issue and the run fails.
 # It is run every night.
 #
 # The icons can be browsed on https://digital.sbb.ch/de/foundation/assets/icons/
@@ -19,8 +22,12 @@ jobs:
     defaults:
       run:
         working-directory: ./tool/font_scripts
+    permissions:
+      contents: read
+      issues: write
     outputs:
       has_version_update: ${{ steps.gitDiff.outputs.has_diff }}
+      issue_number: ${{ steps.issue.outputs.issue-number }}
 
     steps:
 
@@ -41,7 +48,19 @@ jobs:
         run: npm i
 
       - name: Run update script
+        id: update
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: dart lib/update_icon_fonts.dart
+
+      - name: Open or update tracking issue
+        id: issue
+        if: ${{ !cancelled() && steps.update.outputs.new_version != '' }}
+        uses: ./.github/actions/icon-lib-tracking-issue
+        with:
+          version: ${{ steps.update.outputs.new_version }}
+          outcome: ${{ steps.update.outcome == 'failure' && 'failure' || 'pending' }}
+          token: ${{ github.token }}
 
       - name: Move files to correct dirs if exist
         shell: bash {0}
@@ -87,6 +106,7 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
+      issues: write
     runs-on: ubuntu-latest
     needs: font-tool
     if: needs.font-tool.outputs.has_version_update == 0
@@ -138,9 +158,20 @@ jobs:
           sign-commits: true
           branch: update-icon-lib
           title: ${{ format('feat{0} update icon lib version to {1}', ':', steps.version_number.outputs.version) }}
+          body: |
+            Updates the icon lib to version ${{ steps.version_number.outputs.version }}.
+
+            Closes #${{ needs.font-tool.outputs.issue_number }}
           commit-message: |
             ${{ format('feat{0} update to icon lib version {1}', ':', steps.version_number.outputs.version) }}
 
             This is an automatic commit.
             * updates icon lib files
             * updates CHANGELOG
+
+      - name: Mark reported failure as resolved
+        uses: ./.github/actions/icon-lib-tracking-issue
+        with:
+          version: ${{ steps.version_number.outputs.version }}
+          outcome: success
+          token: ${{ github.token }}
