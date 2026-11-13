@@ -3,27 +3,31 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:console_bars/console_bars.dart';
+import 'package:archive/archive.dart';
+import 'package:font_script/checks.dart';
 import 'package:http/http.dart';
 import 'package:version/version.dart';
 
-final baseUri = Uri.https('icons.app.sbb.ch');
-final basePath = ['icons'];
-
-late FillingBar progress;
+const repository = 'sbb-design-systems/sbb-icons';
+const sizes = ['small', 'medium', 'large'];
 
 Future<void> main() async {
-  final uri = makeUrlUri('index.json');
-  final response = await get(uri);
-  final decoded = utf8.decode(response.bodyBytes);
-  final responseJson = jsonDecode(decoded);
+  final client = Client();
+  try {
+    await update(client);
+  } finally {
+    client.close();
+  }
+}
+
+Future<void> update(Client client) async {
+  final newVersion = await fetchLatestVersion(client);
   final versionFile = File('icons/.version');
-  final newVersion = responseJson['version'];
 
   if (await versionFile.exists()) {
-    final oldVersion = await versionFile.readAsString();
+    final oldVersion = Version.parse(await versionFile.readAsString());
     print('Remote Version: $newVersion - Local Version: $oldVersion');
-    if (Version.parse(oldVersion) >= Version.parse(newVersion)) {
+    if (oldVersion >= newVersion) {
       print('All up to date!');
       return;
     } else {
@@ -31,76 +35,79 @@ Future<void> main() async {
     }
   }
 
-  final icons = responseJson['icons'] as List<dynamic>;
-  final total = icons
-      .cast<Map<String, dynamic>>()
-      .where((e) => (e['tags'] as List).cast<String>().any((t) => t.contains('Size=')))
-      .length;
-  progress = FillingBar(total: total + 4, width: 10, desc: 'Downloading icons');
+  print('Downloading icons v$newVersion');
+  final files = await downloadArchive(client, newVersion);
+  final index = jsonDecode(utf8.decode(files['icons/index.json']!)) as Map<String, dynamic>;
+  final icons = index['icons'] as List<dynamic>;
 
-  await prepareIcons('small', icons);
-  await prepareIcons('medium', icons);
-  await prepareIcons('large', icons);
+  for (final size in sizes) {
+    await prepareIcons(size, icons, files);
+    await Directory('icons/$size').create(recursive: true);
+  }
 
-  await Directory('icons/small').create(recursive: true);
-  await Directory('icons/medium').create(recursive: true);
-  await Directory('icons/large').create(recursive: true);
-
-  progress.desc = 'Preparing ttf files';
+  print('Preparing ttf files');
   await Process.run('npm', ['install'], runInShell: true);
-  progress.increment();
   await Process.run('npm', ['run', 'fix'], runInShell: true);
-  progress.increment();
   await Process.run('npm', ['run', 'generate'], runInShell: true);
-  progress.increment();
-  progress.desc = 'Generating dart files';
+  print('Generating dart files');
   await createFlutterFontMap();
-  progress.increment();
 
-  await File('icons/.version').writeAsString(newVersion);
-  await Directory('icons/small').delete(recursive: true);
-  await Directory('icons/small-tmp').delete(recursive: true);
-  await Directory('icons/medium').delete(recursive: true);
-  await Directory('icons/medium-tmp').delete(recursive: true);
-  await Directory('icons/large').delete(recursive: true);
-  await Directory('icons/large-tmp').delete(recursive: true);
-  await File('icons/sbb_icons_small.json').delete();
-  await File('icons/sbb_icons_medium.json').delete();
-  await File('icons/sbb_icons_large.json').delete();
-}
-
-Uri makeUrlUri(String path) {
-  final uri = Uri(pathSegments: basePath.followedBy([path]));
-  return baseUri.resolveUri(uri);
-}
-
-Future<void> prepareIcons(String type, List<dynamic> icons) async {
-  final filter = icons.where((e) => e['tags'].contains('Size=$type'));
-  final dir = await Directory('icons/$type-tmp').create(recursive: true);
-  final List<Future<void>> futures = [];
-  final client = Client();
-  var i = 1;
-  try {
-    for (final icon in filter) {
-      final name = icon['name'];
-      final fileName = '$name.svg';
-      final svgUri = makeUrlUri(fileName);
-
-      futures.add(
-        downloadSvg(svgUri, fileName.replaceAll('-', '_'), dir.path, client).then((_) => progress.increment()),
-      );
-      if (i % 20 == 0) await Future.wait(futures); // otherwise host closes connection
-      i++;
-    }
-    await Future.wait(futures);
-  } finally {
-    client.close();
+  await File('icons/.version').writeAsString(newVersion.toString());
+  for (final size in sizes) {
+    await Directory('icons/$size').delete(recursive: true);
+    await Directory('icons/$size-tmp').delete(recursive: true);
+    await File('icons/sbb_icons_$size.json').delete();
   }
 }
 
-Future<void> downloadSvg(Uri uri, String fileName, String path, Client client) async {
-  final svg = await client.get(uri);
-  await File('$path/$fileName').writeAsBytes(svg.bodyBytes);
+Map<String, String> get githubHeaders {
+  final token = Platform.environment['GITHUB_TOKEN'];
+  return {
+    'Accept': 'application/vnd.github+json',
+    if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
+  };
+}
+
+/// Returns the highest `vX.Y.Z` tag of the icon repository, following the pagination of the tags API.
+Future<Version> fetchLatestVersion(Client client) async {
+  final tagNames = <String>[];
+  Uri? uri = Uri.https('api.github.com', '/repos/$repository/tags', {'per_page': '100'});
+  while (uri != null) {
+    final response = await client.get(uri, headers: githubHeaders);
+    final tags = jsonDecode(response.body) as List<dynamic>;
+    tagNames.addAll(tags.map((tag) => tag['name'] as String));
+    uri = nextPage(response.headers['link']);
+  }
+  final latest = latestVersionTag(tagNames);
+  if (latest == null) throw StateError('No vX.Y.Z tag found in $repository');
+  return latest;
+}
+
+Uri? nextPage(String? linkHeader) {
+  final match = RegExp(r'<([^>]+)>;\s*rel="next"').firstMatch(linkHeader ?? '');
+  return match == null ? null : Uri.parse(match[1]!);
+}
+
+/// Downloads the tagged archive and returns its files keyed by their path inside the repository.
+Future<Map<String, List<int>>> downloadArchive(Client client, Version version) async {
+  final uri = Uri.https('github.com', '/$repository/archive/refs/tags/v$version.zip');
+  final response = await client.get(uri);
+  final archive = ZipDecoder().decodeBytes(response.bodyBytes);
+  return {
+    for (final file in archive.files)
+      if (file.isFile) file.name.substring(file.name.indexOf('/') + 1): file.content,
+  };
+}
+
+Future<void> prepareIcons(String size, List<dynamic> icons, Map<String, List<int>> files) async {
+  final filter = icons.where((e) => e['tags'].contains('Size=$size'));
+  final dir = await Directory('icons/$size-tmp').create(recursive: true);
+  for (final icon in filter) {
+    final name = icon['name'] as String;
+    final svg = files['icons/$name.svg'];
+    if (svg == null) continue;
+    await File('${dir.path}/${name.replaceAll('-', '_')}.svg').writeAsBytes(svg);
+  }
 }
 
 Future<void> createFlutterFontMap() async {
