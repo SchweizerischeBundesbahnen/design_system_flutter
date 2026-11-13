@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## Unreleased
 
+> **⚠ Breaking Change**
+> We migrated the DSM to the new standalone `material_ui` and `cupertino_ui` packages.
+> This version will only work with Flutter >= 3.47.0 and migrated projects using the standalone packages.
+
 ### Fixed
 
 - apply theme-wide input decoration to all decorated components like `SBBTextInput`
@@ -17,6 +21,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
+- BREAKING: migrated to standalone `material_ui` and `cupertino_ui` packages
+- BREAKING: Updates minimum supported SDK version to Flutter 3.47/Dart 3.13.
 - (auto): updated icon lib to version 1.8.38
 
 ## [5.2.0] - 2026-09-25

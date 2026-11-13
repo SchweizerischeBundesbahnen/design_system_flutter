@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorator.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';

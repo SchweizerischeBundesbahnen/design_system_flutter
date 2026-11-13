@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The colors as defined in https://www.figma.com/design/5j2eZ2D0sHYFKkRSmFdBPJ/SBB-Colors
 /// and https://digital.sbb.ch/de/foundation/colors/base-colors/
