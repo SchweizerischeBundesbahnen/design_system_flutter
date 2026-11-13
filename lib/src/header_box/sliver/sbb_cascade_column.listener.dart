@@ -1,11 +1,10 @@
 part of 'sbb_cascade_column.dart';
 
-typedef ContractionListenerBuilder =
-    Widget Function(
-      BuildContext context,
-      SBBContractionState state,
-      Widget? child,
-    );
+typedef ContractionListenerBuilder = Widget Function(
+  BuildContext context,
+  SBBContractionState state,
+  Widget? child,
+);
 
 /// A widget that listens to expansion state changes.
 ///

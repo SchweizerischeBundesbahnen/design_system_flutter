@@ -119,8 +119,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                   SBBCheckboxListItem(
                     value: _listItemValue7,
                     title: Text('Multiline Label with\nSecondary Label'),
-                    subtitleText:
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+                    subtitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
                     onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
                   ),
                   SBBCheckboxListItem(

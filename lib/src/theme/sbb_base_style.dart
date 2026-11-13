@@ -118,14 +118,13 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
 
   SBBBaseStyle merge(SBBBaseStyle? other) {
     return copyWith(
-          brightness: other?.brightness,
-          colorScheme: other?.colorScheme,
-          textTheme: textTheme.merge(other?.textTheme),
-          iconTheme: iconTheme?.merge(other?.iconTheme) ?? other?.iconTheme,
-          dividerTheme: dividerTheme?.merge(other?.dividerTheme) ?? other?.dividerTheme,
-          textSelectionTheme: textSelectionTheme?.merge(other?.textSelectionTheme) ?? other?.textSelectionTheme,
-        )
-        as SBBBaseStyle;
+      brightness: other?.brightness,
+      colorScheme: other?.colorScheme,
+      textTheme: textTheme.merge(other?.textTheme),
+      iconTheme: iconTheme?.merge(other?.iconTheme) ?? other?.iconTheme,
+      dividerTheme: dividerTheme?.merge(other?.dividerTheme) ?? other?.dividerTheme,
+      textSelectionTheme: textSelectionTheme?.merge(other?.textSelectionTheme) ?? other?.textSelectionTheme,
+    ) as SBBBaseStyle;
   }
 }
 

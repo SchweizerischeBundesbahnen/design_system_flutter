@@ -1,11 +1,10 @@
 part of 'sbb_cascade_column.dart';
 
-typedef ContractibleBuilder =
-    Widget Function(
-      BuildContext context,
-      SBBContractibleState state,
-      Widget? child,
-    );
+typedef ContractibleBuilder = Widget Function(
+  BuildContext context,
+  SBBContractibleState state,
+  Widget? child,
+);
 
 /// Describes how an [SBBContractible] reacts as its available height decreases.
 enum SBBContractionBehavior {
