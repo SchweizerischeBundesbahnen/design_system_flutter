@@ -72,9 +72,9 @@ Future<void> update(Client client) async {
   }
 
   print('Preparing ttf files');
-  await Process.run('npm', ['install'], runInShell: true);
-  await Process.run('npm', ['run', 'fix'], runInShell: true);
-  await Process.run('npm', ['run', 'generate'], runInShell: true);
+  if (await npm(['install']) != 0) failures.add('npm install failed');
+  if (await npm(['run', 'fix']) != 0) failures.add('npm run fix failed');
+  if (await npm(['run', 'generate']) != 0) failures.add('npm run generate failed');
   if (failures.isNotEmpty) throw UpdateFailure.all(failures);
 
   print('Generating dart files');
@@ -146,6 +146,13 @@ Future<Response> getWithRetry(Client client, Uri uri, {Map<String, String>? head
     print('GET $uri failed ($problem), retrying in ${delay.inSeconds}s');
     await Future<void>.delayed(delay);
   }
+}
+
+/// Runs npm with its output streamed into this process's output and returns its exit code.
+Future<int> npm(List<String> arguments) async {
+  print('> npm ${arguments.join(' ')}');
+  final process = await Process.start('npm', arguments, runInShell: true, mode: ProcessStartMode.inheritStdio);
+  return process.exitCode;
 }
 
 Future<void> prepareIcons(String size, Set<String> names, Map<String, List<int>> files) async {
