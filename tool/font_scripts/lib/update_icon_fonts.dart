@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -10,11 +11,25 @@ import 'package:version/version.dart';
 
 const repository = 'sbb-design-systems/sbb-icons';
 const sizes = ['small', 'medium', 'large'];
+const retries = 3;
+
+/// A failed check that stops the update. Its message names what went wrong.
+class UpdateFailure implements Exception {
+  UpdateFailure(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}
 
 Future<void> main() async {
   final client = Client();
   try {
     await update(client);
+  } on UpdateFailure catch (e) {
+    print('Update failed: $e');
+    exitCode = 1;
   } finally {
     client.close();
   }
@@ -73,13 +88,13 @@ Future<Version> fetchLatestVersion(Client client) async {
   final tagNames = <String>[];
   Uri? uri = Uri.https('api.github.com', '/repos/$repository/tags', {'per_page': '100'});
   while (uri != null) {
-    final response = await client.get(uri, headers: githubHeaders);
+    final response = await getWithRetry(client, uri, headers: githubHeaders);
     final tags = jsonDecode(response.body) as List<dynamic>;
     tagNames.addAll(tags.map((tag) => tag['name'] as String));
     uri = nextPage(response.headers['link']);
   }
   final latest = latestVersionTag(tagNames);
-  if (latest == null) throw StateError('No vX.Y.Z tag found in $repository');
+  if (latest == null) throw UpdateFailure('No vX.Y.Z tag found in $repository');
   return latest;
 }
 
@@ -91,12 +106,33 @@ Uri? nextPage(String? linkHeader) {
 /// Downloads the tagged archive and returns its files keyed by their path inside the repository.
 Future<Map<String, List<int>>> downloadArchive(Client client, Version version) async {
   final uri = Uri.https('github.com', '/$repository/archive/refs/tags/v$version.zip');
-  final response = await client.get(uri);
+  final response = await getWithRetry(client, uri);
   final archive = ZipDecoder().decodeBytes(response.bodyBytes);
   return {
     for (final file in archive.files)
       if (file.isFile) file.name.substring(file.name.indexOf('/') + 1): file.content,
   };
+}
+
+/// GETs [uri], retrying network errors and 5xx responses with exponential backoff.
+/// Throws an [UpdateFailure] if the final response is not 200.
+Future<Response> getWithRetry(Client client, Uri uri, {Map<String, String>? headers}) async {
+  for (var attempt = 0; ; attempt++) {
+    String problem;
+    try {
+      final response = await client.get(uri, headers: headers).timeout(const Duration(minutes: 2));
+      if (response.statusCode == 200) return response;
+      if (response.statusCode < 500) throw UpdateFailure('GET $uri failed with HTTP ${response.statusCode}');
+      problem = 'HTTP ${response.statusCode}';
+    } on Exception catch (e) {
+      if (e is! ClientException && e is! SocketException && e is! TimeoutException && e is! HttpException) rethrow;
+      problem = e.toString();
+    }
+    if (attempt >= retries) throw UpdateFailure('GET $uri failed after ${retries + 1} attempts: $problem');
+    final delay = Duration(seconds: 2 << attempt);
+    print('GET $uri failed ($problem), retrying in ${delay.inSeconds}s');
+    await Future<void>.delayed(delay);
+  }
 }
 
 Future<void> prepareIcons(String size, List<dynamic> icons, Map<String, List<int>> files) async {
