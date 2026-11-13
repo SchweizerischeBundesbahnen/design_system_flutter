@@ -75,6 +75,15 @@ Future<void> update(Client client) async {
   if (await npm(['install']) != 0) failures.add('npm install failed');
   if (await npm(['run', 'fix']) != 0) failures.add('npm run fix failed');
   if (await npm(['run', 'generate']) != 0) failures.add('npm run generate failed');
+  for (final size in sizes) {
+    final glyphMap = File('icons/sbb_icons_$size.json');
+    if (!await glyphMap.exists()) {
+      failures.add('$size: fantasticon wrote no glyph map');
+      continue;
+    }
+    final glyphs = (jsonDecode(await glyphMap.readAsString()) as Map<String, dynamic>).keys;
+    failures.addAll(checkGlyphs(size, iconNames(index, size), glyphs));
+  }
   if (failures.isNotEmpty) throw UpdateFailure.all(failures);
 
   print('Generating dart files');
@@ -160,7 +169,7 @@ Future<void> prepareIcons(String size, Set<String> names, Map<String, List<int>>
   for (final name in names) {
     final svg = files['icons/$name.svg'];
     if (svg == null) continue;
-    await File('${dir.path}/${name.replaceAll('-', '_')}.svg').writeAsBytes(svg);
+    await File('${dir.path}/${glyphName(name)}.svg').writeAsBytes(svg);
   }
 }
 

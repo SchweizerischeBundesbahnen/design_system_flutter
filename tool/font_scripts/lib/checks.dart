@@ -38,3 +38,22 @@ List<String> checkIndex(Map<String, dynamic> index, Version version, Set<String>
   }
   return failures;
 }
+
+/// The glyph name fantasticon gives an icon: its SVG file name, with dashes replaced by underscores.
+String glyphName(String iconName) => iconName.replaceAll('-', '_');
+
+/// Checks that the font of [size] has exactly one glyph per name in [iconNames].
+List<String> checkGlyphs(String size, Set<String> iconNames, Iterable<String> glyphNames) {
+  final expected = iconNames.map(glyphName).toSet();
+  final actual = glyphNames.toSet();
+  final missing = expected.difference(actual);
+  final unexpected = actual.difference(expected);
+  if (missing.isEmpty && unexpected.isEmpty) return [];
+  return [
+    [
+      '$size: ${actual.length} glyphs, expected ${expected.length}',
+      if (missing.isNotEmpty) 'missing ${missing.join(', ')}',
+      if (unexpected.isNotEmpty) 'unexpected ${unexpected.join(', ')}',
+    ].join('; '),
+  ];
+}

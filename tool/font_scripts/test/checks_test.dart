@@ -100,4 +100,28 @@ void main() {
       ]);
     });
   });
+
+  group('checkGlyphs', () {
+    final expected = {'arrow-turn-right-small', 'bike-small', 'train-small'};
+
+    test('passes when every expected icon has exactly one glyph', () {
+      final glyphs = ['arrow_turn_right_small', 'bike_small', 'train_small'];
+
+      expect(checkGlyphs('small', expected, glyphs), isEmpty);
+    });
+
+    test('reports missing glyphs with the counts', () {
+      final glyphs = ['bike_small'];
+
+      expect(checkGlyphs('small', expected, glyphs), [
+        'small: 1 glyphs, expected 3; missing arrow_turn_right_small, train_small',
+      ]);
+    });
+
+    test('reports unexpected glyphs with the counts', () {
+      final glyphs = ['arrow_turn_right_small', 'bike_small', 'train_small', 'tram_small'];
+
+      expect(checkGlyphs('small', expected, glyphs), ['small: 4 glyphs, expected 3; unexpected tram_small']);
+    });
+  });
 }
