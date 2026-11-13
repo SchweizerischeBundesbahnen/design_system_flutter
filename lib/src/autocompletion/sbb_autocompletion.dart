@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
@@ -229,11 +229,11 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
   }
 
   List<T> getSuggestions(
-    final List<T> suggestions,
-    final Comparator<T> sorter,
-    final Filter<T> filter,
-    final int maxAmount,
-    final String? query,
+    List<T> suggestions,
+    Comparator<T> sorter,
+    Filter<T> filter,
+    int maxAmount,
+    String? query,
   ) {
     if (query == null || query.length < widget.minLength) {
       return [];

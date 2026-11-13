@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Base style used in [SBBTheme].
@@ -118,14 +118,13 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
 
   SBBBaseStyle merge(SBBBaseStyle? other) {
     return copyWith(
-          brightness: other?.brightness,
-          colorScheme: other?.colorScheme,
-          textTheme: textTheme.merge(other?.textTheme),
-          iconTheme: iconTheme?.merge(other?.iconTheme) ?? other?.iconTheme,
-          dividerTheme: dividerTheme?.merge(other?.dividerTheme) ?? other?.dividerTheme,
-          textSelectionTheme: textSelectionTheme?.merge(other?.textSelectionTheme) ?? other?.textSelectionTheme,
-        )
-        as SBBBaseStyle;
+      brightness: other?.brightness,
+      colorScheme: other?.colorScheme,
+      textTheme: textTheme.merge(other?.textTheme),
+      iconTheme: iconTheme?.merge(other?.iconTheme) ?? other?.iconTheme,
+      dividerTheme: dividerTheme?.merge(other?.dividerTheme) ?? other?.dividerTheme,
+      textSelectionTheme: textSelectionTheme?.merge(other?.textSelectionTheme) ?? other?.textSelectionTheme,
+    ) as SBBBaseStyle;
   }
 }
 

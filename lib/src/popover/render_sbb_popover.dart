@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_shape.dart';
 
@@ -80,30 +80,19 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
 
 class RenderSBBPopover extends RenderShiftedBox {
   RenderSBBPopover({
-    required SBBPopoverPlacement placement,
-    required Offset targetPosition,
-    required Size targetSize,
-    required bool showNotch,
-    required bool alignNotchToTarget,
-    required Color color,
-    required BoxConstraints popoverConstraints,
-    required double sideOffset,
-    required double alignmentOffset,
-    required EdgeInsets viewportMargin,
-    Animation<double>? scaleAnimation,
+    required this._placement,
+    required this._targetPosition,
+    required this._targetSize,
+    required this._showNotch,
+    required this._alignNotchToTarget,
+    required this._color,
+    required this._popoverConstraints,
+    required this._sideOffset,
+    required this._alignmentOffset,
+    required this._viewportMargin,
+    this._scaleAnimation,
     RenderBox? child,
-  }) : _placement = placement,
-       _targetPosition = targetPosition,
-       _targetSize = targetSize,
-       _showNotch = showNotch,
-       _alignNotchToTarget = alignNotchToTarget,
-       _color = color,
-       _popoverConstraints = popoverConstraints,
-       _sideOffset = sideOffset,
-       _alignmentOffset = alignmentOffset,
-       _viewportMargin = viewportMargin,
-       _scaleAnimation = scaleAnimation,
-       super(child);
+  }) : super(child);
 
   SBBPopoverPlacement _placement;
 

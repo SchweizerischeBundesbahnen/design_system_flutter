@@ -4,8 +4,8 @@ version: 5.2.0+20010424 # automatically set by GH Action
 publish_to: "none"
 
 environment:
-  sdk: '^3.10.0'
-  flutter: '>=3.38.1'
+  sdk: '^3.13.0'
+  flutter: '>=3.47.0'
 
 dependencies:
   flutter:
@@ -15,15 +15,16 @@ dependencies:
 
   # https://pub.dev/packages/provider
   provider: ^6.1.5+1
-
   # https://pub.dev/packages/animations
-  animations: ^2.2.0
-
+  animations: ^3.0.0
   # https://pub.dev/packages/flutter_svg
-  flutter_svg: ^2.3.0
-
+  flutter_svg: ^2.4.0
   # https://pub.dev/packages/intl
-  intl: ^0.20.2
+  intl: ^0.20.3
+  # https://pub.dev/packages/material_ui
+  material_ui: ^1.11.0
+  # https://pub.dev/packages/cupertino_ui
+  cupertino_ui: ^1.1.6
 
   sbb_design_system_mobile:
     path: ../

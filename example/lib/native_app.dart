@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_design_system_mobile_example/pages/autocompletion_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/bottom_sheet_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/button_page.dart';
@@ -37,7 +36,7 @@ import 'package:flutter_design_system_mobile_example/pages/text_area_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/text_input_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/toast_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/typography_page.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -70,11 +69,7 @@ class MyApp extends StatelessWidget {
             theme: SBBTheme.light(themeContext: appState.themeContext),
             darkTheme: SBBTheme.dark(themeContext: appState.themeContext),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
             supportedLocales: const [Locale('en'), Locale('de'), Locale('fr'), Locale('it')],
             locale: const Locale('de'),
             home: Scaffold(

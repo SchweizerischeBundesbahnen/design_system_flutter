@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
@@ -124,7 +124,7 @@ class _PromotionBoxBadgeRenderObjectWidget extends SingleChildRenderObjectWidget
 }
 
 class _RenderPromotionBoxBadge extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
-  _RenderPromotionBoxBadge({required Color color, required double spread}) : _color = color, _spread = spread;
+  _RenderPromotionBoxBadge({required this._color, required this._spread});
 
   Color _color;
 
