@@ -53,6 +53,7 @@ Future<void> update(Client client) async {
       print('Starting update process...');
     }
   }
+  await setOutput('new_version', newVersion.toString());
 
   print('Downloading icons v$newVersion');
   final files = await downloadArchive(client, newVersion);
@@ -95,6 +96,13 @@ Future<void> update(Client client) async {
     await Directory('icons/$size-tmp').delete(recursive: true);
     await File('icons/sbb_icons_$size.json').delete();
   }
+}
+
+/// Sets a step output when running in GitHub Actions.
+Future<void> setOutput(String name, String value) async {
+  final path = Platform.environment['GITHUB_OUTPUT'];
+  if (path == null) return;
+  await File(path).writeAsString('$name=$value\n', mode: FileMode.append);
 }
 
 Map<String, String> get githubHeaders {
