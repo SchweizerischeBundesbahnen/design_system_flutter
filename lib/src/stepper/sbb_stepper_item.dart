@@ -23,7 +23,7 @@ sealed class SBBStepperItem {
   }) : assert(labelText == null || label == null, 'Cannot provide both labelText and label!');
 
   /// Creates a step that displays an icon inside the step circle.
-  const factory SBBStepperItem.icon({
+  const factory icon({
     required IconData icon,
     String? labelText,
     Widget? label,
@@ -40,7 +40,7 @@ sealed class SBBStepperItem {
   /// This is useful for custom labels like letters, abbreviations, or short
   /// descriptive text. For sequential numbering, use [SBBStepperItem.numbered]
   /// instead.
-  const factory SBBStepperItem.text({
+  const factory text({
     required String text,
     String? labelText,
     Widget? label,
@@ -59,7 +59,7 @@ sealed class SBBStepperItem {
   /// Set [semanticLabel] to provide an accessible name to screen readers.
   /// When a step is passed, a badge with [badgeIcon] can be displayed if
   /// [showBadgeWhenPassed] is true (default).
-  const factory SBBStepperItem.numbered({
+  const factory numbered({
     String? labelText,
     Widget? label,
     String? semanticLabel,

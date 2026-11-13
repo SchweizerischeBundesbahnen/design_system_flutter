@@ -1,5 +1,5 @@
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class TabBarPage extends StatefulWidget {
@@ -119,9 +119,7 @@ class _DemoPage extends StatelessWidget {
   }
 }
 
-class _DemoItem extends SBBTabBarItem {
-  _DemoItem(super.id, super.icon);
-
+class _DemoItem(super.id, super.icon) extends SBBTabBarItem {
   @override
   String translate(BuildContext context) => 'Item $id';
 }

@@ -1,19 +1,12 @@
 import 'package:flutter/rendering.dart';
 
 /// Paints a divider that can be indented and optionally at the top of the underlying child.
-class DividerPainter extends CustomPainter {
-  const DividerPainter({
-    required this.color,
-    required this.indent,
-    required this.paintAtTop,
-    this.height = 1.0,
-  });
-
-  final Color color;
-  final double indent;
-  final double height;
-  final bool paintAtTop;
-
+class const DividerPainter({
+  required final Color color,
+  required final double indent,
+  required final bool paintAtTop,
+  final double height = 1.0,
+}) extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final y = paintAtTop ? 0.0 : size.height;

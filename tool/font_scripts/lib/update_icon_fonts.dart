@@ -77,7 +77,7 @@ Uri makeUrlUri(String path) {
 Future<void> prepareIcons(String type, List<dynamic> icons) async {
   final filter = icons.where((e) => e['tags'].contains('Size=$type'));
   final dir = await Directory('icons/$type-tmp').create(recursive: true);
-  final List<Future<void>> futures = [];
+  final futures = <Future<void>>[];
   final client = Client();
   var i = 1;
   try {

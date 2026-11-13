@@ -1,5 +1,5 @@
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Selectively lets you override specific intrinsics of [child].
 ///
@@ -12,16 +12,14 @@ import 'package:flutter/rendering.dart';
 ///
 ///  * [IntrinsicHeight] and [IntrinsicWidth], for more detailed information on this topic.
 ///
-class OverrideIntrinsics extends SingleChildRenderObjectWidget {
-  const OverrideIntrinsics({
-    super.key,
-    this.minHeight,
-    this.maxHeight,
-    this.minWidth,
-    this.maxWidth,
-    super.child,
-  });
-
+class const OverrideIntrinsics({
+  super.key,
+  final double? minHeight,
+  final double? maxHeight,
+  final double? minWidth,
+  final double? maxWidth,
+  super.child,
+}) extends SingleChildRenderObjectWidget {
   const OverrideIntrinsics.ignore({Key? key, required Widget child})
     : this(
         key: key,
@@ -29,11 +27,6 @@ class OverrideIntrinsics extends SingleChildRenderObjectWidget {
         maxHeight: 0.0,
         child: child,
       );
-
-  final double? minHeight;
-  final double? maxHeight;
-  final double? minWidth;
-  final double? maxWidth;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -59,25 +52,21 @@ class OverrideIntrinsics extends SingleChildRenderObjectWidget {
   }
 }
 
-class RenderOverrideIntrinsics extends RenderConstrainedBox {
-  RenderOverrideIntrinsics({
-    this.minHeight,
-    this.maxHeight,
-    this.minWidth,
-    this.maxWidth,
-  }) : super(
-         additionalConstraints: BoxConstraints(
-           minHeight: minHeight ?? 0.0,
-           maxHeight: maxHeight ?? double.infinity,
-           minWidth: minWidth ?? 0.0,
-           maxWidth: maxWidth ?? double.infinity,
-         ),
-       );
-
-  double? minHeight;
-  double? maxHeight;
-  double? minWidth;
-  double? maxWidth;
+class RenderOverrideIntrinsics({
+  var double? minHeight,
+  var double? maxHeight,
+  var double? minWidth,
+  var double? maxWidth,
+}) extends RenderConstrainedBox {
+  this
+    : super(
+        additionalConstraints: BoxConstraints(
+          minHeight: minHeight ?? 0.0,
+          maxHeight: maxHeight ?? double.infinity,
+          minWidth: minWidth ?? 0.0,
+          maxWidth: maxWidth ?? double.infinity,
+        ),
+      );
 
   void updateConstraints({
     double? minHeight,

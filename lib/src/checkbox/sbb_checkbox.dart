@@ -332,21 +332,21 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Offset origin = size / 2.0 - const Size.square(_innerWidthLength) / 2.0 as Offset;
-    final double tNormalized = switch (position.status) {
+    final origin = size / 2.0 - const Size.square(_innerWidthLength) / 2.0 as Offset;
+    final tNormalized = switch (position.status) {
       .forward || .completed => position.value,
       .reverse || .dismissed => 1.0 - position.value,
     };
 
-    final Paint checkPaint = _createCheckPaint();
-    final Paint boxBorderPaint = _createBoxBorderPaint();
-    final Paint boxFillPaint = _createBoxFillPaint();
+    final checkPaint = _createCheckPaint();
+    final boxBorderPaint = _createBoxBorderPaint();
+    final boxFillPaint = _createBoxFillPaint();
 
     _drawRoundedBox(canvas, origin, boxBorderPaint, boxFillPaint);
 
     // Four cases: false to null, false to true, null to false, true to false
     if (previousValue == false || value == false) {
-      final double t = value == false ? 1.0 - tNormalized : tNormalized;
+      final t = value == false ? 1.0 - tNormalized : tNormalized;
       if (previousValue == null || value == null) {
         _drawDash(canvas, origin, t, checkPaint);
       } else {
@@ -355,14 +355,14 @@ class _SBBCheckboxPainter extends ToggleablePainter {
     } else {
       // Two cases: null to true, true to null
       if (tNormalized <= 0.5) {
-        final double tShrink = 1.0 - tNormalized * 2.0;
+        final tShrink = 1.0 - tNormalized * 2.0;
         if (previousValue ?? false) {
           _drawCheck(canvas, origin, tShrink, checkPaint);
         } else {
           _drawDash(canvas, origin, tShrink, checkPaint);
         }
       } else {
-        final double tExpand = (tNormalized - 0.5) * 2.0;
+        final tExpand = (tNormalized - 0.5) * 2.0;
         if (value ?? false) {
           _drawCheck(canvas, origin, tExpand, checkPaint);
         } else {
@@ -409,7 +409,7 @@ class _SBBCheckboxPainter extends ToggleablePainter {
   void _drawCheckShortSide(Canvas canvas, Offset origin, double t, Paint paint) {
     const xStart = 0.3 * _innerWidthLength;
     const xEnd = 0.6 * _innerWidthLength;
-    final double xAtT = lerpDouble(xStart, xEnd, t)!;
+    final xAtT = lerpDouble(xStart, xEnd, t)!;
 
     final start = Offset(xStart, 0.6 * _innerWidthLength) + origin;
     final end = Offset(xAtT, 0.7 * _innerWidthLength) + origin;
@@ -421,7 +421,7 @@ class _SBBCheckboxPainter extends ToggleablePainter {
   void _drawCheckLongSide(Canvas canvas, Offset origin, double t, Paint paint) {
     const yStart = _innerWidthLength * 0.7;
     const yEnd = 0.2 * _innerWidthLength;
-    final double yAtT = lerpDouble(yStart, yEnd, t)!;
+    final yAtT = lerpDouble(yStart, yEnd, t)!;
 
     final start = Offset(0.5 * _innerWidthLength, yAtT) + origin;
     final end = Offset(0.6 * _innerWidthLength, yStart) + origin;
@@ -434,18 +434,18 @@ class _SBBCheckboxPainter extends ToggleablePainter {
     // Animate the horizontal rounded rectangle from the mid point outwards.
     assert(t >= 0.0 && t <= 1.0);
 
-    const double height = _innerWidthLength * 0.15;
-    final Offset center = Offset(_edgeHalf, _edgeHalf) + origin;
+    const height = _innerWidthLength * 0.15;
+    final center = Offset(_edgeHalf, _edgeHalf) + origin;
 
-    final double drawWidth = lerpDouble(0, 0.6 * _innerWidthLength, t)!;
+    final drawWidth = lerpDouble(0, 0.6 * _innerWidthLength, t)!;
 
-    final Rect rect = Rect.fromCenter(center: center, width: drawWidth, height: height);
+    final rect = Rect.fromCenter(center: center, width: drawWidth, height: height);
     canvas.drawRRect(RRect.fromRectAndRadius(rect, _markRadius), paint);
   }
 
   void _drawRoundedBox(Canvas canvas, Offset origin, Paint boxBorderPaint, Paint boxFillPaint) {
-    final Offset center = Offset(_edgeHalf + origin.dx, _edgeHalf + origin.dy);
-    final Rect rect = Rect.fromCenter(center: center, width: _innerWidthLength, height: _innerWidthLength);
+    final center = Offset(_edgeHalf + origin.dx, _edgeHalf + origin.dy);
+    final rect = Rect.fromCenter(center: center, width: _innerWidthLength, height: _innerWidthLength);
     final outerRect = rect.inflate(SBBCheckboxStyle.borderWidth);
 
     canvas.drawRRect(RRect.fromRectAndRadius(outerRect, SBBCheckboxStyle.borderRadius), boxBorderPaint);

@@ -241,7 +241,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     SBBBottomSheetStyle? sheetStyle,
   }) {
     final isSelectionValid = selectionValidation ?? _defaultSelectionValidation;
-    List<T> selectedValues = List.from(selectedItems);
+    var selectedValues = List<T>.from(selectedItems);
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
 
     showSBBBottomSheet(

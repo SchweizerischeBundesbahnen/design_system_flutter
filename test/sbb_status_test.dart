@@ -6,7 +6,7 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('status test', (WidgetTester tester) async {
-    const String text = 'Lorem ipsum sit dolor';
+    const text = 'Lorem ipsum sit dolor';
     final widget = Column(
       spacing: SBBSpacing.medium,
       children: [

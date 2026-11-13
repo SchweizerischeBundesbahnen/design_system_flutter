@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/default_button_label.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
@@ -384,11 +384,7 @@ class _BaseTertiaryButton extends StatelessWidget {
 /// Redirect taps that occur in the padded area around the child to the center
 /// of the child. This increases the size of the button and the button's
 /// "tap target", but not its material or its ink splashes.
-class _InputPadding extends SingleChildRenderObjectWidget {
-  const _InputPadding({super.child, required this.minSize});
-
-  final Size minSize;
-
+class const _InputPadding({super.child, required final Size minSize}) extends SingleChildRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) {
     return _RenderInputPadding(minSize);
@@ -400,11 +396,10 @@ class _InputPadding extends SingleChildRenderObjectWidget {
   }
 }
 
-class _RenderInputPadding extends RenderShiftedBox {
-  _RenderInputPadding(this._minSize, [RenderBox? child]) : super(child);
+class _RenderInputPadding(var Size _minSize) extends RenderShiftedBox {
+  this : super(null);
 
   Size get minSize => _minSize;
-  Size _minSize;
 
   set minSize(Size value) {
     if (_minSize == value) {
@@ -448,9 +443,9 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   Size _computeSize({required BoxConstraints constraints, required ChildLayouter layoutChild}) {
     if (child != null) {
-      final Size childSize = layoutChild(child!, constraints);
-      final double height = math.max(childSize.width, minSize.width);
-      final double width = math.max(childSize.height, minSize.height);
+      final childSize = layoutChild(child!, constraints);
+      final height = math.max(childSize.width, minSize.width);
+      final width = math.max(childSize.height, minSize.height);
       return constraints.constrain(Size(height, width));
     }
     return Size.zero;
@@ -463,15 +458,15 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   @override
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
-    final RenderBox? child = this.child;
+    final child = this.child;
     if (child == null) {
       return null;
     }
-    final double? result = child.getDryBaseline(constraints, baseline);
+    final result = child.getDryBaseline(constraints, baseline);
     if (result == null) {
       return null;
     }
-    final Size childSize = child.getDryLayout(constraints);
+    final childSize = child.getDryLayout(constraints);
     return result + Alignment.center.alongOffset(getDryLayout(constraints) - childSize as Offset).dy;
   }
 
@@ -479,7 +474,7 @@ class _RenderInputPadding extends RenderShiftedBox {
   void performLayout() {
     size = _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.layoutChild);
     if (child != null) {
-      final BoxParentData childParentData = child!.parentData! as BoxParentData;
+      final childParentData = child!.parentData! as BoxParentData;
       childParentData.offset = Alignment.center.alongOffset(size - child!.size as Offset);
     }
   }
@@ -489,7 +484,7 @@ class _RenderInputPadding extends RenderShiftedBox {
     if (super.hitTest(result, position: position)) {
       return true;
     }
-    final Offset center = child!.size.center(Offset.zero);
+    final center = child!.size.center(Offset.zero);
     return result.addWithRawTransform(
       transform: MatrixUtils.forceToPoint(center),
       position: center,

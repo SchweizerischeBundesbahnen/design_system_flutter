@@ -169,7 +169,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
       position
         ..curve = Curves.linear
         ..reverseCurve = null;
-      final double delta = details.primaryDelta! / SBBSwitchStyle.trackInnerLength;
+      final delta = details.primaryDelta! / SBBSwitchStyle.trackInnerLength;
       positionController.value += delta;
     }
   }
@@ -197,7 +197,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
     }
 
     final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
-    final SBBSwitchStyle effectiveStyle = _getEffectiveStyle(context);
+    final effectiveStyle = _getEffectiveStyle(context);
 
     // Colors need to be resolved in selected and non selected states separately
     // so that they can be lerped between.
@@ -253,7 +253,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
   }
 
   SBBSwitchStyle _getEffectiveStyle(BuildContext context) {
-    final SBBSwitchStyle themeStyle = Theme.of(context).sbbSwitchTheme.style!;
+    final themeStyle = Theme.of(context).sbbSwitchTheme.style!;
     return themeStyle.merge(widget.style);
   }
 

@@ -84,12 +84,7 @@ class SBBLogo extends StatelessWidget {
   }
 }
 
-class _Painter extends CustomPainter {
-  const _Painter(this.paintObject, this.path);
-
-  final Paint paintObject;
-  final Path path;
-
+class const _Painter(final Paint paintObject, final Path path) extends CustomPainter {
   @override
   void paint(Canvas canvas, _) => canvas.drawPath(path, paintObject);
 

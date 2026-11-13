@@ -78,23 +78,21 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   }
 }
 
-class RenderSBBPopover extends RenderShiftedBox {
-  RenderSBBPopover({
-    required this._placement,
-    required this._targetPosition,
-    required this._targetSize,
-    required this._showNotch,
-    required this._alignNotchToTarget,
-    required this._color,
-    required this._popoverConstraints,
-    required this._sideOffset,
-    required this._alignmentOffset,
-    required this._viewportMargin,
-    this._scaleAnimation,
-    RenderBox? child,
-  }) : super(child);
-
-  SBBPopoverPlacement _placement;
+class RenderSBBPopover({
+  required var SBBPopoverPlacement _placement,
+  required var Offset _targetPosition,
+  required var Size _targetSize,
+  required var bool _showNotch,
+  required var bool _alignNotchToTarget,
+  required var Color _color,
+  required var BoxConstraints _popoverConstraints,
+  required var double _sideOffset,
+  required var double _alignmentOffset,
+  required var EdgeInsets _viewportMargin,
+  var Animation<double>? _scaleAnimation,
+  RenderBox? child,
+}) extends RenderShiftedBox {
+  this : super(child);
 
   set placement(SBBPopoverPlacement value) {
     if (_placement == value) return;
@@ -102,15 +100,11 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsLayout();
   }
 
-  Offset _targetPosition;
-
   set targetPosition(Offset value) {
     if (_targetPosition == value) return;
     _targetPosition = value;
     markNeedsLayout();
   }
-
-  Size _targetSize;
 
   set targetSize(Size value) {
     if (_targetSize == value) return;
@@ -118,23 +112,17 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsLayout();
   }
 
-  bool _showNotch;
-
   set showNotch(bool value) {
     if (_showNotch == value) return;
     _showNotch = value;
     markNeedsLayout();
   }
 
-  bool _alignNotchToTarget;
-
   set alignNotchToTarget(bool value) {
     if (_alignNotchToTarget == value) return;
     _alignNotchToTarget = value;
     markNeedsLayout();
   }
-
-  Color _color;
 
   set color(Color value) {
     if (_color == value) return;
@@ -143,15 +131,11 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsPaint();
   }
 
-  BoxConstraints _popoverConstraints;
-
   set popoverConstraints(BoxConstraints value) {
     if (_popoverConstraints == value) return;
     _popoverConstraints = value;
     markNeedsLayout();
   }
-
-  double _sideOffset;
 
   set sideOffset(double value) {
     if (_sideOffset == value) return;
@@ -159,23 +143,17 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsLayout();
   }
 
-  double _alignmentOffset;
-
   set alignmentOffset(double value) {
     if (_alignmentOffset == value) return;
     _alignmentOffset = value;
     markNeedsLayout();
   }
 
-  EdgeInsets _viewportMargin;
-
   set viewportMargin(EdgeInsets value) {
     if (_viewportMargin == value) return;
     _viewportMargin = value;
     markNeedsLayout();
   }
-
-  Animation<double>? _scaleAnimation;
 
   set scaleAnimation(Animation<double>? value) {
     if (_scaleAnimation == value) return;
@@ -233,7 +211,7 @@ class RenderSBBPopover extends RenderShiftedBox {
   void performLayout() {
     size = constraints.biggest;
 
-    final RenderBox? child = this.child;
+    final child = this.child;
     if (child == null) {
       _popoverRect = Rect.zero;
       _shapePath = Path();
@@ -242,29 +220,29 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
-    final bool vertical = _placement.mainAxis == .vertical;
+    final vertical = _placement.mainAxis == .vertical;
 
-    final double viewportMainMin = vertical ? _viewportMargin.top : _viewportMargin.left;
-    final double viewportMainMax = vertical
+    final viewportMainMin = vertical ? _viewportMargin.top : _viewportMargin.left;
+    final viewportMainMax = vertical
         ? constraints.maxHeight - _viewportMargin.bottom
         : constraints.maxWidth - _viewportMargin.right;
-    final double viewportCrossMin = vertical ? _viewportMargin.left : _viewportMargin.top;
-    final double viewportCrossMax = vertical
+    final viewportCrossMin = vertical ? _viewportMargin.left : _viewportMargin.top;
+    final viewportCrossMax = vertical
         ? constraints.maxWidth - _viewportMargin.right
         : constraints.maxHeight - _viewportMargin.bottom;
 
-    final double targetMainStart = vertical ? _targetPosition.dy : _targetPosition.dx;
-    final double targetMainEnd = targetMainStart + (vertical ? _targetSize.height : _targetSize.width);
-    final double targetCrossStart = vertical ? _targetPosition.dx : _targetPosition.dy;
-    final double targetCrossEnd = targetCrossStart + (vertical ? _targetSize.width : _targetSize.height);
+    final targetMainStart = vertical ? _targetPosition.dy : _targetPosition.dx;
+    final targetMainEnd = targetMainStart + (vertical ? _targetSize.height : _targetSize.width);
+    final targetCrossStart = vertical ? _targetPosition.dx : _targetPosition.dy;
+    final targetCrossEnd = targetCrossStart + (vertical ? _targetSize.width : _targetSize.height);
 
     // Main-axis space available on either side of the target. sideOffset is
     // part of the occupied extent on whichever side gets resolved (a
     // positive value pushes the box further from the target), so it shrinks
     // both budgets up front — a large offset can force a flip just like an
     // oversized child can.
-    final double spaceAfter = viewportMainMax - targetMainEnd - _sideOffset; // below / right of the target
-    final double spaceBefore = targetMainStart - viewportMainMin - _sideOffset; // above / left of the target
+    final spaceAfter = viewportMainMax - targetMainEnd - _sideOffset; // below / right of the target
+    final spaceBefore = targetMainStart - viewportMainMin - _sideOffset; // above / left of the target
 
     // Constrain the child to the larger of the two sides instead of the full
     // overlay extent, so oversized (e.g. scrollable) content sizes to the
@@ -276,22 +254,22 @@ class RenderSBBPopover extends RenderShiftedBox {
     // way.
     final double maxAvailableSpaceOnMainAxis = math.max(0, math.max(spaceAfter, spaceBefore));
     final double maxAvailableSpaceOnCrossAxis = math.max(0, viewportCrossMax - viewportCrossMin);
-    final BoxConstraints available = BoxConstraints(
+    final available = BoxConstraints(
       maxWidth: vertical ? maxAvailableSpaceOnCrossAxis : maxAvailableSpaceOnMainAxis,
       maxHeight: vertical ? maxAvailableSpaceOnMainAxis : maxAvailableSpaceOnCrossAxis,
     );
 
     // constrain child always with hypothetical notch
-    final BoxConstraints childConstraints = _popoverConstraints
+    final childConstraints = _popoverConstraints
         .enforce(available)
         .deflate(_shapeFor(_placement.edge, _showNotch).dimensions);
     child.layout(childConstraints, parentUsesSize: true);
-    final double childCrossAxisExtent = vertical ? child.size.width : child.size.height;
+    final childCrossAxisExtent = vertical ? child.size.width : child.size.height;
 
     // but drop notch entirely if cannot fit because cross side too small
     // ensures child never overflows
-    final bool effectiveShowNotch = _showNotch && childCrossAxisExtent >= SBBPopoverShapeBorder.minExtentForNotch;
-    final double childMainAxisExtent =
+    final effectiveShowNotch = _showNotch && childCrossAxisExtent >= SBBPopoverShapeBorder.minExtentForNotch;
+    final childMainAxisExtent =
         (vertical ? child.size.height : child.size.width) +
         _shapeFor(_placement.edge, effectiveShowNotch).dimensions.along(_placement.mainAxis);
 
@@ -299,7 +277,7 @@ class RenderSBBPopover extends RenderShiftedBox {
     // The ideal position comes from the placement's alignment (start/end are
     // physical: left/top and right/bottom), nudged by alignmentOffset, then
     // shifted to avoid colliding with viewport edges.
-    double childCrossPosition =
+    var childCrossPosition =
         switch (_placement.crossAxisAlignment) {
           SBBPopoverAlignment.start => targetCrossStart,
           SBBPopoverAlignment.center => (targetCrossStart + targetCrossEnd - childCrossAxisExtent) / 2,
@@ -316,17 +294,17 @@ class RenderSBBPopover extends RenderShiftedBox {
     // Keep the preferred edge as long as the child fits there; flip only when it doesn't.
     // Because the child was constrained to the larger side's space above,
     // the child is guaranteed to fit after a flip.
-    final bool preferAfter = _placement.edge == SBBPopoverEdge.bottom || _placement.edge == SBBPopoverEdge.right;
-    final double preferredSpace = preferAfter ? spaceAfter : spaceBefore;
-    final double oppositeSpace = preferAfter ? spaceBefore : spaceAfter;
-    SBBPopoverEdge finalEdge = _placement.edge;
+    final preferAfter = _placement.edge == SBBPopoverEdge.bottom || _placement.edge == SBBPopoverEdge.right;
+    final preferredSpace = preferAfter ? spaceAfter : spaceBefore;
+    final oppositeSpace = preferAfter ? spaceBefore : spaceAfter;
+    var finalEdge = _placement.edge;
     if (childMainAxisExtent > preferredSpace && oppositeSpace > preferredSpace) {
       finalEdge = finalEdge.opposite;
     }
 
     // sideOffset always pushes the box further away from the target
-    final bool finalAfter = finalEdge == SBBPopoverEdge.bottom || finalEdge == SBBPopoverEdge.right;
-    double mainPos = finalAfter ? targetMainEnd + _sideOffset : targetMainStart - _sideOffset - childMainAxisExtent;
+    final finalAfter = finalEdge == SBBPopoverEdge.bottom || finalEdge == SBBPopoverEdge.right;
+    var mainPos = finalAfter ? targetMainEnd + _sideOffset : targetMainStart - _sideOffset - childMainAxisExtent;
     mainPos = clampDouble(mainPos, viewportMainMin, math.max(viewportMainMin, viewportMainMax - childMainAxisExtent));
 
     _popoverRect = vertical
@@ -386,7 +364,7 @@ class RenderSBBPopover extends RenderShiftedBox {
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    final double scale = _scaleAnimation?.value ?? 1.0;
+    final scale = _scaleAnimation?.value ?? 1.0;
     if (scale == 1.0) {
       _transformLayer.layer = null;
       _paintPopover(context, offset);
@@ -395,13 +373,13 @@ class RenderSBBPopover extends RenderShiftedBox {
 
     // Scale around the center of the popover's target-facing edge, so the popover
     // grows out of / shrinks into its anchor point.
-    final Offset pivot = switch (_resolvedEdge) {
+    final pivot = switch (_resolvedEdge) {
       SBBPopoverEdge.bottom => _popoverRect.topCenter,
       SBBPopoverEdge.top => _popoverRect.bottomCenter,
       SBBPopoverEdge.right => _popoverRect.centerLeft,
       SBBPopoverEdge.left => _popoverRect.centerRight,
     };
-    final Matrix4 transform = Matrix4.identity()
+    final transform = Matrix4.identity()
       ..translateByDouble(pivot.dx, pivot.dy, 0, 1)
       ..scaleByDouble(scale, scale, 1, 1)
       ..translateByDouble(-pivot.dx, -pivot.dy, 0, 1);
@@ -415,7 +393,7 @@ class RenderSBBPopover extends RenderShiftedBox {
   }
 
   void _paintPopover(PaintingContext context, Offset offset) {
-    final SBBPopoverShapeBorder? shapeBorder = _shapeBorder;
+    final shapeBorder = _shapeBorder;
     if (shapeBorder != null) {
       _decoration ??= ShapeDecoration(color: _color, shape: shapeBorder);
       _backgroundPainter ??= _decoration!.createBoxPainter(markNeedsPaint);
@@ -434,16 +412,16 @@ class RenderSBBPopover extends RenderShiftedBox {
   double get _notchOffset {
     if (!_showNotch || !_alignNotchToTarget) return 0;
 
-    final bool vertical = _placement.mainAxis == .vertical;
-    final double targetCrossStart = vertical ? _targetPosition.dx : _targetPosition.dy;
-    final double targetCrossEnd = targetCrossStart + (vertical ? _targetSize.width : _targetSize.height);
-    final double popoverCrossStart = vertical ? _popoverRect.left : _popoverRect.top;
-    final double popoverCrossEnd = vertical ? _popoverRect.right : _popoverRect.bottom;
-    final double popoverCrossCenter = (popoverCrossStart + popoverCrossEnd) / 2.0;
-    final bool shouldShiftNotch = popoverCrossCenter > targetCrossEnd || popoverCrossCenter < targetCrossStart;
+    final vertical = _placement.mainAxis == .vertical;
+    final targetCrossStart = vertical ? _targetPosition.dx : _targetPosition.dy;
+    final targetCrossEnd = targetCrossStart + (vertical ? _targetSize.width : _targetSize.height);
+    final popoverCrossStart = vertical ? _popoverRect.left : _popoverRect.top;
+    final popoverCrossEnd = vertical ? _popoverRect.right : _popoverRect.bottom;
+    final popoverCrossCenter = (popoverCrossStart + popoverCrossEnd) / 2.0;
+    final shouldShiftNotch = popoverCrossCenter > targetCrossEnd || popoverCrossCenter < targetCrossStart;
     if (!shouldShiftNotch) return 0;
 
-    final double targetCrossCenter = (targetCrossStart + targetCrossEnd) / 2;
+    final targetCrossCenter = (targetCrossStart + targetCrossEnd) / 2;
     return targetCrossCenter - popoverCrossCenter;
   }
 
