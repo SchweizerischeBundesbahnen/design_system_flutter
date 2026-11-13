@@ -133,9 +133,9 @@ class _SBBRadioState<T> extends State<SBBRadio<T>> {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final bool effectiveEnabled = widget.enabled ?? (_registry?.onChanged != null);
-    final SBBRadioStyle themeStyle = Theme.of(context).sbbRadioTheme.style!;
-    final EdgeInsetsGeometry effectivePadding = widget.style?.tapTargetPadding ?? themeStyle.tapTargetPadding!;
+    final effectiveEnabled = widget.enabled ?? (_registry?.onChanged != null);
+    final themeStyle = Theme.of(context).sbbRadioTheme.style!;
+    final effectivePadding = widget.style?.tapTargetPadding ?? themeStyle.tapTargetPadding!;
 
     return Semantics(
       label: widget.semanticLabel,
@@ -192,8 +192,8 @@ class _SBBRadioPaintState extends State<_SBBRadioPaint> {
     final themeStyle = Theme.of(context).sbbRadioTheme.style!;
 
     // Compute active and inactive state so that colors can be determined and painter can lerp between them
-    final Set<WidgetState> activeStates = {...widget.toggleableState.states, WidgetState.selected};
-    final Set<WidgetState> inactiveStates = {...widget.toggleableState.states}..remove(WidgetState.selected);
+    final activeStates = <WidgetState>{...widget.toggleableState.states, WidgetState.selected};
+    final inactiveStates = <WidgetState>{...widget.toggleableState.states}..remove(WidgetState.selected);
 
     final activeFillColor = _resolveColor(
       widget.style?.fillColor,
@@ -252,7 +252,7 @@ class _SBBRadioPaintState extends State<_SBBRadioPaint> {
     WidgetStateProperty<Color?> themeColor,
     Set<WidgetState> states,
   ) {
-    final WidgetStateProperty<Color?> effectiveProperty = widgetColor ?? themeColor;
+    final effectiveProperty = widgetColor ?? themeColor;
     return effectiveProperty.resolve(states);
   }
 }
@@ -313,11 +313,11 @@ class _SBBRadioPainter extends ToggleablePainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Offset center = size.center(Offset.zero);
+    final center = size.center(Offset.zero);
 
-    final Paint fillPaint = _createFillPaint();
-    final Paint borderPaint = _createBorderPaint();
-    final Paint innerCirclePaint = _createInnerCirclePaint();
+    final fillPaint = _createFillPaint();
+    final borderPaint = _createBorderPaint();
+    final innerCirclePaint = _createInnerCirclePaint();
 
     // fill
     canvas.drawCircle(center, SBBRadioStyle.radioRadius, fillPaint);
@@ -325,8 +325,8 @@ class _SBBRadioPainter extends ToggleablePainter {
     canvas.drawCircle(center, SBBRadioStyle.radioRadius - SBBRadioStyle.borderWidth / 2.0, borderPaint);
 
     if (!position.isDismissed) {
-      final double t = position.value;
-      final double radius = lerpDouble(0.0, SBBRadioStyle.innerCircleRadius, t)!;
+      final t = position.value;
+      final radius = lerpDouble(0.0, SBBRadioStyle.innerCircleRadius, t)!;
       if (radius > 0) {
         canvas.drawCircle(center, radius, innerCirclePaint);
       }

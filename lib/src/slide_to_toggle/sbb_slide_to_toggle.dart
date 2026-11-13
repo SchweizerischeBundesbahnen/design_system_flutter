@@ -480,17 +480,11 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
 }
 
 /// Used to clip help widget so it doesn't go over toggle. Long help widgets would otherwise overlap while sliding.
-class _HelpWidgetClipper extends CustomClipper<Rect> {
-  const _HelpWidgetClipper({
-    required this.state,
-    required this.position,
-    required this.toggleSize,
-  });
-
-  final SBBSlideToToggleState state;
-  final double position;
-  final double toggleSize;
-
+class const _HelpWidgetClipper({
+  required final SBBSlideToToggleState state,
+  required final double position,
+  required final double toggleSize,
+}) extends CustomClipper<Rect> {
   @override
   Rect getClip(Size size) {
     final clampedPosition = position.clamp(0.0, 1.0);

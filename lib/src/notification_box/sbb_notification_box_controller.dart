@@ -5,8 +5,8 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 ///
 /// Provide an instance via [SBBNotificationBox.controller]. If no controller is
 /// provided, [SBBNotificationBox] creates one internally.
-class SBBNotificationBoxController extends ValueNotifier<bool> {
-  SBBNotificationBoxController({bool initialValue = true}) : super(initialValue);
+class SBBNotificationBoxController({bool initialValue = true}) extends ValueNotifier<bool> {
+  this : super(initialValue);
 
   /// Shows the notification box with an animation.
   void show() => value = true;

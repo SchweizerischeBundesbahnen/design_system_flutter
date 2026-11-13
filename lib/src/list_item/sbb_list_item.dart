@@ -534,7 +534,7 @@ class _SBBListItemState extends State<SBBListItem> {
   EdgeInsets _resolveTrailingPadding(SBBListItemStyle effectiveStyle, TextDirection direction) {
     final padding = effectiveStyle.padding!.resolve(direction);
 
-    EdgeInsets trailingPadding = padding.copyWith(left: effectiveStyle.trailingHorizontalGapWidth!);
+    var trailingPadding = padding.copyWith(left: effectiveStyle.trailingHorizontalGapWidth!);
 
     // Adjust padding depending on the presence of a trailing button
     if (widget.trailingIconButton != null) {

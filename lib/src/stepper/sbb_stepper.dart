@@ -379,20 +379,12 @@ class _StepCircleState extends State<_StepCircle> {
 ///
 /// Used to center the active step's label under the circle while
 /// preventing the label from overflowing past the stepper's edges.
-class _EdgeClampedCentered extends SingleChildRenderObjectWidget {
-  const _EdgeClampedCentered({
-    required this.activeStep,
-    required this.stepCount,
-    required this.stepCircleSize,
-    super.child,
-  });
-
-  final double stepCircleSize;
-
-  final int activeStep;
-
-  final int stepCount;
-
+class const _EdgeClampedCentered({
+  required final int activeStep,
+  required final int stepCount,
+  required final double stepCircleSize,
+  super.child,
+}) extends SingleChildRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) =>
       _RenderEdgeClampedCenterX(activeStep: activeStep, stepsCount: stepCount, stepCircleSize: stepCircleSize);
@@ -406,19 +398,13 @@ class _EdgeClampedCentered extends SingleChildRenderObjectWidget {
 }
 
 /// Render object used by [_EdgeClampedCentered].
-class _RenderEdgeClampedCenterX extends RenderShiftedBox {
-  _RenderEdgeClampedCenterX({
-    required this._activeStep,
-    required this._stepsCount,
-    required this._stepCircleSize,
-    RenderBox? child,
-  }) : super(child);
-
-  double _stepCircleSize;
-
-  int _activeStep;
-
-  int _stepsCount;
+class _RenderEdgeClampedCenterX({
+  required var int _activeStep,
+  required var int _stepsCount,
+  required var double _stepCircleSize,
+  RenderBox? child,
+}) extends RenderShiftedBox {
+  this : super(child);
 
   /// Desired horizontal center of the child in the parent's coordinate space.
   double get centerX =>

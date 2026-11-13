@@ -14,6 +14,10 @@ linter:
     always_declare_return_types: true
     sort_constructors_first: true
     use_null_aware_elements: false
+    use_declaring_parameters: true
+    empty_container_bodies: true
+    unnecessary_primary_constructor_body: true
+    unnecessary_const_in_enum_constructor: true
 
 analyzer:
   exclude:

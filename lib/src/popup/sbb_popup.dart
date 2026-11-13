@@ -65,7 +65,7 @@ Future<T?> showSBBPopup<T>({
   assert(debugCheckHasSBBBaseStyle(context));
 
   final themeStyle = Theme.of(context).sbbPopupTheme.style!;
-  final SBBPopupStyle resolvedStyle = themeStyle.merge(style);
+  final resolvedStyle = themeStyle.merge(style);
 
   return showDialog<T>(
     context: context,
@@ -196,7 +196,7 @@ class SBBPopup extends StatelessWidget {
     assert(debugCheckHasSBBBaseStyle(context));
 
     final themeStyle = Theme.of(context).sbbPopupTheme.style!;
-    final SBBPopupStyle resolvedStyle = themeStyle.merge(style);
+    final resolvedStyle = themeStyle.merge(style);
 
     // Build actual widgets from convenience parameters
     Widget? leadingWidget = leading;

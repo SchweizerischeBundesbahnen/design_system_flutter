@@ -2,15 +2,12 @@ part of 'sbb_cascade_column.dart';
 
 const _kSmallValue = 1.0;
 
-class _RenderCascadeColumn extends RenderBox
+class _RenderCascadeColumn(var _ContractionController controller)
+    extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, _CascadeColumnParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, _CascadeColumnParentData>,
         DebugOverflowIndicatorMixin {
-  _RenderCascadeColumn(this.controller);
-
-  _ContractionController controller;
-
   /// Theoretical height of the column when contracted.
   double _minExtent = 0.0;
 
@@ -208,12 +205,7 @@ class _RenderCascadeColumn extends RenderBox
   }
 }
 
-class _ProgressUpdate {
-  const _ProgressUpdate(this.notifier, this.value);
-
-  final ValueNotifier<SBBContractibleState> notifier;
-  final SBBContractibleState value;
-
+class const _ProgressUpdate(final ValueNotifier<SBBContractibleState> notifier, final SBBContractibleState value) {
   @override
   bool operator ==(Object other) => other is _ProgressUpdate && other.notifier == notifier;
 

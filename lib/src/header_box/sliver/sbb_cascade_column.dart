@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'dart:math';
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/header_box/sliver/override_intrinsics.dart';
 
@@ -86,14 +86,10 @@ class _SBBCascadeColumnState extends State<SBBCascadeColumn> {
   );
 }
 
-class _SBBCascadeColumn extends MultiChildRenderObjectWidget {
-  const _SBBCascadeColumn({
-    required this.controller,
-    required super.children,
-  });
-
-  final _ContractionController controller;
-
+class const _SBBCascadeColumn({
+  required final _ContractionController controller,
+  required super.children,
+}) extends MultiChildRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) {
     return _RenderCascadeColumn(controller);
@@ -198,19 +194,17 @@ final class SBBContractibleState {
 }
 
 /// Controller that holds the current (global) expansion state of the column.
-class _ContractionController extends ValueNotifier<SBBContractionState> {
-  _ContractionController([
-    super.initial = const SBBContractionState(expansionValue: 1.0),
-  ]);
-}
+class _ContractionController([
+  super.initial = const SBBContractionState(expansionValue: 1.0),
+]) extends ValueNotifier<SBBContractionState>;
 
 /// Makes the controller available to the subtree, so listeners can subscribe
 /// from anywhere under the SBBCascadeColumn.
-class _ContractionScope extends InheritedNotifier<_ContractionController> {
-  const _ContractionScope({
-    required _ContractionController controller,
-    required super.child,
-  }) : super(notifier: controller);
+class const _ContractionScope({
+  required _ContractionController controller,
+  required super.child,
+}) extends InheritedNotifier<_ContractionController> {
+  this : super(notifier: controller);
 
   static _ContractionController? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<_ContractionScope>()?.notifier;

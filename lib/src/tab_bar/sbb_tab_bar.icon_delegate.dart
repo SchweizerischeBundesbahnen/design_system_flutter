@@ -1,14 +1,12 @@
 part of 'sbb_tab_bar.dart';
 
-class _TabIconDelegate extends MultiChildLayoutDelegate {
-  _TabIconDelegate(this.items, this.selectedTab, this.portrait, this.onPositioned, this.gestureInsets);
-
-  final List<SBBTabBarItem> items;
-  final SBBTabBarItem selectedTab;
-  final bool portrait;
-  final Function(List<Offset> positions, double height) onPositioned;
-  final EdgeInsets gestureInsets;
-
+class _TabIconDelegate(
+  final List<SBBTabBarItem> items,
+  final SBBTabBarItem selectedTab,
+  final bool portrait,
+  final Function(List<Offset> positions, double height) onPositioned,
+  final EdgeInsets gestureInsets,
+) extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     final widthWithPadding = size.width - gestureInsets.left - gestureInsets.right;

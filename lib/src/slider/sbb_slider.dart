@@ -272,8 +272,8 @@ class _SBBSliderState extends State<SBBSlider> {
   }
 
   Widget _slider(SBBSliderStyle effectiveStyle) {
-    final Set<WidgetState> enabledStates = {..._statesController.value}..remove(WidgetState.disabled);
-    final Set<WidgetState> disabledStates = {..._statesController.value, WidgetState.disabled};
+    final enabledStates = <WidgetState>{..._statesController.value}..remove(WidgetState.disabled);
+    final disabledStates = <WidgetState>{..._statesController.value, WidgetState.disabled};
 
     final inactiveTrackColor = effectiveStyle.trackColor?.resolve(enabledStates);
     final disabledInactiveTrackColor = effectiveStyle.trackColor?.resolve(disabledStates);

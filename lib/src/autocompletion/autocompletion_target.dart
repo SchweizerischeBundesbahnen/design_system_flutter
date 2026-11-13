@@ -30,14 +30,10 @@ class AutocompletionTarget extends StatelessWidget {
   }
 }
 
-class _RenderAutocompletionTargetWidget extends SingleChildRenderObjectWidget {
-  const _RenderAutocompletionTargetWidget({
-    required this.link,
-    super.child,
-  });
-
-  final AutocompletionLink link;
-
+class const _RenderAutocompletionTargetWidget({
+  required final AutocompletionLink link,
+  super.child,
+}) extends SingleChildRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) => _RenderAutocompletionTarget(link: link);
 
@@ -50,11 +46,7 @@ class _RenderAutocompletionTargetWidget extends SingleChildRenderObjectWidget {
   }
 }
 
-class _RenderAutocompletionTarget extends RenderProxyBox {
-  _RenderAutocompletionTarget({required this._link});
-
-  AutocompletionLink _link;
-
+class _RenderAutocompletionTarget({required var AutocompletionLink _link}) extends RenderProxyBox {
   AutocompletionLink get link => _link;
 
   set link(AutocompletionLink value) {

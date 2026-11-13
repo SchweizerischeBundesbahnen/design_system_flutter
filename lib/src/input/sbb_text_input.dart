@@ -1,7 +1,7 @@
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorator.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
@@ -300,8 +300,8 @@ class _SBBTextInputState extends State<SBBTextInput>
 
   @override
   TextInputConfiguration get textInputConfiguration {
-    final List<String>? autofillHints = widget.autofillHints?.toList(growable: false);
-    final AutofillConfiguration autofillConfiguration = autofillHints != null
+    final autofillHints = widget.autofillHints?.toList(growable: false);
+    final autofillConfiguration = autofillHints != null
         ? AutofillConfiguration(
             uniqueIdentifier: autofillId,
             autofillHints: autofillHints,
@@ -380,19 +380,19 @@ class _SBBTextInputState extends State<SBBTextInput>
     assert(debugCheckHasSBBBaseStyle(context));
 
     final theme = Theme.of(context);
-    final DefaultSelectionStyle selectionStyle = DefaultSelectionStyle.of(context);
+    final selectionStyle = DefaultSelectionStyle.of(context);
 
-    final bool isMultiline = (widget.maxLines ?? 0) != 1;
+    final isMultiline = (widget.maxLines ?? 0) != 1;
 
     // determine platform specific properties (selection controls, cursor)
     TextSelectionControls? textSelectionControls;
     final bool paintCursorAboveText;
     final bool cursorOpacityAnimates;
     Offset? cursorOffset;
-    final Color cursorColor = selectionStyle.cursorColor ?? theme.colorScheme.primary;
-    final Color selectionColor = selectionStyle.selectionColor ?? theme.colorScheme.primary.withValues(alpha: 0.4);
+    final cursorColor = selectionStyle.cursorColor ?? theme.colorScheme.primary;
+    final selectionColor = selectionStyle.selectionColor ?? theme.colorScheme.primary.withValues(alpha: 0.4);
     final SpellCheckConfiguration spellCheckConfiguration;
-    final Brightness keyboardAppearance = widget.keyboardAppearance ?? theme.brightness;
+    final keyboardAppearance = widget.keyboardAppearance ?? theme.brightness;
 
     switch (theme.platform) {
       case .iOS || .macOS:
@@ -635,7 +635,7 @@ class _SBBTextInputState extends State<SBBTextInput>
   }
 
   void _handleSelectionChanged(TextSelection selection, SelectionChangedCause? cause) {
-    final bool willShowSelectionHandles = _shouldShowSelectionHandles(cause);
+    final willShowSelectionHandles = _shouldShowSelectionHandles(cause);
     if (willShowSelectionHandles != _showSelectionHandles) {
       setState(() {
         _showSelectionHandles = willShowSelectionHandles;
@@ -731,12 +731,9 @@ class _SBBTextInputStateBoxed extends _SBBTextInputState {
   }
 }
 
-class _SBBTextInputSelectionGestureDetectorBuilder extends TextSelectionGestureDetectorBuilder {
-  _SBBTextInputSelectionGestureDetectorBuilder({required _SBBTextInputState state})
-    : _state = state,
-      super(delegate: state);
-
-  final _SBBTextInputState _state;
+class _SBBTextInputSelectionGestureDetectorBuilder({required final _SBBTextInputState _state})
+    extends TextSelectionGestureDetectorBuilder {
+  this : super(delegate: _state);
 
   @override
   bool get onUserTapAlwaysCalled => _state.widget.onTapAlwaysCalled;

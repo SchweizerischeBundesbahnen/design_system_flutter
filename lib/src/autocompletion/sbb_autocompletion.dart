@@ -239,7 +239,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
       return [];
     }
 
-    final List<T> result = suggestions.where((item) => filter(item, query)).toList();
+    final result = suggestions.where((item) => filter(item, query)).toList();
     result.sort(sorter);
     if (result.length > maxAmount) {
       return result.sublist(0, maxAmount);
@@ -295,7 +295,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
         item: favorite,
         onPressed: () {
           setState(() {
-            final String newText = favorite.toString();
+            final newText = favorite.toString();
             _effectiveController.text = newText;
             widget.onChanged?.call(newText);
             if (widget.submitOnSuggestionTap) {
@@ -316,7 +316,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
         item: suggestion,
         onPressed: () {
           setState(() {
-            final String newText = suggestion.toString();
+            final newText = suggestion.toString();
             _effectiveController.text = newText;
             widget.onChanged?.call(newText);
             if (widget.submitOnSuggestionTap) {
