@@ -11,6 +11,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Fixed
 
+- border and label colors of `SBBTextInput` and all other decorated components no longer lag behind a theme switch ([#763](https://github.com/SchweizerischeBundesbahnen/design_system_flutter/issues/763))
 - apply theme-wide input decoration to all decorated components like `SBBTextInput`
 - `SBBTextInputBoxed`, `SBBDecoratedBoxed` and `SBBDecoratedTextBoxed` now respect `SBBInputDecorationThemeData.contentPadding` instead of forcing a horizontal padding
 - `SBBDateInput`, `SBBTimeInput` and `SBBDateTimeInput` now apply `SBBPickerThemeData.triggerDecorationTheme`, `triggerStyle` and `sheetStyle`
