@@ -9,14 +9,14 @@ import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 import 'test_app.dart';
 
 void main() {
-  final Stream<bool> stream1 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> stream2 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> stream3 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> stream4 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> stream5 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> stream6 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> stream7 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> stream8 = (StreamController<bool>()..add(true)).stream;
+  final stream1 = (StreamController<bool>()..add(true)).stream;
+  final stream2 = (StreamController<bool>()..add(true)).stream;
+  final stream3 = (StreamController<bool>()..add(true)).stream;
+  final stream4 = (StreamController<bool>()..add(true)).stream;
+  final stream5 = (StreamController<bool>()..add(true)).stream;
+  final stream6 = (StreamController<bool>()..add(true)).stream;
+  final stream7 = (StreamController<bool>()..add(true)).stream;
+  final stream8 = (StreamController<bool>()..add(true)).stream;
   testWidgets('toast basic test', (WidgetTester tester) async {
     final widget = Column(
       spacing: SBBSpacing.medium,

@@ -71,9 +71,7 @@ enum SBBThemeContext {
 /// See also:
 ///
 /// * [ThemeData], theme for a [MaterialApp]
-class SBBTheme {
-  SBBTheme._();
-
+class SBBTheme._() {
   /// Creates the base light [ThemeData].
   ///
   /// Use [themeContext] if your application is set in an off-brand or safety related context.

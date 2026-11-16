@@ -43,7 +43,7 @@ class SBBHeaderBoxStyle {
     this.margin,
   });
 
-  factory SBBHeaderBoxStyle.$default({required SBBBaseStyle baseStyle}) {
+  factory $default({required SBBBaseStyle baseStyle}) {
     return SBBHeaderBoxStyle(
       titleTextStyle: baseStyle.textTheme.mediumBold?.copyWith(overflow: .ellipsis),
       titleForegroundColor: baseStyle.colorScheme.textPrimary,

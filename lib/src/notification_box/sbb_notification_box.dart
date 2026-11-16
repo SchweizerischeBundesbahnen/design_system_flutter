@@ -76,7 +76,7 @@ class SBBNotificationBox extends StatefulWidget {
   /// Creates an alert notification box.
   ///
   /// The default leading icon is [SBBIcons.circle_cross_small].
-  factory SBBNotificationBox.alert({
+  factory alert({
     Key? key,
     Widget? content,
     String? contentText,

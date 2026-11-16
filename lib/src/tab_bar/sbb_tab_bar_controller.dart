@@ -6,8 +6,8 @@ import 'package:sbb_design_system_mobile/src/tab_bar/tab_bar.dart';
 import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
 
 /// With this Controller, the [SBBTabBar] can be controlled externally.
-class SBBTabBarController {
-  SBBTabBarController(this.tabs, this.selectedTab) {
+class SBBTabBarController(final List<SBBTabBarItem> tabs, var SBBTabBarItem selectedTab) {
+  this {
     currentData = SBBTabBarNavigationData(selectedTab, selectedTab, 0.0, false);
     _nextTab = selectedTab;
   }
@@ -30,8 +30,6 @@ class SBBTabBarController {
     (badges) => badges.whereNot((badge) => _dismissedBadgeIds.contains(badge.id)).toList(growable: false),
   );
 
-  final List<SBBTabBarItem> tabs;
-  late SBBTabBarItem selectedTab;
   late SBBTabBarItem _nextTab;
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -85,13 +83,13 @@ class SBBTabBarController {
       final leftProgress = (i == 0) ? 0.0 : tabStates[i - 1];
       final rightProgress = (i == currentLayoutData.positions.length - 1) ? 0.0 : tabStates[i + 1];
 
-      final double leftMidX = curves.length < 2
+      final leftMidX = curves.length < 2
           ? 0.0
           : (i == 0)
           ? curves[0].midX - (curves[1].midX - curves[0].midX)
           : curves[i - 1].midX;
 
-      final double rightMidX = (i == curves.length - 1) ? 0.0 : curves[i + 1].midX;
+      final rightMidX = (i == curves.length - 1) ? 0.0 : curves[i + 1].midX;
 
       p.setProgress(tabStates[i], leftProgress, leftMidX, rightProgress, rightMidX);
     }).toList();

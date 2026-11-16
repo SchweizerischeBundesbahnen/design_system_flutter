@@ -93,7 +93,7 @@ class SBBHeaderLeadingBackButton extends StatelessWidget {
   }
 
   Widget _icon(BuildContext context) {
-    final bool isAndroid = Theme.of(context).platform == TargetPlatform.android;
+    final isAndroid = Theme.of(context).platform == TargetPlatform.android;
 
     // iOS chevron is a stroked path; Android arrow is a filled shape.
     final PaintingStyle style = isAndroid ? .fill : .stroke;
@@ -173,19 +173,12 @@ class _IconButton extends StatelessWidget {
   }
 }
 
-class _IconPainter extends CustomPainter {
-  const _IconPainter({
-    required this.path,
-    required this.color,
-    this.style = .stroke,
-    this.strokeWidth = 2.0,
-  });
-
-  final Path path;
-  final Color color;
-  final PaintingStyle style;
-  final double strokeWidth;
-
+class const _IconPainter({
+  required final Path path,
+  required final Color color,
+  final PaintingStyle style = .stroke,
+  final double strokeWidth = 2.0,
+}) extends CustomPainter {
   @override
   void paint(Canvas canvas, _) {
     final paint = Paint()

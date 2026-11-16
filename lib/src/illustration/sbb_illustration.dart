@@ -12,7 +12,7 @@ class SBBIllustration extends StatelessWidget {
   /// Creates a male staff illustration.
   ///
   /// The [constraints] is set to a maxHeight of 145px by default.
-  factory SBBIllustration.staffMale({
+  factory staffMale({
     String? semanticLabel,
     bool excludeFromSemantics = false,
     BoxConstraints constraints = const BoxConstraints(maxHeight: 145),
@@ -26,7 +26,7 @@ class SBBIllustration extends StatelessWidget {
   /// Creates a female staff illustration.
   ///
   /// The [constraints] is set to a maxHeight of 145px by default.
-  factory SBBIllustration.staffFemale({
+  factory staffFemale({
     String? semanticLabel,
     bool excludeFromSemantics = false,
     BoxConstraints constraints = const BoxConstraints(maxHeight: 145),
@@ -40,7 +40,7 @@ class SBBIllustration extends StatelessWidget {
   /// Creates a display illustration.
   ///
   /// The [constraints] is set to a maxHeight of 118px by default.
-  factory SBBIllustration.display({
+  factory display({
     String? semanticLabel,
     bool excludeFromSemantics = false,
     BoxConstraints constraints = const BoxConstraints(maxHeight: 118),
@@ -54,7 +54,7 @@ class SBBIllustration extends StatelessWidget {
   /// Creates a binoculars illustration.
   ///
   /// The [constraints] is set to a maxHeight of 100px by default.
-  factory SBBIllustration.binoculars({
+  factory binoculars({
     String? semanticLabel,
     bool excludeFromSemantics = false,
     BoxConstraints constraints = const BoxConstraints(maxHeight: 100),
@@ -68,7 +68,7 @@ class SBBIllustration extends StatelessWidget {
   /// Creates a telescope illustration.
   ///
   /// The [constraints] is set to a maxHeight of 156px by default.
-  factory SBBIllustration.telescope({
+  factory telescope({
     String? semanticLabel,
     bool excludeFromSemantics = false,
     BoxConstraints constraints = const BoxConstraints(maxHeight: 156),
@@ -82,7 +82,7 @@ class SBBIllustration extends StatelessWidget {
   /// Creates a train illustration.
   ///
   /// The [constraints] is set to a maxHeight of 80px by default.
-  factory SBBIllustration.train({
+  factory train({
     String? semanticLabel,
     bool excludeFromSemantics = false,
     BoxConstraints constraints = const BoxConstraints(maxHeight: 80),
@@ -96,7 +96,7 @@ class SBBIllustration extends StatelessWidget {
   /// Creates an elevator illustration.
   ///
   /// The [constraints] is set to a maxHeight of 138px by default.
-  factory SBBIllustration.elevator({
+  factory elevator({
     String? semanticLabel,
     bool excludeFromSemantics = false,
     BoxConstraints constraints = const BoxConstraints(maxHeight: 138),
@@ -110,7 +110,7 @@ class SBBIllustration extends StatelessWidget {
   /// Creates a boat illustration.
   ///
   /// The [constraints] is set to a maxHeight of 133px by default.
-  factory SBBIllustration.boat({
+  factory boat({
     String? semanticLabel,
     bool excludeFromSemantics = false,
     BoxConstraints constraints = const BoxConstraints(maxHeight: 133),
@@ -124,7 +124,7 @@ class SBBIllustration extends StatelessWidget {
   /// Creates a cable car illustration.
   ///
   /// The [constraints] is set to a maxHeight of 160px by default.
-  factory SBBIllustration.cableCar({
+  factory cableCar({
     String? semanticLabel,
     bool excludeFromSemantics = false,
     BoxConstraints constraints = const BoxConstraints(maxHeight: 160),

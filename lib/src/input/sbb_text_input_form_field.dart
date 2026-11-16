@@ -114,10 +114,10 @@ class SBBTextInputFormField extends FormField<String> {
          builder:
              builder ??
              (FormFieldState<String> field) {
-               final _SBBTextInputFormFieldState state = field as _SBBTextInputFormFieldState;
+               final state = field as _SBBTextInputFormFieldState;
 
-               SBBInputDecoration effectiveDecoration = decoration ?? const SBBInputDecoration();
-               final String? errorText = field.errorText;
+               var effectiveDecoration = decoration ?? const SBBInputDecoration();
+               final errorText = field.errorText;
                if (errorText != null) {
                  effectiveDecoration = errorBuilder != null
                      ? effectiveDecoration.copyWith(error: errorBuilder(state.context, errorText))
@@ -323,10 +323,10 @@ class SBBTextInputBoxedFormField extends SBBTextInputFormField {
     EdgeInsetsGeometry? margin,
   }) : super(
          builder: (FormFieldState<String> field) {
-           final _SBBTextInputFormFieldState state = field as _SBBTextInputFormFieldState;
+           final state = field as _SBBTextInputFormFieldState;
 
-           SBBInputDecoration effectiveDecoration = decoration ?? const SBBInputDecoration();
-           final String? errorText = field.errorText;
+           var effectiveDecoration = decoration ?? const SBBInputDecoration();
+           final errorText = field.errorText;
            if (errorText != null) {
              effectiveDecoration = errorBuilder != null
                  ? effectiveDecoration.copyWith(error: errorBuilder(state.context, errorText))

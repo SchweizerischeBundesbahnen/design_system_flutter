@@ -151,7 +151,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
     assert(debugCheckHasSBBBaseStyle(context));
 
     final radioRegistry = RadioGroup.maybeOf<T>(context);
-    final bool isInteractive = enabled && radioRegistry?.onChanged != null;
+    final isInteractive = enabled && radioRegistry?.onChanged != null;
 
     Widget? leadingWidget = leading;
     if (leadingWidget == null && leadingIconData != null) {

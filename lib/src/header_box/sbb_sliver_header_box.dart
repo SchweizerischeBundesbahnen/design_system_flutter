@@ -422,15 +422,13 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     if (kIsWeb) return;
 
     assert(position != null);
-    final RenderSliverPinnedFloatingWidget? renderer = context
-        .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+    final renderer = context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
     renderer?.onScrollingUpdate(position!);
   }
 
   Future<void> onSnapRequested(bool expand) async {
-    final RenderSliverPinnedFloatingWidget? renderer = context
-        .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+    final renderer = context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
     await renderer?.snap(expand ? .forward : .reverse);
   }

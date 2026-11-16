@@ -1,11 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 /// Custom track shape to get even height for active and inactive track on [RoundedRectSliderTrackShape].
-class EvenRoundedRectSliderTrackShape extends RoundedRectSliderTrackShape {
-  const EvenRoundedRectSliderTrackShape({required this.thumbRadius});
-
-  final double thumbRadius;
-
+class const EvenRoundedRectSliderTrackShape({required final double thumbRadius}) extends RoundedRectSliderTrackShape {
   @override
   void paint(
     PaintingContext context,
@@ -22,16 +18,16 @@ class EvenRoundedRectSliderTrackShape extends RoundedRectSliderTrackShape {
   }) {
     // Assign the track segment paints, which are leading: active and
     // trailing: inactive.
-    final ColorTween activeTrackColorTween = ColorTween(
+    final activeTrackColorTween = ColorTween(
       begin: sliderTheme.disabledActiveTrackColor,
       end: sliderTheme.activeTrackColor,
     );
-    final ColorTween inactiveTrackColorTween = ColorTween(
+    final inactiveTrackColorTween = ColorTween(
       begin: sliderTheme.disabledInactiveTrackColor,
       end: sliderTheme.inactiveTrackColor,
     );
-    final Paint activePaint = Paint()..color = activeTrackColorTween.evaluate(enableAnimation)!;
-    final Paint inactivePaint = Paint()..color = inactiveTrackColorTween.evaluate(enableAnimation)!;
+    final activePaint = Paint()..color = activeTrackColorTween.evaluate(enableAnimation)!;
+    final inactivePaint = Paint()..color = inactiveTrackColorTween.evaluate(enableAnimation)!;
     final Paint leftTrackPaint;
     final Paint rightTrackPaint;
     switch (textDirection) {
@@ -43,7 +39,7 @@ class EvenRoundedRectSliderTrackShape extends RoundedRectSliderTrackShape {
         rightTrackPaint = activePaint;
     }
 
-    final Rect trackRect = getPreferredRect(
+    final trackRect = getPreferredRect(
       parentBox: parentBox,
       offset: offset,
       sliderTheme: sliderTheme,

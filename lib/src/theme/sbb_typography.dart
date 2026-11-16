@@ -24,10 +24,7 @@ const TextStyle sbbTextStyle = SBBTextStyles.mediumLight;
 ///
 /// * [SBBFontFamily], which contains the constants for all SBB font families.
 /// * <https://digital.sbb.ch/en/design-system/mobile/basics/typography/>
-class SBBTextStyles {
-  SBBTextStyles._();
-
-  // Font sizes
+class SBBTextStyles._() {
   static const double xxLargeFontSize = 30.0;
   static const double xLargeFontSize = 24.0;
   static const double largeFontSize = 18.0;
@@ -177,10 +174,7 @@ class SBBTextStyles {
 ///
 /// * [SBBTextStyles], which contains constants for text styles defined in the SBB design system mobile.
 /// * <https://digital.sbb.ch/en/design-system/mobile/basics/typography/>
-class SBBFontFamily {
-  SBBFontFamily._();
-
-  // Font families
+class SBBFontFamily._() {
   static const String sbbFontUltraLight = 'packages/sbb_design_system_mobile/SBBWebUltraLight';
   static const String sbbFontThin = 'packages/sbb_design_system_mobile/SBBWebThin';
   static const String sbbFontLight = 'packages/sbb_design_system_mobile/SBBWebLight';

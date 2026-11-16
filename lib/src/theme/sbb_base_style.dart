@@ -13,7 +13,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// * [SBBColorScheme], the color values used by this base style.
 /// * [SBBTheme], helpers to create full ThemeData from an SBB base style.
 class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
-  SBBBaseStyle({
+  const SBBBaseStyle({
     required this.brightness,
     required this.colorScheme,
     required this.textTheme,
@@ -22,18 +22,18 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.textSelectionTheme,
   });
 
-  factory SBBBaseStyle.$default({required Brightness brightness, required SBBThemeContext themeContext}) =>
+  factory $default({required Brightness brightness, required SBBThemeContext themeContext}) =>
       SBBBaseStyle.fromThemeContext(brightness: brightness, context: themeContext);
 
   /// Creates the base style from the provided [SBBThemeContext]
-  factory SBBBaseStyle.fromThemeContext({required Brightness brightness, required SBBThemeContext context}) =>
+  factory fromThemeContext({required Brightness brightness, required SBBThemeContext context}) =>
       SBBBaseStyle.fromColorScheme(
         brightness: brightness,
         colorScheme: context.colorScheme(brightness: brightness),
       );
 
   /// Creates the base style from the provided [SBBColorScheme]
-  factory SBBBaseStyle.fromColorScheme({required Brightness brightness, required SBBColorScheme colorScheme}) {
+  factory fromColorScheme({required Brightness brightness, required SBBColorScheme colorScheme}) {
     return SBBBaseStyle(
       brightness: brightness,
       colorScheme: colorScheme,

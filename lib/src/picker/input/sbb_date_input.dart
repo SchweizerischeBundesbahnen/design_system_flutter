@@ -176,8 +176,7 @@ class SBBDateInput extends StatelessWidget {
   String _formattedValue(BuildContext context) {
     if (value == null) return '';
 
-    final DateFormat effectiveDateFormat =
-        dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString());
+    final effectiveDateFormat = dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString());
 
     final rawDate = PickerUtils.clampedDateOnly(
       value!,

@@ -64,9 +64,7 @@ void main() {
   });
 }
 
-class _DemoItem extends SBBTabBarItem {
-  _DemoItem(super.id, super.icon);
-
+class _DemoItem(super.id, super.icon) extends SBBTabBarItem {
   @override
   String translate(BuildContext context) => 'Item $id';
 }

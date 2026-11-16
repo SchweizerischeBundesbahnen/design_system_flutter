@@ -86,21 +86,13 @@ enum _ToastSlot { title, action }
 /// - The width of the toast is determined by the width of the title, a horizontal gap and the width of the action
 /// - The action will overflow to a separate line with a vertical gap to the title if the actionWidth is
 ///   larger than 40% of the available maxWidth
-class _SBBDefaultToast extends SlottedMultiChildRenderObjectWidget<_ToastSlot, RenderBox> {
-  const _SBBDefaultToast({
-    required this.title,
-    required this.horizontalGap,
-    required this.verticalGap,
-    required this.overflowThreshold,
-    this.action,
-  });
-
-  final Widget title;
-  final Widget? action;
-  final double horizontalGap;
-  final double verticalGap;
-  final double overflowThreshold;
-
+class const _SBBDefaultToast({
+  required final Widget title,
+  required final double horizontalGap,
+  required final double verticalGap,
+  required final double overflowThreshold,
+  final Widget? action,
+}) extends SlottedMultiChildRenderObjectWidget<_ToastSlot, RenderBox> {
   @override
   Iterable<_ToastSlot> get slots => _ToastSlot.values;
 
@@ -126,12 +118,12 @@ class _SBBDefaultToast extends SlottedMultiChildRenderObjectWidget<_ToastSlot, R
   }
 }
 
-class _RenderSBBDefaultToast extends RenderBox with SlottedContainerRenderObjectMixin<_ToastSlot, RenderBox> {
-  _RenderSBBDefaultToast({
-    required double gap,
-    required this._verticalGap,
-    required this._overflowThreshold,
-  }) : _horizontalGap = gap;
+class _RenderSBBDefaultToast({
+  required double gap,
+  required var double _verticalGap,
+  required var double _overflowThreshold,
+}) extends RenderBox with SlottedContainerRenderObjectMixin<_ToastSlot, RenderBox> {
+  this : _horizontalGap = gap;
 
   double _horizontalGap;
 
@@ -143,8 +135,6 @@ class _RenderSBBDefaultToast extends RenderBox with SlottedContainerRenderObject
     markNeedsLayout();
   }
 
-  double _verticalGap;
-
   double get verticalGap => _verticalGap;
 
   set verticalGap(double value) {
@@ -152,8 +142,6 @@ class _RenderSBBDefaultToast extends RenderBox with SlottedContainerRenderObject
     _verticalGap = value;
     markNeedsLayout();
   }
-
-  double _overflowThreshold;
 
   double get overflowThreshold => _overflowThreshold;
 
@@ -255,7 +243,7 @@ class _RenderSBBDefaultToast extends RenderBox with SlottedContainerRenderObject
 
   @override
   bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
-    bool hit = false;
+    var hit = false;
     if (_action != null) {
       final parentData = _action!.parentData! as BoxParentData;
       hit = result.addWithPaintOffset(

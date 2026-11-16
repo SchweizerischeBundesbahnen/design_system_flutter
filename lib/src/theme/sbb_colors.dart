@@ -2,10 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 /// The colors as defined in https://www.figma.com/design/5j2eZ2D0sHYFKkRSmFdBPJ/SBB-Colors
 /// and https://digital.sbb.ch/de/foundation/colors/base-colors/
-class SBBColors {
-  SBBColors._();
-
-  // standard SBB colors
+class SBBColors._() {
   static const Color red = Color(0xFFEB0000);
   static const Color red85 = Color(0xFFFF3838);
   static const Color red125 = Color(0xFFC60018);

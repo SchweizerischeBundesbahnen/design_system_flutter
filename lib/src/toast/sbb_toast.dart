@@ -37,13 +37,9 @@ import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 /// * [SBBToastThemeData] for customizing the toast's appearance across the entire application
 /// * [SBBToastAction], for action buttons with automatic toast dismissal.
 /// * <https://digital.sbb.ch/de/design-system/mobile/components/toast/>
-class SBBToast {
-  SBBToast._(this._overlayState);
-
+class SBBToast._(final OverlayState _overlayState) {
   static const durationShort = Duration(milliseconds: 2000);
   static const durationLong = Duration(milliseconds: 3500);
-
-  final OverlayState _overlayState;
 
   OverlayEntry? _overlayEntry;
   StreamController<bool>? _streamController;

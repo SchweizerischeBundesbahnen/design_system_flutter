@@ -1,21 +1,16 @@
 import 'dart:convert';
 
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-class TestSpecs {
-  const TestSpecs._({required this.size, required this.brightness});
+class const TestSpecs._({required final Size size, required final Brightness brightness}) {
+  factory light() => const TestSpecs._(size: _size, brightness: .light);
 
-  factory TestSpecs.light() => const TestSpecs._(size: _size, brightness: .light);
-
-  factory TestSpecs.dark() => const TestSpecs._(size: _size, brightness: .dark);
+  factory dark() => const TestSpecs._(size: _size, brightness: .dark);
 
   static const _size = Size(600, 1000);
-
-  final Size size;
-  final Brightness brightness;
 
   static List<TestSpecs> themedSpecs = [TestSpecs.light(), TestSpecs.dark()];
 

@@ -1,5 +1,4 @@
 import 'package:material_ui/material_ui.dart';
-
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Icon options available for the badge icon type.
@@ -153,13 +152,11 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
   }
 }
 
-class _BadgeIconPainter extends CustomPainter {
-  const _BadgeIconPainter({required this.badgeIcon, required this.foregroundColor, required this.backgroundColor});
-
-  final SBBBadgeIconData badgeIcon;
-  final Color foregroundColor;
-  final Color backgroundColor;
-
+class const _BadgeIconPainter({
+  required final SBBBadgeIconData badgeIcon,
+  required final Color foregroundColor,
+  required final Color backgroundColor,
+}) extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
@@ -191,7 +188,7 @@ extension _SBBBadgeIconDataX on SBBBadgeIconData {
 
 // google Flutter Shap3Mak3r with 3 replaced by `e`
 void _paintCheckmarkIcon(Canvas canvas, Size size, Color color) {
-  Path path = Path();
+  var path = Path();
   path.moveTo(3.85366, 7.87097);
   path.lineTo(9.87805, 1.67742);
   path.cubicTo(9.91057, 1.64301, 9.93902, 1.6043, 9.96341, 1.56129);
@@ -237,7 +234,7 @@ void _paintExclamationIcon(Canvas canvas, Size size, Color color) {
     ..strokeWidth = size.width * 0.08333333
     ..color = color;
 
-  Path path0 = Path();
+  var path0 = Path();
   path0.moveTo(2.03211, 3.29713);
   path0.lineTo(2.03211, 0.125);
   path0.lineTo(0.236618, 0.125);
@@ -250,7 +247,7 @@ void _paintExclamationIcon(Canvas canvas, Size size, Color color) {
 
   canvas.drawPath(path0, paintFill);
 
-  Path path1 = Path();
+  var path1 = Path();
   path1.moveTo(2.125, 11.1244);
   path1.cubicTo(2.125, 11.6767, 1.67728, 12.1244, 1.125, 12.1244);
   path1.cubicTo(0.572715, 12.1244, 0.125, 11.6767, 0.125, 11.1244);
@@ -263,7 +260,7 @@ void _paintExclamationIcon(Canvas canvas, Size size, Color color) {
 
   canvas.drawPath(path1, paintFill);
 
-  Path path2 = Path();
+  var path2 = Path();
   path2.moveTo(2.03211, 3.29713);
   path2.lineTo(2.03211, 0.125);
   path2.lineTo(0.236618, 0.125);
@@ -279,7 +276,7 @@ void _paintExclamationIcon(Canvas canvas, Size size, Color color) {
 
   canvas.drawPath(path2, paintFill);
 
-  Path path3 = Path();
+  var path3 = Path();
   path3.moveTo(2.125, 11.1244);
   path3.cubicTo(2.125, 11.6767, 1.67728, 12.1244, 1.125, 12.1244);
   path3.cubicTo(0.572715, 12.1244, 0.125, 11.6767, 0.125, 11.1244);
@@ -298,7 +295,7 @@ void _paintInfoIcon(Canvas canvas, Size size, Color color) {
   final paint = Paint()
     ..style = .fill
     ..color = color;
-  Path path0 = Path();
+  var path0 = Path();
   path0.moveTo(0.842318, 1.40386);
   path0.cubicTo(0.842318, 0.628689, 1.47087, 0, 2.24649, 0);
   path0.cubicTo(3.02149, 0, 3.65004, 0.628689, 3.65004, 1.40386);
@@ -309,7 +306,7 @@ void _paintInfoIcon(Canvas canvas, Size size, Color color) {
   path0 = path0.shift(Offset(size.width / 2 - 2.4, size.height / 2 - 5.5));
   canvas.drawPath(path0, paint);
 
-  Path path1 = Path();
+  var path1 = Path();
   path1.moveTo(0.275399, 10.4492);
   path1.lineTo(1.14502, 10.4492);
   path1.lineTo(1.14502, 4.46982);
@@ -336,7 +333,7 @@ void _paintLiveIcon(Canvas canvas, Size size, Color color) {
     ..style = .fill
     ..color = color;
 
-  Path path0 = Path();
+  var path0 = Path();
   path0.moveTo(0.0102563, 1.16352);
   path0.cubicTo(0.0880213, 1.70787, 0.590493, 2.08684, 1.13449, 2.01304);
   path0.lineTo(1.13895, 2.01253);
@@ -377,7 +374,7 @@ void _paintLiveIcon(Canvas canvas, Size size, Color color) {
 
   canvas.drawPath(path0, paint);
 
-  Path path1 = Path();
+  var path1 = Path();
   path1.moveTo(0.0196122, 4.75382);
   path1.cubicTo(0.126944, 5.29047, 0.645247, 5.64022, 1.18161, 5.54111);
   path1.lineTo(1.18659, 5.54041);

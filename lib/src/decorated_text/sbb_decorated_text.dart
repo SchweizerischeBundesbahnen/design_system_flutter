@@ -184,7 +184,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final bool isMultiline = (widget.maxLines ?? 0) != 1;
+    final isMultiline = (widget.maxLines ?? 0) != 1;
 
     final themeStyle = Theme.of(context).sbbDecoratedTextTheme.style!;
     final effectiveStyle = themeStyle.merge(widget.style);

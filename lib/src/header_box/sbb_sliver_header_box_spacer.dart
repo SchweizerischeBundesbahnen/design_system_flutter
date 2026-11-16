@@ -9,9 +9,7 @@ import 'package:sbb_design_system_mobile/src/header_box/sliver/sliver_pinned_flo
 ///
 /// It will make sure that the scroll view has enough space to fully expand and contract the headerbox. Otherwise, you
 /// may face issues with the header box stopping halfway.
-class SBBSliverHeaderBoxSpacer extends LeafRenderObjectWidget {
-  const SBBSliverHeaderBoxSpacer({super.key});
-
+class const SBBSliverHeaderBoxSpacer({super.key}) extends LeafRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) {
     return _RenderSBBSliverHeaderBoxSpacer();

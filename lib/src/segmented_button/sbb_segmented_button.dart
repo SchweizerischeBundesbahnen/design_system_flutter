@@ -118,7 +118,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     final backgroundColor = style.backgroundColor?.resolve(_states);
     final borderColor = style.borderColor?.resolve(_states);
 
-    final List<Widget> children = [];
+    final children = <Widget>[];
     for (var i = 0; i < widget.segments.length; i++) {
       final segment = widget.segments[i];
       children.add(

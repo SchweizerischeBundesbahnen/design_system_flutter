@@ -1,7 +1,5 @@
 /// Spacing scale for SBB Design System.
-class SBBSpacing {
-  SBBSpacing._();
-
+class SBBSpacing._() {
   /// 0 logical pixels
   static const double zero = 0.0;
 

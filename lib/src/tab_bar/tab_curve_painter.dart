@@ -2,13 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
 
-class TabCurvePainter extends CustomPainter {
-  TabCurvePainter(this.curves, this.color, this.shadowColor);
-
-  final List<TabCurves> curves;
-  final Color color;
-  final Color shadowColor;
-
+class TabCurvePainter(final List<TabCurves> curves, final Color color, final Color shadowColor) extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final wavePath = TabCurves.toPath(curves, size);

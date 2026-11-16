@@ -429,8 +429,8 @@ class _ScrollablePageState extends State<ScrollablePage> {
   }
 }
 
-class _DemoItem extends SBBTabBarItem {
-  _DemoItem(int id, IconData icon) : super(id.toString(), icon);
+class _DemoItem(int id, IconData icon) extends SBBTabBarItem {
+  this : super(id.toString(), icon);
 
   @override
   String translate(BuildContext context) => '';

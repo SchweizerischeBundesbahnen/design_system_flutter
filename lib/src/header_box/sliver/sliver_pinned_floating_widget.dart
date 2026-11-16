@@ -196,7 +196,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     final double layoutExtent = max(0.0, _maxExtent - scrollOffset);
 
     final double paintedChildSize = max(layoutExtent, currentExtent);
-    final double cacheExtent = _maxExtent;
+    final cacheExtent = _maxExtent;
 
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
@@ -231,7 +231,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   }
 
   Future<void> snap(ScrollDirection direction) {
-    final bool headerIsPartiallyVisible = switch (direction) {
+    final headerIsPartiallyVisible = switch (direction) {
       .forward when _internalScrollOffset <= 0 => false, // completely visible
       .reverse when _internalScrollOffset >= expandableExtent => false, // not visible
       _ => true,
@@ -285,7 +285,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     } else {
       final elapsed = now.difference(_timeAtScrollStart);
       final scrollAmountSinceStart = (_scrollOffsetAtScrollStart - _internalScrollOffset).abs();
-      final bool useScrollDirection = elapsed < _kQuickSnapTime && scrollAmountSinceStart > (expandableExtent / 4);
+      final useScrollDirection = elapsed < _kQuickSnapTime && scrollAmountSinceStart > (expandableExtent / 4);
 
       final ScrollDirection direction = useScrollDirection || expandableExtent < _kSmallValue
           ? position.userScrollDirection

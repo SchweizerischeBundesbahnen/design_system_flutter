@@ -12,16 +12,11 @@ enum PromotionBoxSlot { badge, content }
 /// The badge is rendered on top of the content. The overall height of the
 /// layout is: `content.height + badge.height / 2`, and the width is the
 /// maximum of both children.
-class PromotionBoxLayout extends SlottedMultiChildRenderObjectWidget<PromotionBoxSlot, RenderBox> {
-  const PromotionBoxLayout({
-    required this.badge,
-    required this.content,
-    super.key,
-  });
-
-  final Widget badge;
-  final Widget content;
-
+class const PromotionBoxLayout({
+  required final Widget badge,
+  required final Widget content,
+  super.key,
+}) extends SlottedMultiChildRenderObjectWidget<PromotionBoxSlot, RenderBox> {
   @override
   Iterable<PromotionBoxSlot> get slots => PromotionBoxSlot.values;
 

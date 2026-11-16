@@ -1,5 +1,5 @@
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class ColorPage extends StatelessWidget {
@@ -101,12 +101,7 @@ class _ColorShowcaseCard extends StatelessWidget {
   }
 }
 
-class _ColorEntry {
-  const _ColorEntry(this.name, this.color);
-
-  final String name;
-  final Color color;
-}
+class const _ColorEntry(final String name, final Color color);
 
 const _colors = [
   _ColorEntry('red', SBBColors.red),

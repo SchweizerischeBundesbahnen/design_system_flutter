@@ -12,7 +12,7 @@ import 'package:sbb_design_system_mobile/src/theme/theme.dart';
 /// * [SBBColors], defined SBB colors
 /// * [SBBTheme], the SBB base theme
 class SBBColorScheme {
-  SBBColorScheme({
+  const SBBColorScheme({
     required this.primary,
     this.primary85,
     this.primary125,
@@ -31,11 +31,11 @@ class SBBColorScheme {
     this.brand,
   });
 
-  factory SBBColorScheme.$default({required Brightness brightness}) =>
+  factory $default({required Brightness brightness}) =>
       brightness == .light ? SBBColorScheme.sbb() : SBBColorScheme.sbbDark();
 
   /// Create a light ColorScheme based on the SBB theme context colors.
-  factory SBBColorScheme.sbb() => SBBColorScheme(
+  factory sbb() => SBBColorScheme(
     primary: SBBColors.red,
     primary85: SBBColors.red85,
     primary125: SBBColors.red125,
@@ -55,7 +55,7 @@ class SBBColorScheme {
   );
 
   /// Create a dark ColorScheme based on the SBB theme context colors.
-  factory SBBColorScheme.sbbDark() => SBBColorScheme.sbb().copyWith(
+  factory sbbDark() => SBBColorScheme.sbb().copyWith(
     backgroundBase: SBBColors.black,
     backgroundContent: SBBColors.charcoal,
     error: SBBColors.errorDark,
@@ -70,7 +70,7 @@ class SBBColorScheme {
   );
 
   /// Create a light ColorScheme based on the off-brand theme context colors.
-  factory SBBColorScheme.offBrand() => SBBColorScheme.$default(brightness: .light).copyWith(
+  factory offBrand() => SBBColorScheme.$default(brightness: .light).copyWith(
     primary: SBBColors.royal,
     primary85: SBBColors.royal85,
     primary125: SBBColors.royal125,
@@ -78,7 +78,7 @@ class SBBColorScheme {
   );
 
   /// Create a dark ColorScheme based on the off-brand theme context colors.
-  factory SBBColorScheme.offBrandDark() => SBBColorScheme.$default(brightness: .dark).copyWith(
+  factory offBrandDark() => SBBColorScheme.$default(brightness: .dark).copyWith(
     primary: SBBColors.royalDark,
     primary85: SBBColors.royal85Dark,
     primary125: SBBColors.royal125Dark,
@@ -86,7 +86,7 @@ class SBBColorScheme {
   );
 
   /// Create a light ColorScheme based on the safety theme context colors.
-  factory SBBColorScheme.safety() => SBBColorScheme.$default(brightness: .light).copyWith(
+  factory safety() => SBBColorScheme.$default(brightness: .light).copyWith(
     primary: SBBColors.royal,
     primary85: SBBColors.royal85,
     primary125: SBBColors.royal125,
@@ -95,7 +95,7 @@ class SBBColorScheme {
   );
 
   /// Create a dark ColorScheme based on the safety theme context colors.
-  factory SBBColorScheme.safetyDark() => SBBColorScheme.$default(brightness: .dark).copyWith(
+  factory safetyDark() => SBBColorScheme.$default(brightness: .dark).copyWith(
     primary: SBBColors.royalDark,
     primary85: SBBColors.royal85Dark,
     primary125: SBBColors.royal125Dark,

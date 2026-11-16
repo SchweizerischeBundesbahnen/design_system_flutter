@@ -216,7 +216,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    final SBBPromotionBoxStyle effectiveStyle = _effectiveStyle(context);
+    final effectiveStyle = _effectiveStyle(context);
 
     final titleWidget = _titleWidget(effectiveStyle);
     final subtitleWidget = _subtitleWidget(effectiveStyle);
@@ -226,7 +226,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     final titleRow = _titleRow(titleWidget, trailingWidget, dismissButton);
     final subtitleRow = _subtitleRow(subtitleWidget, trailingWidget);
 
-    final Widget content = subtitleRow != null
+    final content = subtitleRow != null
         ? Column(
             crossAxisAlignment: .start,
             mainAxisSize: .min,
@@ -358,7 +358,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   }
 
   Widget? _trailingWidget(SBBPromotionBoxStyle effectiveStyle) {
-    Widget? trailingWidget = widget.trailing;
+    var trailingWidget = widget.trailing;
     if (trailingWidget == null && widget.onTap != null) {
       trailingWidget = const Icon(SBBIcons.chevron_small_right_small, size: sbbIconSizeSmall);
     }
@@ -369,7 +369,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   }
 
   Widget? _subtitleWidget(SBBPromotionBoxStyle effectiveStyle) {
-    Widget? subtitleWidget = widget.subtitle;
+    var subtitleWidget = widget.subtitle;
     if (subtitleWidget == null && widget.subtitleText != null) {
       subtitleWidget = Text(widget.subtitleText!, maxLines: effectiveStyle.subtitleTextMaxLines, overflow: .ellipsis);
     }
@@ -382,7 +382,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   }
 
   Widget _titleWidget(SBBPromotionBoxStyle effectiveStyle) {
-    final Widget titleWidget = widget.title ?? Text(widget.titleText!, maxLines: effectiveStyle.titleTextMaxLines);
+    final titleWidget = widget.title ?? Text(widget.titleText!, maxLines: effectiveStyle.titleTextMaxLines);
 
     return addDefaultAncestorWithResolved(
       child: titleWidget,
