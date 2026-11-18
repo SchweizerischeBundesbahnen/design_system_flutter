@@ -43,23 +43,9 @@ const Duration _kContentFadeDuration = Duration(milliseconds: 210);
 ///
 /// ## Decoration
 ///
-/// The label, the leading and trailing widgets, the placeholder, the error and the border
-/// are the [decoration]. The same decoration is drawn by [SBBTextInput] for editable text,
-/// by [SBBDecoratedText] for a read-only text value and by this widget for any other content.
-/// The triggers of [SBBDropdown], [SBBMultiDropdown], [SBBDateInput], [SBBTimeInput] and
-/// [SBBDateTimeInput] are an [SBBDecoratedText].
-///
-/// The look of the decoration is an [SBBDecorationStyle]. The most specific non-null value wins:
-///
-/// 1. [SBBDecoration.style] of this widget
-/// 2. [SBBDecoratedThemeData.decorationStyle] for all [SBBDecorated] widgets
-/// 3. [SBBDecorationThemeData.style] for all decorated components
-///
-/// A component that wraps another one adds its own theme on top. The trigger of a dropdown
-/// applies [SBBDropdownThemeData.triggerDecorationStyle] before
-/// [SBBDecoratedTextThemeData.decorationStyle].
-///
-/// The [style] only covers what this widget draws itself: the content and the tap feedback.
+/// The [decoration] is what surrounds the [child]: the label, the leading and trailing
+/// widgets, the placeholder, the error and the border. Its look is set with
+/// [SBBDecoration.style]. See [SBBDecoration] for details.
 ///
 /// See also:
 /// * [SBBDecoratedText] for displaying a static [String]
