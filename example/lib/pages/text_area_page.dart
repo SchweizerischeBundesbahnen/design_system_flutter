@@ -32,26 +32,30 @@ class _TextAreaPageState extends State<TextAreaPage> {
                 context: context,
                 items: [
                   SBBTextInput(
-                    decoration: SBBInputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: SBBSpacing.medium,
-                      ).copyWith(top: SBBSpacing.xSmall),
+                    decoration: SBBDecoration(
                       leadingIconData: SBBIcons.unicorn_small,
                       trailingIconData: SBBIcons.circle_information_small_small,
                       labelText: 'Label',
+                      style: SBBDecorationStyle(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: SBBSpacing.medium,
+                        ).copyWith(top: SBBSpacing.xSmall),
+                      ),
                     ),
                     controller: defaultTextEditingController,
                     maxLines: 3,
                   ),
                   SBBTextInput(
-                    decoration: SBBInputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: SBBSpacing.medium,
-                      ).copyWith(top: SBBSpacing.xSmall),
+                    decoration: SBBDecoration(
                       leadingIconData: SBBIcons.unicorn_small,
                       trailingIconData: SBBIcons.circle_information_small_small,
                       labelText: 'Label',
                       errorText: errorText,
+                      style: SBBDecorationStyle(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: SBBSpacing.medium,
+                        ).copyWith(top: SBBSpacing.xSmall),
+                      ),
                     ),
                     controller: errorTextEditingController,
                     maxLines: 2,
@@ -68,13 +72,15 @@ class _TextAreaPageState extends State<TextAreaPage> {
                     },
                   ),
                   SBBTextInput(
-                    decoration: SBBInputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: SBBSpacing.medium,
-                      ).copyWith(top: SBBSpacing.xSmall),
+                    decoration: SBBDecoration(
                       leadingIconData: SBBIcons.unicorn_small,
                       trailingIconData: SBBIcons.circle_information_small_small,
                       labelText: 'Maximum three lines!',
+                      style: SBBDecorationStyle(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: SBBSpacing.medium,
+                        ).copyWith(top: SBBSpacing.xSmall),
+                      ),
                     ),
                     controller: emptyTextEditingController,
                     maxLines: 3,
@@ -96,13 +102,15 @@ class _TextAreaPageState extends State<TextAreaPage> {
                     maxHeight: _expandableHeight,
                   ),
                   child: SBBTextInput(
-                    decoration: SBBInputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: SBBSpacing.medium,
-                      ).copyWith(top: SBBSpacing.xSmall),
+                    decoration: SBBDecoration(
                       labelText: 'Resizable Text Area',
                       leadingIconData: SBBIcons.pen_small,
                       placeholderText: 'Drag the handle below to resize...',
+                      style: SBBDecorationStyle(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: SBBSpacing.medium,
+                        ).copyWith(top: SBBSpacing.xSmall),
+                      ),
                     ),
                     controller: expandableTextEditingController,
                     expands: true,
@@ -136,14 +144,16 @@ class _TextAreaPageState extends State<TextAreaPage> {
           SizedBox(height: SBBSpacing.medium),
           SBBListHeader('Boxed'),
           SBBTextInputBoxed(
-            decoration: SBBInputDecoration(
-              contentPadding: const .symmetric(
-                vertical: SBBSpacing.small,
-                horizontal: SBBSpacing.medium,
-              ),
+            decoration: SBBDecoration(
               leadingIconData: SBBIcons.unicorn_small,
               trailingIconData: SBBIcons.circle_information_small_small,
               labelText: 'Label',
+              style: SBBDecorationStyle(
+                contentPadding: const .symmetric(
+                  vertical: SBBSpacing.small,
+                  horizontal: SBBSpacing.medium,
+                ),
+              ),
             ),
             controller: defaultTextEditingController,
             maxLines: 3,

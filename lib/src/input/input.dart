@@ -1,7 +1,9 @@
+export 'decoration/sbb_decoration.dart';
+export 'decoration/sbb_decoration_border_type.dart';
+export 'decoration/sbb_decoration_style.dart';
 export 'decoration/sbb_floating_label_behavior.dart';
-export 'decoration/sbb_input_border_type.dart';
-export 'decoration/sbb_input_decoration.dart';
 export 'sbb_text_input.dart';
 export 'sbb_text_input_form_field.dart';
-export 'theme/sbb_input_decoration_theme_data.dart';
+export 'theme/sbb_decoration_theme_data.dart';
+export 'theme/sbb_text_input_style.dart';
 export 'theme/sbb_text_input_theme_data.dart';

@@ -21,14 +21,14 @@ class DecoratedTextPage extends StatelessWidget {
                 items: [
                   SBBDecoratedText(
                     value: '',
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'Empty',
                     ),
                     onTap: () => sbbToast.show(titleText: 'Empty'),
                   ),
                   SBBDecoratedText(
                     value: '',
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'With Placeholder',
                       placeholderText: 'Placeholder',
                     ),
@@ -37,14 +37,14 @@ class DecoratedTextPage extends StatelessWidget {
                     },
                   ),
                   SBBDecoratedText(
-                    decoration: SBBInputDecoration(labelText: 'Label', leadingIconData: SBBIcons.dog_small),
+                    decoration: SBBDecoration(labelText: 'Label', leadingIconData: SBBIcons.dog_small),
                     value: 'Value',
                     onTap: () {
                       sbbToast.show(titleText: 'With Leading Icon');
                     },
                   ),
                   SBBDecoratedText(
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'Label',
                       leadingIconData: SBBIcons.dog_small,
                       trailingIconData: SBBIcons.chevron_small_right_circle_small,
@@ -55,8 +55,7 @@ class DecoratedTextPage extends StatelessWidget {
                     },
                   ),
                   SBBDecoratedText(
-                    decoration: SBBInputDecoration(
-                      contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
+                    decoration: SBBDecoration(
                       labelText: 'Label',
                       leadingIconData: SBBIcons.dog_small,
                       trailing: SBBTertiaryButtonSmall(
@@ -65,6 +64,9 @@ class DecoratedTextPage extends StatelessWidget {
                         },
                         iconData: SBBIcons.dog_small,
                       ),
+                      style: SBBDecorationStyle(
+                        contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
+                      ),
                     ),
                     value: 'Value',
                     onTap: () {
@@ -72,7 +74,7 @@ class DecoratedTextPage extends StatelessWidget {
                     },
                   ),
                   SBBDecoratedText(
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'Error',
                       errorText: 'This is an error!',
                       leadingIconData: SBBIcons.dog_small,
@@ -86,15 +88,17 @@ class DecoratedTextPage extends StatelessWidget {
                     onTap: () {},
                     maxLines: 4,
                     minLines: 4,
-                    decoration: SBBInputDecoration(
-                      contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+                    decoration: SBBDecoration(
                       leadingIconData: SBBIcons.dog_small,
                       labelText: 'Multiple Lines',
+                      style: SBBDecorationStyle(
+                        contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+                      ),
                     ),
                     value: 'I am \nmulti \nline',
                   ),
                   SBBDecoratedText(
-                    decoration: SBBInputDecoration(labelText: 'Disabled', leadingIconData: SBBIcons.dog_small),
+                    decoration: SBBDecoration(labelText: 'Disabled', leadingIconData: SBBIcons.dog_small),
                     value: 'Value',
                     onTap: null,
                   ),
@@ -103,13 +107,15 @@ class DecoratedTextPage extends StatelessWidget {
                     child: SBBDecoratedText(
                       expands: true,
                       maxLines: null,
-                      decoration: SBBInputDecoration(
-                        contentPadding: EdgeInsets.only(
-                          left: SBBSpacing.medium,
-                          top: SBBSpacing.xSmall,
-                        ),
+                      decoration: SBBDecoration(
                         leadingIconData: SBBIcons.dog_small,
                         labelText: 'Expands',
+                        style: SBBDecorationStyle(
+                          contentPadding: EdgeInsets.only(
+                            left: SBBSpacing.medium,
+                            top: SBBSpacing.xSmall,
+                          ),
+                        ),
                       ),
                       value: 'I expand to fill\nthe available\nheight',
                       onTap: () => sbbToast.show(titleText: 'Expands'),
@@ -127,7 +133,7 @@ class DecoratedTextPage extends StatelessWidget {
               SBBDecoratedTextBoxed(
                 value: '',
                 onTap: () => sbbToast.show(titleText: 'Empty'),
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'Empty',
                   leadingIconData: SBBIcons.unicorn_small,
                 ),
@@ -135,7 +141,7 @@ class DecoratedTextPage extends StatelessWidget {
               SBBDecoratedTextBoxed(
                 onTap: () => sbbToast.show(titleText: 'Trailing Icon'),
                 value: 'Value',
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Trailing Icon',
                   leadingIconData: SBBIcons.unicorn_small,
                   trailingIconData: SBBIcons.circle_information_small_small,
@@ -144,7 +150,7 @@ class DecoratedTextPage extends StatelessWidget {
               SBBDecoratedTextBoxed(
                 value: '',
                 onTap: () => sbbToast.show(titleText: 'Placeholder'),
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Placeholder',
                   placeholderText: 'Placeholder',
                   leadingIconData: SBBIcons.unicorn_small,
@@ -153,8 +159,7 @@ class DecoratedTextPage extends StatelessWidget {
               SBBDecoratedTextBoxed(
                 onTap: () => sbbToast.show(titleText: 'Button'),
                 value: 'Value',
-                decoration: SBBInputDecoration(
-                  contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
+                decoration: SBBDecoration(
                   labelText: 'With Custom Button',
                   placeholderText: 'Press the Button!',
                   leadingIconData: SBBIcons.unicorn_small,
@@ -162,12 +167,15 @@ class DecoratedTextPage extends StatelessWidget {
                     iconData: SBBIcons.dog_small,
                     onPressed: () => sbbToast.show(titleText: 'Button pressed'),
                   ),
+                  style: SBBDecorationStyle(
+                    contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
+                  ),
                 ),
               ),
               SBBDecoratedTextBoxed(
                 onTap: () => sbbToast.show(titleText: 'Error'),
                 value: 'With Error',
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Error',
                   errorText: 'Error Text',
                   leadingIconData: SBBIcons.unicorn_small,
@@ -176,7 +184,7 @@ class DecoratedTextPage extends StatelessWidget {
               SBBDecoratedTextBoxed(
                 value: 'Disabled',
                 onTap: null,
-                decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
+                decoration: SBBDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
               ),
               SizedBox(
                 height: 120.0,
@@ -185,13 +193,15 @@ class DecoratedTextPage extends StatelessWidget {
                   maxLines: null,
                   value: 'I expand to fill\nthe available\nheight',
                   onTap: () => sbbToast.show(titleText: 'Expands'),
-                  decoration: SBBInputDecoration(
-                    contentPadding: EdgeInsets.only(
-                      left: SBBSpacing.medium,
-                      top: SBBSpacing.xSmall,
-                    ),
+                  decoration: SBBDecoration(
                     leadingIconData: SBBIcons.unicorn_small,
                     labelText: 'Expands',
+                    style: SBBDecorationStyle(
+                      contentPadding: EdgeInsets.only(
+                        left: SBBSpacing.medium,
+                        top: SBBSpacing.xSmall,
+                      ),
+                    ),
                   ),
                 ),
               ),

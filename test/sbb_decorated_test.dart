@@ -90,7 +90,7 @@ void main() {
         children: [
           SBBDecoratedBoxed(
             key: tappableKey,
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Default',
               leadingIconData: SBBIcons.unicorn_small,
             ),
@@ -98,7 +98,7 @@ void main() {
             child: const _Badge('Value'),
           ),
           SBBDecoratedBoxed(
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'With Placeholder',
               placeholderText: 'Placeholder',
               leadingIconData: SBBIcons.unicorn_small,
@@ -108,7 +108,7 @@ void main() {
             child: const _Badge('Value'),
           ),
           SBBDecoratedBoxed(
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'With Trailing Icon',
               leadingIconData: SBBIcons.unicorn_small,
               trailingIconData: SBBIcons.circle_information_small_small,
@@ -117,7 +117,7 @@ void main() {
             child: const _Badge('Value'),
           ),
           SBBDecoratedBoxed(
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Error',
               errorText: 'Error Text',
               leadingIconData: SBBIcons.unicorn_small,
@@ -126,7 +126,7 @@ void main() {
             child: const _Badge('With Error'),
           ),
           SBBDecoratedBoxed(
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Disabled',
               leadingIconData: SBBIcons.unicorn_small,
             ),
@@ -163,44 +163,46 @@ void main() {
         spacing: SBBSpacing.medium,
         children: [
           SBBDecorated(
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Min Content Height',
               leadingIconData: SBBIcons.dog_small,
-              borderType: .standalone,
+              style: SBBDecorationStyle(borderType: .standalone),
             ),
             minContentHeight: 64.0,
             onTap: () {},
             child: const _Badge('Reserves 64px'),
           ),
           SBBDecorated(
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Top Aligned Affixes',
               leadingIconData: SBBIcons.dog_small,
               trailingIconData: SBBIcons.circle_information_small_small,
-              contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
-              borderType: .standalone,
+              style: SBBDecorationStyle(
+                contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+                borderType: .standalone,
+              ),
             ),
             topAlignAffixes: true,
             onTap: () {},
             child: const _TallContent(),
           ),
           SBBDecorated(
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Centered Affixes',
               leadingIconData: SBBIcons.dog_small,
               trailingIconData: SBBIcons.circle_information_small_small,
-              borderType: .standalone,
+              style: SBBDecorationStyle(borderType: .standalone),
             ),
             onTap: () {},
             child: const _TallContent(),
           ),
           SBBDecorated(
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Empty With Tall Content',
               placeholderText: 'Placeholder',
               leadingIconData: SBBIcons.dog_small,
               trailingIconData: SBBIcons.circle_information_small_small,
-              borderType: .standalone,
+              style: SBBDecorationStyle(borderType: .standalone),
             ),
             isEmpty: true,
             onTap: () {},
@@ -209,12 +211,14 @@ void main() {
           SizedBox(
             height: 140.0,
             child: SBBDecorated(
-              decoration: SBBInputDecoration(
+              decoration: SBBDecoration(
                 labelText: 'Expands',
                 leadingIconData: SBBIcons.dog_small,
                 errorText: 'Anchored to the bottom',
-                contentPadding: EdgeInsets.only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
-                borderType: .standalone,
+                style: SBBDecorationStyle(
+                  contentPadding: EdgeInsets.only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+                  borderType: .standalone,
+                ),
               ),
               expands: true,
               topAlignAffixes: true,
@@ -236,76 +240,88 @@ void main() {
   });
 }
 
-List<Widget> _decoratedItems({required ValueKey<String> tappableItemKey, required SBBInputBorderType borderType}) {
+List<Widget> _decoratedItems({required ValueKey<String> tappableItemKey, required SBBDecorationBorderType borderType}) {
   return [
     SBBDecorated(
       key: tappableItemKey,
-      decoration: SBBInputDecoration(labelText: 'Default', borderType: borderType),
+      decoration: SBBDecoration(
+        labelText: 'Default',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onTap: () {},
       child: const _Badge('Value'),
     ),
     SBBDecorated(
-      decoration: SBBInputDecoration(labelText: 'Empty', borderType: borderType),
+      decoration: SBBDecoration(
+        labelText: 'Empty',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       isEmpty: true,
       onTap: () {},
       child: const _Badge('Value'),
     ),
     SBBDecorated(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Placeholder',
         placeholderText: 'Placeholder',
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       isEmpty: true,
       onTap: () {},
       child: const _Badge('Value'),
     ),
     SBBDecorated(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Placeholder Widget',
         placeholder: const _Badge('Placeholder Widget'),
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       isEmpty: true,
       onTap: () {},
       child: const _Badge('Value'),
     ),
     SBBDecorated(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Leading Icon',
         leadingIconData: SBBIcons.dog_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTap: () {},
       child: const _Badge('Value'),
     ),
     SBBDecorated(
-      decoration: SBBInputDecoration(labelText: 'Custom Style', borderType: borderType),
+      decoration: SBBDecoration(
+        labelText: 'Custom Style',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       style: SBBDecoratedStyle(contentForegroundColor: const WidgetStatePropertyAll(SBBColors.granite)),
       onTap: () {},
       child: const _Badge('Value'),
     ),
     SBBDecorated(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Trailing Icon',
         leadingIconData: SBBIcons.dog_small,
         trailingIconData: SBBIcons.chevron_small_right_circle_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTap: () {},
       child: const _Badge('Value'),
     ),
     SBBDecorated(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'Error',
         errorText: 'This is an error!',
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTap: () {},
       child: const _Badge('Value'),
     ),
     SBBDecorated(
-      decoration: SBBInputDecoration(labelText: 'Disabled', borderType: borderType),
+      decoration: SBBDecoration(
+        labelText: 'Disabled',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       child: const _Badge('Value'),
     ),
   ];

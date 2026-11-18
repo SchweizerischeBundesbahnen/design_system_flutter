@@ -25,7 +25,7 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 /// ```dart
 /// SBBDateInput(
 ///   value: _selectedDate,
-///   triggerDecoration: SBBInputDecoration(labelText: 'Departure date'),
+///   triggerDecoration: SBBDecoration(labelText: 'Departure date'),
 ///   sheetTitleText: 'Select departure date',
 ///   onDateChanged: (date) => setState(() => _selectedDate = date),
 /// )
@@ -86,8 +86,8 @@ class SBBDateInput extends StatelessWidget {
 
   /// The decoration applied to the [SBBDecoratedText] trigger.
   ///
-  /// See [SBBInputDecoration] for available options.
-  final SBBInputDecoration? triggerDecoration;
+  /// See [SBBDecoration] for available options.
+  final SBBDecoration? triggerDecoration;
 
   /// The visual style applied to the [SBBDecoratedText] trigger.
   ///
@@ -163,14 +163,15 @@ class SBBDateInput extends StatelessWidget {
     );
   }
 
-  SBBDecoratedTextStyle _effectiveTriggerStyle(BuildContext context) {
-    final themeTriggerStyle = Theme.of(context).sbbPickerTheme.triggerStyle!;
-    return themeTriggerStyle.merge(triggerStyle);
+  SBBDecoratedTextStyle? _effectiveTriggerStyle(BuildContext context) {
+    final themeTriggerStyle = Theme.of(context).sbbPickerTheme.triggerStyle;
+    return themeTriggerStyle?.merge(triggerStyle) ?? triggerStyle;
   }
 
-  SBBInputDecoration _effectiveTriggerDecoration(BuildContext context) {
-    final themeDecoration = Theme.of(context).sbbPickerTheme.triggerDecorationTheme!;
-    return (triggerDecoration ?? const SBBInputDecoration()).applyThemeValues(themeDecoration);
+  SBBDecoration _effectiveTriggerDecoration(BuildContext context) {
+    final themeDecorationStyle = Theme.of(context).sbbPickerTheme.triggerDecorationStyle;
+    final decoration = triggerDecoration ?? const SBBDecoration();
+    return decoration.copyWith(style: themeDecorationStyle?.merge(decoration.style));
   }
 
   String _formattedValue(BuildContext context) {

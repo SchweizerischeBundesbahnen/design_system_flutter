@@ -1,3 +1,84 @@
+# V6 Migration guide
+
+## Decoration
+
+The decoration is the label, the leading and trailing widget, the placeholder, the error and the border
+of `SBBTextInput`, `SBBDecorated`, `SBBDecoratedText`, `SBBDropdown`, `SBBMultiDropdown`, `SBBDateInput`,
+`SBBTimeInput`, `SBBDateTimeInput` and `SBBAutocompletion`. Widget names did not change.
+
+### Renamed
+
+| V5                                     | V6                                |
+|----------------------------------------|-----------------------------------|
+| `SBBInputDecoration`                   | `SBBDecoration`                   |
+| `SBBInputDecorationThemeData`          | `SBBDecorationThemeData`          |
+| `SBBInputBorderType`                   | `SBBDecorationBorderType`         |
+| `Theme.of(context).sbbInputDecorationTheme` | `Theme.of(context).sbbDecorationTheme` |
+| `SBBTheme.light(inputDecorationTheme:)` | `SBBTheme.light(decorationTheme:)` |
+| `SBBDropdownThemeData.triggerDecorationTheme` | `SBBDropdownThemeData.triggerDecorationStyle` |
+| `SBBPickerThemeData.triggerDecorationTheme` | `SBBPickerThemeData.triggerDecorationStyle` |
+
+### Style fields moved to SBBDecorationStyle
+
+`SBBDecoration` keeps the content: `leading`, `leadingIconData`, `label`, `labelText`, `trailing`, `trailingIconData`,
+`placeholder`, `placeholderText`, `error` and `errorText`. Every other field moved to the new `SBBDecorationStyle`:
+`leadingForegroundColor`, `leadingInputGap`, `labelTextStyle`, `labelForegroundColor`, `floatingLabelTextStyle`,
+`floatingLabelInputGap`, `floatingLabelBehavior`, `trailingForegroundColor`, `inputTrailingGap`, `placeholderTextStyle`,
+`placeholderForegroundColor`, `errorTextStyle`, `errorForegroundColor`, `titleRowErrorGap`, `errorBottomPadding`,
+`borderColor`, `borderType` and `contentPadding`.
+
+```diff
+- SBBInputDecoration(labelText: 'Name', borderType: .standalone)
++ SBBDecoration(labelText: 'Name', style: SBBDecorationStyle(borderType: .standalone))
+
+- SBBInputDecorationThemeData(borderType: .standalone)
++ SBBDecorationThemeData(style: SBBDecorationStyle(borderType: .standalone))
+
+- SBBDropdownThemeData(triggerDecorationTheme: SBBInputDecorationThemeData(borderType: .standalone))
++ SBBDropdownThemeData(triggerDecorationStyle: SBBDecorationStyle(borderType: .standalone))
+
+- Theme.of(context).sbbInputDecorationTheme.contentPadding
++ Theme.of(context).sbbDecorationTheme.style!.contentPadding
+```
+
+The extension method `SBBInputDecoration.applyThemeValues` was removed. Use `SBBDecorationStyle.merge`.
+
+### Order of the decoration style
+
+The most specific non-null value wins:
+
+1. `SBBDecoration.style` of the widget
+2. the component theme: `SBBTextInputThemeData.decorationStyle`, `SBBDecoratedThemeData.decorationStyle`,
+   `SBBDecoratedTextThemeData.decorationStyle`, `SBBDropdownThemeData.triggerDecorationStyle` or
+   `SBBPickerThemeData.triggerDecorationStyle`
+3. `SBBDecorationThemeData.style`
+
+A component that wraps another one adds its theme on top. The trigger of dropdowns and of date and time inputs
+is an `SBBDecoratedText`, so `SBBDecoratedTextThemeData` applies between step 2 and step 3.
+`SBBAutocompletion` uses the theme of `SBBTextInput`.
+
+### SBBTextInput
+
+`inputTextStyle`, `inputForegroundColor` and `enableClearButton` moved to the new `SBBTextInputStyle`. This applies to
+`SBBTextInput`, `SBBTextInputBoxed`, `SBBTextInputFormField`, `SBBTextInputBoxedFormField` and `SBBTextInputThemeData`.
+
+```diff
+- SBBTextInput(enableClearButton: false)
++ SBBTextInput(style: SBBTextInputStyle(enableClearButton: false))
+
+- SBBTextInputThemeData(inputTextStyle: myTextStyle)
++ SBBTextInputThemeData(style: SBBTextInputStyle(inputTextStyle: myTextStyle))
+```
+
+A widget-level `inputTextStyle` used to disable the `inputForegroundColor` of the theme. Now the theme color still
+applies. Set `SBBTextInputStyle.inputForegroundColor` on the widget to change the color.
+
+### Dropdown and picker themes
+
+`triggerStyle`, `triggerDecorationStyle` and `sheetStyle` of `SBBDropdownThemeData` and `SBBPickerThemeData` are `null`
+by default. They only hold overrides. Read the effective values from `sbbDecoratedTextTheme`, `sbbDecorationTheme` and
+`sbbBottomSheetTheme`.
+
 # V5 Migration guide
 
 V5 introduces a lot of breaking changes to allow for a more flexible and modern Design System.

@@ -329,9 +329,9 @@ class _ScrollablePageState extends State<ScrollablePage> {
                 context: context,
                 items: [
                   SBBDropdown(
-                    triggerDecoration: SBBInputDecoration(
+                    triggerDecoration: SBBDecoration(
                       labelText: 'Snap Mode',
-                      contentPadding: EdgeInsets.zero,
+                      style: SBBDecorationStyle(contentPadding: EdgeInsets.zero),
                     ),
                     selectedItem: _snapMode,
                     items: [
@@ -345,9 +345,9 @@ class _ScrollablePageState extends State<ScrollablePage> {
                     },
                   ),
                   SBBDropdown(
-                    triggerDecoration: SBBInputDecoration(
+                    triggerDecoration: SBBDecoration(
                       labelText: 'Top Mode',
-                      contentPadding: EdgeInsets.zero,
+                      style: SBBDecorationStyle(contentPadding: EdgeInsets.zero),
                     ),
                     selectedItem: _topMode,
                     items: [
@@ -361,9 +361,9 @@ class _ScrollablePageState extends State<ScrollablePage> {
                     },
                   ),
                   SBBDropdown(
-                    triggerDecoration: SBBInputDecoration(
+                    triggerDecoration: SBBDecoration(
                       labelText: 'Flap Mode',
-                      contentPadding: EdgeInsets.zero,
+                      style: SBBDecorationStyle(contentPadding: EdgeInsets.zero),
                     ),
                     selectedItem: _flapMode,
                     items: [

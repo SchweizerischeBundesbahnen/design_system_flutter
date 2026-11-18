@@ -18,7 +18,7 @@ class ThemeContextDropdown extends StatelessWidget {
       builder: (context, appState, _) {
         return SBBDropdown<SBBThemeContext>(
           sheetTitleText: "Choose the theme's context",
-          triggerDecoration: const SBBInputDecoration(labelText: 'Context'),
+          triggerDecoration: const SBBDecoration(labelText: 'Context'),
           selectedItem: appState.themeContext,
           items: _themeContexts,
           onChanged: (value) => Provider.of<AppState>(context, listen: false).updateThemeContext(value!),

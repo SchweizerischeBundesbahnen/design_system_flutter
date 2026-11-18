@@ -6,12 +6,14 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 class DefaultSBBTextInputThemeData extends SBBTextInputThemeData {
   DefaultSBBTextInputThemeData(SBBBaseStyle baseStyle)
     : super(
-        inputTextStyle: baseStyle.textTheme.defaultTextStyle,
-        inputForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-          WidgetState.disabled: baseStyle.colorScheme.textSecondary,
-          WidgetState.error: baseStyle.colorScheme.error,
-          WidgetState.any: baseStyle.colorScheme.textPrimary,
-        }),
-        enableClearButton: true,
+        style: SBBTextInputStyle(
+          inputTextStyle: baseStyle.textTheme.defaultTextStyle,
+          inputForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.disabled: baseStyle.colorScheme.textSecondary,
+            WidgetState.error: baseStyle.colorScheme.error,
+            WidgetState.any: baseStyle.colorScheme.textPrimary,
+          }),
+          enableClearButton: true,
+        ),
       );
 }

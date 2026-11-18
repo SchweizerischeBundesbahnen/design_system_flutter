@@ -1,5 +1,5 @@
 /// Defines if the input widget is standalone or listed/boxed to handle input border.
-enum SBBInputBorderType {
+enum SBBDecorationBorderType {
   /// Default bottom border is handled by surrounding widgets like boxed variants or by [SBBDivider.divideItems].
   boxedOrListed,
 
