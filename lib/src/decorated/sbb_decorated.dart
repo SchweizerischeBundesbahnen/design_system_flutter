@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorator.dart';
+import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decorator.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
@@ -41,10 +41,30 @@ const Duration _kContentFadeDuration = Duration(milliseconds: 210);
 /// hidden child still occupies its space. Set [expands] to fill the available vertical
 /// space instead, which also anchors the error message to the bottom of the field.
 ///
+/// ## Decoration
+///
+/// The label, the leading and trailing widgets, the placeholder, the error and the border
+/// are the [decoration]. The same decoration is drawn by [SBBTextInput] for editable text,
+/// by [SBBDecoratedText] for a read-only text value and by this widget for any other content.
+/// The triggers of [SBBDropdown], [SBBMultiDropdown], [SBBDateInput], [SBBTimeInput] and
+/// [SBBDateTimeInput] are an [SBBDecoratedText].
+///
+/// The look of the decoration is an [SBBDecorationStyle]. The most specific non-null value wins:
+///
+/// 1. [SBBDecoration.style] of this widget
+/// 2. [SBBDecoratedThemeData.decorationStyle] for all [SBBDecorated] widgets
+/// 3. [SBBDecorationThemeData.style] for all decorated components
+///
+/// A component that wraps another one adds its own theme on top. The trigger of a dropdown
+/// applies [SBBDropdownThemeData.triggerDecorationStyle] before
+/// [SBBDecoratedTextThemeData.decorationStyle].
+///
+/// The [style] only covers what this widget draws itself: the content and the tap feedback.
+///
 /// See also:
 /// * [SBBDecoratedText] for displaying a static [String]
 /// * [SBBTextInput] for an editable text field with similar styling
-/// * [SBBInputDecoration] for customizing the decoration surrounding the content
+/// * [SBBDecoration] for customizing the decoration surrounding the content
 /// * [SBBDecoratedStyle] for customizing the visual appearance
 class SBBDecorated extends StatefulWidget {
   const SBBDecorated({
@@ -78,8 +98,8 @@ class SBBDecorated extends StatefulWidget {
   /// The decoration surrounding the displayed content.
   ///
   /// Includes styling for labels, icons, error states, and other visual elements.
-  /// See [SBBInputDecoration] for customization options.
-  final SBBInputDecoration? decoration;
+  /// See [SBBDecoration] for customization options.
+  final SBBDecoration? decoration;
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
@@ -90,7 +110,7 @@ class SBBDecorated extends StatefulWidget {
   /// The minimum height reserved for the content.
   ///
   /// Defaults to 0.0, letting the content determine its own height. The field is
-  /// never shorter than [SBBInputDecoration.minInputFieldHeight] regardless of this
+  /// never shorter than [SBBDecoration.minInputFieldHeight] regardless of this
   /// value.
   final double minContentHeight;
 
@@ -173,26 +193,16 @@ class _SBBDecoratedState extends State<SBBDecorated> {
     _statesController.update(WidgetState.error, _hasError);
   }
 
-  /// Returns the effective decoration, automatically setting [SBBFloatingLabelBehavior.always]
-  /// if no [SBBInputDecoration.floatingLabelBehavior] is provided, the field is empty,
-  /// and a placeholder is present.
-  SBBInputDecoration get _effectiveDecoration {
-    final decoration = widget.decoration ?? SBBInputDecoration();
-    if (decoration.floatingLabelBehavior == null &&
-        _isEmpty &&
-        (decoration.placeholder != null || decoration.placeholderText != null)) {
-      return decoration.copyWith(floatingLabelBehavior: SBBFloatingLabelBehavior.always);
-    }
-    return decoration;
-  }
-
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeStyle = Theme.of(context).sbbDecoratedTheme.style!;
-    final effectiveStyle = themeStyle.merge(widget.style);
+    final theme = Theme.of(context).sbbDecoratedTheme;
+    final effectiveStyle = theme.style!.merge(widget.style);
+
+    final decoration = widget.decoration ?? const SBBDecoration();
+    final decorationStyle = resolveDecorationStyle(context, theme.decorationStyle, decoration.style);
 
     final child = addDefaultAncestorWithResolved(
       child: _hiddenWhenEmpty(widget.child),
@@ -212,8 +222,9 @@ class _SBBDecoratedState extends State<SBBDecorated> {
         child: ListenableBuilder(
           listenable: _effectiveFocusNode,
           builder: (context, Widget? child) {
-            return SBBInputDecorator(
-              decoration: _effectiveDecoration,
+            return SBBDecorator(
+              decoration: decoration,
+              style: decorationStyle,
               expands: widget.expands,
               minInputHeight: widget.minContentHeight,
               isMultiline: widget.topAlignAffixes,
@@ -258,8 +269,7 @@ class _SBBDecoratedState extends State<SBBDecorated> {
 /// This variant applies special border styling for a contained appearance:
 /// the border only displays when in an error state, showing a surrounding box.
 ///
-/// The content padding is resolved from [decoration.contentPadding], falling back
-/// to [SBBInputDecorationThemeData.contentPadding].
+/// The content padding is taken from the [SBBDecorationStyle.contentPadding] of the decoration style.
 ///
 /// This is useful for creating grouped form-like layouts with consistent spacing.
 class SBBDecoratedBoxed extends SBBDecorated {

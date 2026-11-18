@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorator.dart';
+import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decorator.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB TextInput.
@@ -32,7 +32,7 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 ///
 /// See also:
 /// * [SBBTextInputThemeData] for customizing the style across the current theme
-/// * [SBBInputDecoration] for customizing the decoration surrounding the raw input field
+/// * [SBBDecoration] for customizing the decoration surrounding the raw input field
 /// * [digital.sbb.ch documentation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
 /// * [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236) (internal only)
 class SBBTextInput extends StatefulWidget {
@@ -69,9 +69,7 @@ class SBBTextInput extends StatefulWidget {
     this.onTapUpOutside,
     this.scrollController,
     this.autofillHints,
-    this.inputTextStyle,
-    this.inputForegroundColor,
-    this.enableClearButton,
+    this.style,
   }) : assert(obscuringCharacter.length == 1),
        assert(maxLines == null || maxLines > 0),
        assert(minLines == null || minLines > 0),
@@ -104,8 +102,8 @@ class SBBTextInput extends StatefulWidget {
   /// The decoration surrounding the underlying [EditableText] field.
   ///
   /// The values given for colors and text styles will override the values given in
-  /// [SBBInputDecorationThemeData].
-  final SBBInputDecoration? decoration;
+  /// [SBBDecorationThemeData].
+  final SBBDecoration? decoration;
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
@@ -180,7 +178,7 @@ class SBBTextInput extends StatefulWidget {
   ///   enabled: true,
   ///   readOnly: true,
   ///   enableInteractiveSelection: false,
-  ///   decoration: SBBInputDecoration(
+  ///   decoration: SBBDecoration(
   ///     trailing: IconButton(
   ///       onPressed: () {
   ///         // This will work because the SBBTextInput is enabled
@@ -240,28 +238,15 @@ class SBBTextInput extends StatefulWidget {
   /// {@macro flutter.services.AutofillConfiguration.autofillHints}
   final Iterable<String>? autofillHints;
 
-  /// The text style for the input text.
+  /// Customizes the input text and the clear button of this text input.
   ///
-  /// If null, the value from [SBBTextInputThemeData.inputTextStyle] is used.
-  /// If that is also null, the default text style is used.
-  final TextStyle? inputTextStyle;
-
-  /// The color of the input text.
+  /// Non-null properties override the corresponding properties in
+  /// [SBBTextInputThemeData.style] from the current theme.
   ///
-  /// If null, the value from [SBBTextInputThemeData.inputForegroundColor] is used.
-  /// If that is also null, the default color is used.
-  final WidgetStateProperty<Color?>? inputForegroundColor;
-
-  /// Whether to show a [SBBIcons.cross_tiny_small] tappable icon instead of this [decoration.trailingIconData]
-  /// when the input is not empty and has focus.
-  ///
-  /// This only replaces the icon given in [decoration.trailingIconData]. Custom trailing widgets
-  /// via [decoration.trailing] are not replaced.
-  ///
-  /// This setting can be overridden in the [SBBTextInputThemeData].
-  ///
-  /// Defaults to true.
-  final bool? enableClearButton;
+  /// With [SBBTextInputStyle.enableClearButton], a tappable [SBBIcons.cross_tiny_small] icon is shown
+  /// instead of [decoration.trailingIconData] when the input is not empty and has focus.
+  /// Custom trailing widgets via [decoration.trailing] are not replaced.
+  final SBBTextInputStyle? style;
 
   @override
   State<StatefulWidget> createState() => _SBBTextInputState();
@@ -371,7 +356,7 @@ class _SBBTextInputState extends State<SBBTextInput>
   }
 
   // The SBBTextInput does three things:
-  // 1. Determine the WidgetStates and hand down the WidgetStates to SBBInputDecorator for color resolving
+  // 1. Determine the WidgetStates and hand down the WidgetStates to SBBDecorator for color resolving
   // 2. Build styled EditableText with platform specific look (mainly cursor)
   // 3. Build the text selection gesture controls
   @override
@@ -501,8 +486,9 @@ class _SBBTextInputState extends State<SBBTextInput>
                 child: AnimatedBuilder(
                   animation: Listenable.merge(<Listenable>[_effectiveFocusNode, _effectiveController]),
                   builder: (context, Widget? child) {
-                    return SBBInputDecorator(
+                    return SBBDecorator(
                       decoration: _getEffectiveDecorationWithClearButton(context),
+                      style: _effectiveDecorationStyle(context),
                       expands: widget.expands,
                       minInputHeight: effectiveInputTextStyle.height! * effectiveInputTextStyle.fontSize!,
                       isMultiline: isMultiline,
@@ -526,36 +512,36 @@ class _SBBTextInputState extends State<SBBTextInput>
     _editableText?.requestKeyboard();
   }
 
+  SBBTextInputStyle _effectiveStyle(BuildContext context) {
+    final themeStyle = Theme.of(context).sbbTextInputTheme.style!;
+    return themeStyle.merge(widget.style);
+  }
+
+  SBBDecorationStyle _effectiveDecorationStyle(BuildContext context) {
+    final themeDecorationStyle = Theme.of(context).sbbTextInputTheme.decorationStyle;
+    return resolveDecorationStyle(context, themeDecorationStyle, widget.decoration?.style);
+  }
+
   TextStyle _effectiveInputTextStyle(BuildContext context) {
-    final themeData = Theme.of(context).sbbTextInputTheme;
-    final states = _statesController.value;
-
-    if (widget.inputTextStyle != null) {
-      final textStyle = widget.inputTextStyle;
-      final color = widget.inputForegroundColor?.resolve(states);
-      return color != null ? textStyle!.copyWith(color: color) : textStyle!;
-    }
-
-    final textStyle = themeData.inputTextStyle!;
-    final color = widget.inputForegroundColor?.resolve(states) ?? themeData.inputForegroundColor?.resolve(states);
+    final style = _effectiveStyle(context);
+    final textStyle = style.inputTextStyle!;
+    final color = style.inputForegroundColor?.resolve(_statesController.value);
     return color != null ? textStyle.copyWith(color: color) : textStyle;
   }
 
-  SBBInputDecoration _getEffectiveDecorationWithClearButton(BuildContext context) {
-    final themeData = Theme.of(context).sbbTextInputTheme;
-    final effectiveShowClearButton = widget.enableClearButton ?? themeData.enableClearButton!;
+  SBBDecoration _getEffectiveDecorationWithClearButton(BuildContext context) {
+    final effectiveShowClearButton = _effectiveStyle(context).enableClearButton!;
 
-    final baseDecoration = widget.decoration ?? SBBInputDecoration();
+    final baseDecoration = widget.decoration ?? SBBDecoration();
 
     if (baseDecoration.trailing != null || !effectiveShowClearButton) return baseDecoration;
 
     final shouldReplaceTrailingWithClearButton = _effectiveFocusNode.hasFocus && _effectiveController.text.isNotEmpty;
 
-    final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
     final Widget trailing = widget.decoration?.trailingIconData == null
         ? SizedBox.shrink()
         : Padding(
-            padding: .only(left: _effectiveTrailingInputGap(inputDecorationTheme)),
+            padding: .only(left: _effectiveDecorationStyle(context).inputTrailingGap!),
             child: Icon(widget.decoration!.trailingIconData),
           );
 
@@ -665,10 +651,6 @@ class _SBBTextInputState extends State<SBBTextInput>
     }
     return AdaptiveTextSelectionToolbar.editableText(editableTextState: editableTextState);
   }
-
-  double _effectiveTrailingInputGap(SBBInputDecorationThemeData inputDecorationTheme) {
-    return widget.decoration?.inputTrailingGap ?? inputDecorationTheme.inputTrailingGap!;
-  }
 }
 
 /// The boxed variant of [SBBTextInput].
@@ -707,9 +689,7 @@ class SBBTextInputBoxed extends SBBTextInput {
     super.onTapUpOutside,
     super.scrollController,
     super.autofillHints,
-    super.inputTextStyle,
-    super.inputForegroundColor,
-    super.enableClearButton,
+    super.style,
     super.decoration,
     this.margin,
   });

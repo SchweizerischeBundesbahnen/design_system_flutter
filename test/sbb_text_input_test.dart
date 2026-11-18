@@ -97,13 +97,13 @@ void main() {
             spacing: SBBSpacing.xSmall,
             children: [
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'Default',
                   leadingIconData: SBBIcons.unicorn_small,
                 ),
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Trailing Icon',
                   leadingIconData: SBBIcons.unicorn_small,
                   trailingIconData: SBBIcons.circle_information_small_small,
@@ -111,14 +111,14 @@ void main() {
               ),
               SBBTextInputBoxed(
                 key: boxedPressableKey,
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Placeholder',
                   placeholderText: 'Placeholder',
                   leadingIconData: SBBIcons.unicorn_small,
                 ),
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Custom Button',
                   placeholderText: 'Press the Button!',
                   leadingIconData: SBBIcons.unicorn_small,
@@ -129,14 +129,14 @@ void main() {
                 ),
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'Error message',
                   errorText: 'This is an error!',
                   leadingIconData: SBBIcons.unicorn_small,
                 ),
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
+                decoration: SBBDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
                 controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                 enabled: false,
               ),
@@ -166,34 +166,37 @@ void main() {
   });
 }
 
-List<Widget> _textInputItems({required ValueKey<String> pressableItemKey, required SBBInputBorderType borderType}) {
+List<Widget> _textInputItems({
+  required ValueKey<String> pressableItemKey,
+  required SBBDecorationBorderType borderType,
+}) {
   return [
     SBBTextInput(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'Default',
         leadingIconData: SBBIcons.unicorn_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
     ),
     SBBTextInput(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Trailing Icon',
         leadingIconData: SBBIcons.unicorn_small,
         trailingIconData: SBBIcons.circle_information_small_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
     ),
     SBBTextInput(
       key: pressableItemKey,
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Placeholder',
         placeholderText: 'Placeholder',
         leadingIconData: SBBIcons.unicorn_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
     ),
     SBBTextInput(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Custom Button',
         placeholderText: 'Press the Button!',
         leadingIconData: SBBIcons.unicorn_small,
@@ -201,22 +204,22 @@ List<Widget> _textInputItems({required ValueKey<String> pressableItemKey, requir
           iconData: SBBIcons.dog_small,
           onPressed: () {},
         ),
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
     ),
     SBBTextInput(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'Error message',
         errorText: 'This is an error!',
         leadingIconData: SBBIcons.unicorn_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
     ),
     SBBTextInput(
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         leadingIconData: SBBIcons.unicorn_small,
         labelText: 'Disabled',
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
       enabled: false,

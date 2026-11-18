@@ -70,7 +70,7 @@ class _PopoverPageState extends State<PopoverPage> {
         context: context,
         items: [
           SBBDropdown<SBBPopoverPlacement>(
-            triggerDecoration: const SBBInputDecoration(labelText: 'Preferred Placement'),
+            triggerDecoration: const SBBDecoration(labelText: 'Preferred Placement'),
             selectedItem: _placement,
             items: _placementItems,
             onChanged: (value) {
@@ -100,7 +100,7 @@ class _PopoverPageState extends State<PopoverPage> {
             onChanged: (value) => setState(() => _showKeyboardInteraction = value),
           ),
           SBBTextInput(
-            decoration: const SBBInputDecoration(
+            decoration: const SBBDecoration(
               labelText: 'Popover Content',
             ),
             autofocus: false,
@@ -134,7 +134,7 @@ class _PopoverPageState extends State<PopoverPage> {
               ),
             ),
             builder: (context, hidePopover) => _showKeyboardInteraction
-                ? SBBTextInput(decoration: SBBInputDecoration(placeholderText: 'Tap me!'))
+                ? SBBTextInput(decoration: SBBDecoration(placeholderText: 'Tap me!'))
                 : Text(_popoverContentText),
           ),
         ),

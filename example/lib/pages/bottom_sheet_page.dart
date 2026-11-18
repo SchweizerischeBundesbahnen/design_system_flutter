@@ -265,7 +265,7 @@ class _KeyboardAwareBody extends StatelessWidget {
           ),
           SBBTextInput(
             controller: controller,
-            decoration: SBBInputDecoration(labelText: 'Enter Text'),
+            decoration: SBBDecoration(labelText: 'Enter Text'),
           ),
           SBBPrimaryButton(
             labelText: 'Submit',

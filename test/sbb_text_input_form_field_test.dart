@@ -23,27 +23,27 @@ void main() {
                       context: context,
                       items: [
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'Default',
                             leadingIconData: SBBIcons.unicorn_small,
                           ),
                         ),
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'With Trailing Icon',
                             leadingIconData: SBBIcons.unicorn_small,
                             trailingIconData: SBBIcons.circle_information_small_small,
                           ),
                         ),
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'With Placeholder',
                             placeholderText: 'Placeholder',
                             leadingIconData: SBBIcons.unicorn_small,
                           ),
                         ),
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'With Validation',
                             leadingIconData: SBBIcons.unicorn_small,
                           ),

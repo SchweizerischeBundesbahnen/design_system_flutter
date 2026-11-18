@@ -23,23 +23,26 @@ void main() {
               selectedItems: [],
               items: items,
               onChanged: (_) {},
-              triggerDecoration: SBBInputDecoration(borderType: .standalone),
+              triggerDecoration: SBBDecoration(style: SBBDecorationStyle(borderType: .standalone)),
             ),
             SBBMultiDropdown<int>(
               selectedItems: [1, 2],
               items: items,
               onChanged: (_) {},
-              triggerDecoration: SBBInputDecoration(
+              triggerDecoration: SBBDecoration(
                 labelText: 'Default Value',
                 leadingIconData: SBBIcons.dog_small,
-                borderType: .standalone,
+                style: SBBDecorationStyle(borderType: .standalone),
               ),
             ),
             SBBMultiDropdown<int>(
               selectedItems: [1],
               items: items,
               onChanged: null,
-              triggerDecoration: SBBInputDecoration(labelText: 'Disabled', borderType: .standalone),
+              triggerDecoration: SBBDecoration(
+                labelText: 'Disabled',
+                style: SBBDecorationStyle(borderType: .standalone),
+              ),
             ),
             SBBListHeader('Listed'),
             SBBContentBox(
@@ -54,7 +57,7 @@ void main() {
                       selectedItems: [1, 2],
                       items: items,
                       onChanged: (_) {},
-                      triggerDecoration: SBBInputDecoration(
+                      triggerDecoration: SBBDecoration(
                         labelText: 'Default Value',
                         leadingIconData: SBBIcons.dog_small,
                       ),
@@ -63,7 +66,7 @@ void main() {
                       selectedItems: [1],
                       items: items,
                       onChanged: null,
-                      triggerDecoration: SBBInputDecoration(labelText: 'Disabled'),
+                      triggerDecoration: SBBDecoration(labelText: 'Disabled'),
                     ),
                   ],
                 ),

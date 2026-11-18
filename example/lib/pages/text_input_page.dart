@@ -32,28 +32,28 @@ class _TextInputPageState extends State<TextInputPage> {
                     context: context,
                     items: [
                       SBBTextInput(
-                        decoration: SBBInputDecoration(
+                        decoration: SBBDecoration(
                           labelText: 'Default',
                           leadingIconData: SBBIcons.unicorn_small,
                         ),
                         controller: defaultTextEditingController,
                       ),
                       SBBTextInput(
-                        decoration: SBBInputDecoration(
+                        decoration: SBBDecoration(
                           labelText: 'With Trailing Icon',
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                         ),
                       ),
                       SBBTextInput(
-                        decoration: SBBInputDecoration(
+                        decoration: SBBDecoration(
                           labelText: 'With Placeholder',
                           placeholderText: 'Placeholder',
                           leadingIconData: SBBIcons.unicorn_small,
                         ),
                       ),
                       SBBTextInput(
-                        decoration: SBBInputDecoration(
+                        decoration: SBBDecoration(
                           labelText: 'Unfocus On Tap Outside',
                           placeholderText: 'Tap outside to unfocus',
                           leadingIconData: SBBIcons.unicorn_small,
@@ -61,19 +61,21 @@ class _TextInputPageState extends State<TextInputPage> {
                         onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
                       ),
                       SBBTextInput(
-                        decoration: SBBInputDecoration(
+                        decoration: SBBDecoration(
                           labelText: 'With Custom Button',
                           placeholderText: 'Press the Button!',
                           leadingIconData: SBBIcons.unicorn_small,
-                          contentPadding: EdgeInsets.only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
                           trailing: SBBTertiaryButtonSmall(
                             iconData: SBBIcons.dog_small,
                             onPressed: () => sbbToast.show(titleText: 'Button pressed'),
                           ),
+                          style: SBBDecorationStyle(
+                            contentPadding: EdgeInsets.only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
+                          ),
                         ),
                       ),
                       SBBTextInput(
-                        decoration: SBBInputDecoration(
+                        decoration: SBBDecoration(
                           labelText: 'Display Error Message if input too long',
                           errorText: errorText,
                           leadingIconData: SBBIcons.unicorn_small,
@@ -92,7 +94,7 @@ class _TextInputPageState extends State<TextInputPage> {
                         },
                       ),
                       SBBTextInput(
-                        decoration: SBBInputDecoration(
+                        decoration: SBBDecoration(
                           leadingIconData: SBBIcons.unicorn_small,
                           labelText: 'Disabled',
                         ),
@@ -111,40 +113,42 @@ class _TextInputPageState extends State<TextInputPage> {
             spacing: SBBSpacing.xSmall,
             children: [
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'Default',
                   leadingIconData: SBBIcons.unicorn_small,
                 ),
                 controller: defaultTextEditingController,
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Trailing Icon',
                   leadingIconData: SBBIcons.unicorn_small,
                   trailingIconData: SBBIcons.circle_information_small_small,
                 ),
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Placeholder',
                   placeholderText: 'Placeholder',
                   leadingIconData: SBBIcons.unicorn_small,
                 ),
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Custom Button',
                   placeholderText: 'Press the Button!',
                   leadingIconData: SBBIcons.unicorn_small,
-                  contentPadding: EdgeInsets.only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
                   trailing: SBBTertiaryButtonSmall(
                     iconData: SBBIcons.dog_small,
                     onPressed: () => sbbToast.show(titleText: 'Button pressed'),
                   ),
+                  style: SBBDecorationStyle(
+                    contentPadding: EdgeInsets.only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
+                  ),
                 ),
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'Display Error Message if input too long',
                   errorText: errorText,
                   leadingIconData: SBBIcons.unicorn_small,
@@ -163,7 +167,7 @@ class _TextInputPageState extends State<TextInputPage> {
                 },
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
+                decoration: SBBDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
                 controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                 enabled: false,
               ),

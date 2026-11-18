@@ -12,17 +12,36 @@ It is expected that you keep this format strictly, since we depend on it in our 
 > **⚠ Breaking Change**
 > We migrated the DSM to the new standalone `material_ui` and `cupertino_ui` packages.
 > This version will only work with Flutter >= 3.47.0 and migrated projects using the standalone packages.
+>
+> The decoration of `SBBTextInput`, `SBBDecorated`, `SBBDecoratedText`, dropdowns and date and time inputs was restructured.
+> See the [migration guide](migration_guide.md#decoration).
+
+### Added
+
+- added `SBBDecorationStyle`: the style of an `SBBDecoration`, used by the widget, the component themes and `SBBDecorationThemeData`
+- added `SBBTextInputStyle` and `SBBTextInput.style`
+- added `decorationStyle` to `SBBTextInputThemeData`, `SBBDecoratedThemeData` and `SBBDecoratedTextThemeData` to style the decoration of one component type
 
 ### Fixed
 
 - apply theme-wide input decoration to all decorated components like `SBBTextInput`
-- `SBBTextInputBoxed`, `SBBDecoratedBoxed` and `SBBDecoratedTextBoxed` now respect `SBBInputDecorationThemeData.contentPadding` instead of forcing a horizontal padding
-- `SBBDateInput`, `SBBTimeInput` and `SBBDateTimeInput` now apply `SBBPickerThemeData.triggerDecorationTheme`, `triggerStyle` and `sheetStyle`
+- `SBBTextInputBoxed`, `SBBDecoratedBoxed` and `SBBDecoratedTextBoxed` now respect the theme-wide `SBBDecorationStyle.contentPadding` instead of forcing a horizontal padding
+- `SBBDateInput`, `SBBTimeInput` and `SBBDateTimeInput` now apply `SBBPickerThemeData.triggerDecorationStyle`, `triggerStyle` and `sheetStyle`
+- a subtree `Theme` that overrides `SBBDecorationThemeData`, `SBBDecoratedTextThemeData` or `SBBBottomSheetThemeData` now reaches dropdowns and date and time inputs
+- the picker sheet of an open `SBBDateInput`, `SBBTimeInput` or `SBBDateTimeInput` follows a theme switch
 
 ### Changed
 
 - BREAKING: migrated to standalone `material_ui` and `cupertino_ui` packages
 - BREAKING: Updates minimum supported SDK version to Flutter 3.47/Dart 3.13.
+- BREAKING: renamed `SBBInputDecoration` to `SBBDecoration`, `SBBInputDecorationThemeData` to `SBBDecorationThemeData` and `SBBInputBorderType` to `SBBDecorationBorderType`
+- BREAKING: renamed `ThemeData.sbbInputDecorationTheme` to `sbbDecorationTheme` and the `SBBTheme` parameter `inputDecorationTheme` to `decorationTheme`
+- BREAKING: moved all style fields of `SBBDecoration` and `SBBDecorationThemeData` into their `style` of type `SBBDecorationStyle`
+- BREAKING: replaced `triggerDecorationTheme` of `SBBDropdownThemeData` and `SBBPickerThemeData` with `triggerDecorationStyle` of type `SBBDecorationStyle`
+- BREAKING: replaced `inputTextStyle`, `inputForegroundColor` and `enableClearButton` of `SBBTextInput`, its variants and `SBBTextInputThemeData` with `style` of type `SBBTextInputStyle`
+- BREAKING: a widget-level `SBBTextInputStyle.inputTextStyle` no longer disables the theme's `inputForegroundColor`
+- BREAKING: `triggerStyle`, `triggerDecorationStyle` and `sheetStyle` of `SBBDropdownThemeData` and `SBBPickerThemeData` are `null` by default and only hold overrides
+- the trigger of dropdowns and date and time inputs now also applies `SBBDecoratedTextThemeData`
 - (auto): updated icon lib to version 1.8.38
 
 ## [5.2.0] - 2026-09-25

@@ -46,71 +46,80 @@ void main() {
   });
 }
 
-List<Widget> _dateTimeInputItems({required SBBInputBorderType borderType}) {
+List<Widget> _dateTimeInputItems({required SBBDecorationBorderType borderType}) {
   final initialDateTime = DateTime(2024, 07, 03, 12, 33);
   final minimumDateTime = DateTime(2024, 08, 01, 16, 12);
   final maximumDateTime = DateTime(2024, 07, 01, 08, 43);
   return [
     SBBDateTimeInput(
       onDateTimeChanged: (_) {},
-      triggerDecoration: SBBInputDecoration(borderType: borderType),
+      triggerDecoration: SBBDecoration(style: SBBDecorationStyle(borderType: borderType)),
     ),
     SBBDateTimeInput(
       value: initialDateTime,
       onDateTimeChanged: (_) {},
-      triggerDecoration: SBBInputDecoration(borderType: borderType),
+      triggerDecoration: SBBDecoration(style: SBBDecorationStyle(borderType: borderType)),
     ),
     SBBDateTimeInput(
-      triggerDecoration: SBBInputDecoration(placeholderText: 'Hint only', borderType: borderType),
+      triggerDecoration: SBBDecoration(
+        placeholderText: 'Hint only',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onDateTimeChanged: (_) {},
     ),
     SBBDateTimeInput(
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Label and Hint',
         placeholderText: 'Label and Hint',
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateTimeChanged: (_) {},
     ),
     SBBDateTimeInput(
       value: initialDateTime,
-      triggerDecoration: SBBInputDecoration(labelText: 'Label and Value', borderType: borderType),
+      triggerDecoration: SBBDecoration(
+        labelText: 'Label and Value',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onDateTimeChanged: (_) {},
     ),
     SBBDateTimeInput(
       value: initialDateTime,
-      triggerDecoration: SBBInputDecoration(labelText: 'Custom date format', borderType: borderType),
+      triggerDecoration: SBBDecoration(
+        labelText: 'Custom date format',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       dateFormat: DateFormat('dd.MM.yy, H:m'),
       onDateTimeChanged: (_) {},
     ),
     SBBDateTimeInput(
       value: initialDateTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Error',
         errorText: 'Error',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateTimeChanged: (_) {},
     ),
     SBBDateTimeInput(
       value: initialDateTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Disabled',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateTimeChanged: null,
     ),
     SBBDateTimeInput(
       value: initialDateTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Minute interval',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       minuteInterval: 15,
       onDateTimeChanged: (_) {},
@@ -118,22 +127,22 @@ List<Widget> _dateTimeInputItems({required SBBInputBorderType borderType}) {
     SBBDateTimeInput(
       value: initialDateTime,
       minimumDateTime: minimumDateTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Initial date before minimum date',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateTimeChanged: (_) {},
     ),
     SBBDateTimeInput(
       value: initialDateTime,
       maximumDateTime: maximumDateTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Initial date after maximum date',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateTimeChanged: (_) {},
     ),
