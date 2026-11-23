@@ -12,15 +12,15 @@ class DefaultSBBDecorationThemeData extends SBBDecorationThemeData {
             WidgetState.disabled: baseStyle.colorScheme.iconSecondary,
             WidgetState.any: baseStyle.colorScheme.iconPrimary,
           }),
-          leadingInputGap: 8.0,
+          leadingInputGap: SBBSpacing.xSmall,
           trailingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.colorScheme.iconSecondary,
             WidgetState.any: baseStyle.colorScheme.iconPrimary,
           }),
-          inputTrailingGap: 8.0,
+          inputTrailingGap: SBBSpacing.xSmall,
           errorTextStyle: baseStyle.textTheme.xxSmallBold,
           errorForegroundColor: WidgetStatePropertyAll(baseStyle.colorScheme.error),
-          titleRowErrorGap: 4.0,
+          titleRowErrorGap: SBBSpacing.xxSmall,
           errorBottomPadding: 6.0,
           labelTextStyle: baseStyle.textTheme.defaultTextStyle,
           labelForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
