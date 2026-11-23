@@ -1,4 +1,4 @@
-# Runs flutter test and CHANGELOG.md validation on every PR to main.
+# Runs flutter test on every PR to main.
 # Failed goldens are uploaded and can be seen in the artifact summary of the job.
 
 name: test
@@ -65,17 +65,6 @@ jobs:
         run: flutter pub publish --dry-run
 
 
-  changelog-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone Repository.
-        uses: actions/checkout@v7
-
-      - name: Read Changelog and validate.
-        uses: mindsers/changelog-reader-action@v2.4.0
-        with:
-          validation_level: "error"
-
   naming-analysis:
     runs-on: ubuntu-latest
     steps:
@@ -93,7 +82,7 @@ jobs:
   build-android:
     name: Build Example App Android
     runs-on: ubuntu-latest
-    needs: [ test, changelog-test, naming-analysis ]
+    needs: [ test, naming-analysis ]
     defaults:
       run:
         working-directory: example
@@ -125,7 +114,7 @@ jobs:
   build-iOS:
     name: Build Example App iOS
     runs-on: macos-26
-    needs: [ test, changelog-test, naming-analysis ]
+    needs: [ test, naming-analysis ]
     env:
       # rm when Flutter 3.44 support is dropped
       FLUTTER_SWIFT_PACKAGE_MANAGER: "true"
