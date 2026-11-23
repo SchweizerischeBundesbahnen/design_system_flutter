@@ -189,7 +189,7 @@ Future<void> createFlutterFontMap() async {
   final large = await getMap('large');
   void mapFont(String name, String value) => sb.writeln('  static const $name = $value;');
 
-  sb.writeln('import \'package:flutter/material.dart\';');
+  sb.writeln('import \'package:material_ui/material_ui.dart\';');
   sb.writeln();
   sb.writeln('const sbbIconSizeSmall = 24.0;');
   sb.writeln('const sbbIconSizeMedium = 36.0;');
