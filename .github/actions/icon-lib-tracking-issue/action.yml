@@ -1,0 +1,30 @@
+name: 'icon-lib-tracking-issue'
+description: 'Opens or updates the issue tracking a new icon lib version and reports failed updates on it using update-issue.sh'
+inputs:
+  version:
+    description: 'The new version of the icon lib'
+    required: true
+  outcome:
+    description: 'failure reports the failed update, success marks a reported failure as resolved, pending only opens or updates the issue'
+    required: true
+  token:
+    description: 'A token with issues: write permission'
+    required: true
+outputs:
+  issue-number:
+    description: 'The number of the tracking issue'
+    value: ${{ steps.issue.outputs.number }}
+runs:
+  using: "composite"
+  steps:
+    - name: Run update-issue.sh
+      id: issue
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        GH_TOKEN: ${{ inputs.token }}
+        VERSION: ${{ inputs.version }}
+        OUTCOME: ${{ inputs.outcome }}
+        RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      run: |
+        "$ACTION_PATH/update-issue.sh" "$VERSION" "$OUTCOME" "$RUN_URL"
+      shell: bash

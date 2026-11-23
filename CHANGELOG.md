@@ -24,9 +24,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Fixed
 
-- apply theme-wide input decoration to all decorated components like `SBBTextInput`
-- `SBBTextInputBoxed`, `SBBDecoratedBoxed` and `SBBDecoratedTextBoxed` now respect the theme-wide `SBBDecorationStyle.contentPadding` instead of forcing a horizontal padding
-- `SBBDateInput`, `SBBTimeInput` and `SBBDateTimeInput` now apply `SBBPickerThemeData.triggerDecorationStyle`, `triggerStyle` and `sheetStyle`
 - a subtree `Theme` that overrides `SBBDecorationThemeData`, `SBBDecoratedTextThemeData` or `SBBBottomSheetThemeData` now reaches dropdowns and date and time inputs
 - the picker sheet of an open `SBBDateInput`, `SBBTimeInput` or `SBBDateTimeInput` follows a theme switch
 
@@ -42,7 +39,20 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: a widget-level `SBBTextInputStyle.inputTextStyle` no longer disables the theme's `inputForegroundColor`
 - BREAKING: `triggerStyle`, `triggerDecorationStyle` and `sheetStyle` of `SBBDropdownThemeData` and `SBBPickerThemeData` are `null` by default and only hold overrides
 - the trigger of dropdowns and date and time inputs now also applies `SBBDecoratedTextThemeData`
-- (auto): updated icon lib to version 1.8.38
+- (auto): updated icon lib to version 1.8.40
+
+## [5.3.0] - 2026-11-16
+
+### Fixed
+
+- border and label colors of `SBBTextInput` and all other decorated components no longer lag behind a theme switch
+- apply theme-wide input decoration to all decorated components like `SBBTextInput`
+- `SBBTextInputBoxed`, `SBBDecoratedBoxed` and `SBBDecoratedTextBoxed` now respect `SBBInputDecorationThemeData.contentPadding` instead of forcing a horizontal padding
+- `SBBDateInput`, `SBBTimeInput` and `SBBDateTimeInput` now apply `SBBPickerThemeData.triggerDecorationTheme`, `triggerStyle` and `sheetStyle`
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.39
 
 ## [5.2.0] - 2026-09-25
 
@@ -92,42 +102,42 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `SBBButtonSegment` for adding segments to `SBBSegmentedButton`
 - added `SBBDivider` for separating listed items within an indexed builder (e.g. `ListView.separated`)
 - added `SBBIllustration` for adding predefined illustrations to e.g. `SBBMessage`
-- added `SBBRadioGroup` - see [v5 migration guide]
-- added `SBBTextInput` as replacement for `SBBTextField` - see [v5 migration guide]
-- added `SBBColorScheme` - see [v5 migration guide]
-- added `SBBThemeContext` - see [v5 migration guide]
+- added `SBBRadioGroup` - see [v5 migration guide](migration_guide.md)
+- added `SBBTextInput` as replacement for `SBBTextField` - see [v5 migration guide](migration_guide.md)
+- added `SBBColorScheme` - see [v5 migration guide](migration_guide.md)
+- added `SBBThemeContext` - see [v5 migration guide](migration_guide.md)
 - added `SBBHeaderBoxPreferredSize` and `SBBHeaderBoxFlapPreferredSize` for use in headers
 
 ### Changed
 
-- BREAKING: overhauled `SBBHeaderBox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBBaseStyle` - see [v5 migration guide]
-- BREAKING: overhauled all button variants - see [v5 migration guide]
-- BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBChip` - see [v5 migration guide]
-- BREAKING: different theming / styling for `SBBContentBox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBInputTrigger` and renamed it to `SBBDecoratedText` - see [v5 migration guide]
-- BREAKING: overhauled `SBBSelect` and renamed to `SBBDropdown` - see [v5 migration guide]
-- BREAKING: overhauled `SBBListHeader` - see [v5 migration guide]
-- BREAKING: overhauled `SBBListItem` - see [v5 migration guide]
-- BREAKING: overhauled `SBBMessage` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBModal` component and renamed to `SBBBottomSheet` - see [v5 migration guide]
-- BREAKING: overhauled `SBBPagination` and renamed to `SBBPaginator` - see [v5 migration guide]
-- BREAKING: overhauled `SBBPicker` - see [v5 migration guide]
-- BREAKING: overhauled `SBBPromotionBox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBNotificationBox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBModalPopup` and renamed to `SBBPopup` - see [v5 migration guide]
-- BREAKING: overhauled `SBBRadio` with `SBBRadioGroup` ancestor - see [v5 migration guide]
-- BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBSlider` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBStatus` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBStepper` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBHeader` component - see [v5 migration guide]
-- BREAKING: different theming / styling for `SBBSwitch` - see [v5 migration guide]
-- BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see [v5 migration guide]
-- BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
+- BREAKING: overhauled `SBBHeaderBox` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBBaseStyle` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled all button variants - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBChip` - see [v5 migration guide](migration_guide.md)
+- BREAKING: different theming / styling for `SBBContentBox` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBInputTrigger` and renamed it to `SBBDecoratedText` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBSelect` and renamed to `SBBDropdown` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBListHeader` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBListItem` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBMessage` component - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBModal` component and renamed to `SBBBottomSheet` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBPagination` and renamed to `SBBPaginator` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBPicker` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBPromotionBox` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBNotificationBox` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBModalPopup` and renamed to `SBBPopup` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBRadio` with `SBBRadioGroup` ancestor - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBSlider` component - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBStatus` component - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBStepper` component - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBHeader` component - see [v5 migration guide](migration_guide.md)
+- BREAKING: different theming / styling for `SBBSwitch` - see [v5 migration guide](migration_guide.md)
+- BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see [v5 migration guide](migration_guide.md)
+- BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide](migration_guide.md)
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
-- BREAKING: renamed static methods containing `extra` on `SBBTextStyles` to containing `x` - see [v5 migration guide]
+- BREAKING: renamed static methods containing `extra` on `SBBTextStyles` to containing `x` - see [v5 migration guide](migration_guide.md)
 - renamed `TextStylesExtensions` to `SBBTextStyleExtensions`
 - BREAKING: renamed `ContractionState` to `SBBContractionState`
 - BREAKING: renamed `ContractibleState` to `SBBContractibleState`
@@ -135,10 +145,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Removed
 
 - Removed convenience methods `SBBTheme.allStates` and `SBBTheme.resolveStatesWith` - use methods on `WidgetStateProperty`
-- Removed `SBBIconButtonLarge`: use `SBBTertiaryButton` with only `iconData` or `icon` - see [v5 migration guide]
-- Removed `SBBIconButtonSmall`: use `SBBTertiaryButtonSmall` with only `iconData` or `icon` - see [v5 migration guide]
+- Removed `SBBIconButtonLarge`: use `SBBTertiaryButton` with only `iconData` or `icon` - see [v5 migration guide](migration_guide.md)
+- Removed `SBBIconButtonSmall`: use `SBBTertiaryButtonSmall` with only `iconData` or `icon` - see [v5 migration guide](migration_guide.md)
 - Removed `buttonStyles` argument in `SBBTheme`: use `primaryButtonTheme`, `secondaryButtonTheme` and
-  `tertiaryButtonTheme` - see [v5 migration guide]
+  `tertiaryButtonTheme` - see [v5 migration guide](migration_guide.md)
 - Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
 - Removed deprecated `SBBGroupStyle`, use `SBBContentBoxThemeData` instead
 - Removed deprecated `SBBGroup`
@@ -153,8 +163,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `SBBColors.redDark`, use `SBBColors.red85` instead
 - Removed `TransparentTappableElement`
 - Removed `ClosableBoxController`, use the component specific controller like `SBBNotificationBoxController`
-
-[v5 migration guide]: migration_guide.md
 
 ## [4.13.1] - 2026-06-19
 
@@ -928,6 +936,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Initial project setup
 - Added some widgets
+
+[5.3.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.2.0...5.3.0
 
 [5.2.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.1.0...5.2.0
 
