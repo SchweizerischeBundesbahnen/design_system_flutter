@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
-## Unreleased
+## [6.0.0] - 2026-11-23
 
 > **⚠ Breaking Change**
 > We migrated the DSM to the new standalone `material_ui` and `cupertino_ui` packages.
@@ -936,6 +936,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Initial project setup
 - Added some widgets
+
+[6.0.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.3.0...6.0.0
 
 [5.3.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.2.0...5.3.0
 
