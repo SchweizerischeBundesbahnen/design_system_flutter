@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
@@ -102,16 +102,11 @@ class SBBPromotionBoxBadge extends StatelessWidget {
 /// A [SingleChildRenderObjectWidget] that expands its layout size by [spread]
 /// on all sides to account for the halo painted around the child, and paints
 /// the halo behind the child ONLY ON THE UPPER HALF.
-class _PromotionBoxBadgeRenderObjectWidget extends SingleChildRenderObjectWidget {
-  const _PromotionBoxBadgeRenderObjectWidget({
-    required this.color,
-    required this.spread,
-    super.child,
-  });
-
-  final Color color;
-  final double spread;
-
+class const _PromotionBoxBadgeRenderObjectWidget({
+  required final Color color,
+  required final double spread,
+  super.child,
+}) extends SingleChildRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) => _RenderPromotionBoxBadge(color: color, spread: spread);
 
@@ -123,11 +118,10 @@ class _PromotionBoxBadgeRenderObjectWidget extends SingleChildRenderObjectWidget
   }
 }
 
-class _RenderPromotionBoxBadge extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
-  _RenderPromotionBoxBadge({required Color color, required double spread}) : _color = color, _spread = spread;
-
-  Color _color;
-
+class _RenderPromotionBoxBadge({
+  required var Color _color,
+  required var double _spread,
+}) extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
   Color get color => _color;
 
   set color(Color value) {
@@ -135,8 +129,6 @@ class _RenderPromotionBoxBadge extends RenderBox with RenderObjectWithChildMixin
     _color = value;
     markNeedsPaint();
   }
-
-  double _spread;
 
   double get spread => _spread;
 

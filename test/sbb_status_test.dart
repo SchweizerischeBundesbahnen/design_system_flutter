@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -6,7 +6,7 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('status test', (WidgetTester tester) async {
-    const String text = 'Lorem ipsum sit dolor';
+    const text = 'Lorem ipsum sit dolor';
     final widget = Column(
       spacing: SBBSpacing.medium,
       children: [

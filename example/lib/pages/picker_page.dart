@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -43,7 +43,7 @@ class _PickerPageState extends State<PickerPage> {
                 items: [
                   SBBDateInput(
                     value: _selectedDate,
-                    triggerDecoration: const SBBInputDecoration(
+                    triggerDecoration: const SBBDecoration(
                       labelText: 'Date only',
                       leadingIconData: SBBIcons.calendar_one_day_small,
                     ),
@@ -57,7 +57,7 @@ class _PickerPageState extends State<PickerPage> {
                   ),
                   SBBDateTimeInput(
                     value: _selectedDateTime,
-                    triggerDecoration: const SBBInputDecoration(
+                    triggerDecoration: const SBBDecoration(
                       labelText: 'Date and time',
                       leadingIconData: SBBIcons.calendar_weekday_small,
                     ),
@@ -71,7 +71,7 @@ class _PickerPageState extends State<PickerPage> {
                   ),
                   SBBTimeInput(
                     value: _selectedTime,
-                    triggerDecoration: const SBBInputDecoration(
+                    triggerDecoration: const SBBDecoration(
                       labelText: 'Time only',
                       leadingIconData: SBBIcons.clock_small,
                     ),

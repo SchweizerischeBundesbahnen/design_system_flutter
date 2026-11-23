@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -329,9 +329,9 @@ class _ScrollablePageState extends State<ScrollablePage> {
                 context: context,
                 items: [
                   SBBDropdown(
-                    triggerDecoration: SBBInputDecoration(
+                    triggerDecoration: SBBDecoration(
                       labelText: 'Snap Mode',
-                      contentPadding: EdgeInsets.zero,
+                      style: SBBDecorationStyle(contentPadding: EdgeInsets.zero),
                     ),
                     selectedItem: _snapMode,
                     items: [
@@ -345,9 +345,9 @@ class _ScrollablePageState extends State<ScrollablePage> {
                     },
                   ),
                   SBBDropdown(
-                    triggerDecoration: SBBInputDecoration(
+                    triggerDecoration: SBBDecoration(
                       labelText: 'Top Mode',
-                      contentPadding: EdgeInsets.zero,
+                      style: SBBDecorationStyle(contentPadding: EdgeInsets.zero),
                     ),
                     selectedItem: _topMode,
                     items: [
@@ -361,9 +361,9 @@ class _ScrollablePageState extends State<ScrollablePage> {
                     },
                   ),
                   SBBDropdown(
-                    triggerDecoration: SBBInputDecoration(
+                    triggerDecoration: SBBDecoration(
                       labelText: 'Flap Mode',
-                      contentPadding: EdgeInsets.zero,
+                      style: SBBDecorationStyle(contentPadding: EdgeInsets.zero),
                     ),
                     selectedItem: _flapMode,
                     items: [
@@ -429,8 +429,8 @@ class _ScrollablePageState extends State<ScrollablePage> {
   }
 }
 
-class _DemoItem extends SBBTabBarItem {
-  _DemoItem(int id, IconData icon) : super(id.toString(), icon);
+class _DemoItem(int id, IconData icon) extends SBBTabBarItem {
+  this : super(id.toString(), icon);
 
   @override
   String translate(BuildContext context) => '';

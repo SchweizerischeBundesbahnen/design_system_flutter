@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -20,11 +20,11 @@ class _ToastPageState extends State<ToastPage> {
       componentConfig: Column(
         children: [
           SBBTextInput(
-            decoration: SBBInputDecoration(labelText: 'Toast Title'),
+            decoration: SBBDecoration(labelText: 'Toast Title'),
             controller: titleController,
           ),
           SBBTextInput(
-            decoration: SBBInputDecoration(labelText: 'Toast Action (empty action will hide action)'),
+            decoration: SBBDecoration(labelText: 'Toast Action (empty action will hide action)'),
             controller: actionController,
           ),
         ],

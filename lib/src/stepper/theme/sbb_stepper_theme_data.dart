@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBStepper].
@@ -9,9 +9,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbStepperTheme`.
 @immutable
 class SBBStepperThemeData extends ThemeExtension<SBBStepperThemeData> with Diagnosticable {
-  /// Creates an [SBBStepperThemeData].
-  ///
-  /// The [style] may be null.
   const SBBStepperThemeData({this.style, this.filledStyle});
 
   /// Style overrides for [SBBStepper].

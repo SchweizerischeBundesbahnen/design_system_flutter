@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
@@ -108,25 +108,25 @@ class SBBAutocompletion<T> extends StatefulWidget {
   final bool enabled;
   final bool enableInteractiveSelection;
 
-  /// Placeholder text shown when the input is empty. Maps to [SBBInputDecoration.placeholderText].
+  /// Placeholder text shown when the input is empty. Maps to [SBBDecoration.placeholderText].
   final String? hintText;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
 
-  /// Label text shown above the input field. Maps to [SBBInputDecoration.labelText].
+  /// Label text shown above the input field. Maps to [SBBDecoration.labelText].
   final String? labelText;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onTextSubmitted;
   final TextCapitalization textCapitalization;
 
-  /// Leading icon shown before the input field. Maps to [SBBInputDecoration.leadingIconData].
+  /// Leading icon shown before the input field. Maps to [SBBDecoration.leadingIconData].
   final IconData? icon;
 
   /// Additional decoration applied to the trigger [SBBTextInput].
   ///
   /// When provided, [labelText], [hintText], and [icon] are ignored in favour
   /// of the values set in [decoration].
-  final SBBInputDecoration? decoration;
+  final SBBDecoration? decoration;
 
   /// Call this method to add a favorite to the list
   void addFavorite(T favorite) => key.currentState?.addFavorite(favorite);
@@ -229,17 +229,17 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
   }
 
   List<T> getSuggestions(
-    final List<T> suggestions,
-    final Comparator<T> sorter,
-    final Filter<T> filter,
-    final int maxAmount,
-    final String? query,
+    List<T> suggestions,
+    Comparator<T> sorter,
+    Filter<T> filter,
+    int maxAmount,
+    String? query,
   ) {
     if (query == null || query.length < widget.minLength) {
       return [];
     }
 
-    final List<T> result = suggestions.where((item) => filter(item, query)).toList();
+    final result = suggestions.where((item) => filter(item, query)).toList();
     result.sort(sorter);
     if (result.length > maxAmount) {
       return result.sublist(0, maxAmount);
@@ -278,9 +278,9 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
     super.dispose();
   }
 
-  SBBInputDecoration get _effectiveDecoration {
+  SBBDecoration get _effectiveDecoration {
     if (widget.decoration != null) return widget.decoration!;
-    return SBBInputDecoration(
+    return SBBDecoration(
       labelText: widget.labelText,
       placeholderText: widget.hintText,
       leadingIconData: widget.icon,
@@ -295,7 +295,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
         item: favorite,
         onPressed: () {
           setState(() {
-            final String newText = favorite.toString();
+            final newText = favorite.toString();
             _effectiveController.text = newText;
             widget.onChanged?.call(newText);
             if (widget.submitOnSuggestionTap) {
@@ -316,7 +316,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
         item: suggestion,
         onPressed: () {
           setState(() {
-            final String newText = suggestion.toString();
+            final newText = suggestion.toString();
             _effectiveController.text = newText;
             widget.onChanged?.call(newText);
             if (widget.submitOnSuggestionTap) {

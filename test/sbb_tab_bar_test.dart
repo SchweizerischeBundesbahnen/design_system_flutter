@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -64,9 +64,7 @@ void main() {
   });
 }
 
-class _DemoItem extends SBBTabBarItem {
-  _DemoItem(super.id, super.icon);
-
+class _DemoItem(super.id, super.icon) extends SBBTabBarItem {
   @override
   String translate(BuildContext context) => 'Item $id';
 }

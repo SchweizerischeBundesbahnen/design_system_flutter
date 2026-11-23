@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
@@ -75,7 +75,6 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// * [SBBSlideToToggleTriggerMode], defines when the [onChanged] callback is triggered.
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=6666-1023)
 class SBBSlideToToggle extends StatefulWidget {
-  /// Creates an SBB Slide-To-Toggle.
   const SBBSlideToToggle({
     super.key,
     required this.value,
@@ -480,17 +479,11 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
 }
 
 /// Used to clip help widget so it doesn't go over toggle. Long help widgets would otherwise overlap while sliding.
-class _HelpWidgetClipper extends CustomClipper<Rect> {
-  const _HelpWidgetClipper({
-    required this.state,
-    required this.position,
-    required this.toggleSize,
-  });
-
-  final SBBSlideToToggleState state;
-  final double position;
-  final double toggleSize;
-
+class const _HelpWidgetClipper({
+  required final SBBSlideToToggleState state,
+  required final double position,
+  required final double toggleSize,
+}) extends CustomClipper<Rect> {
   @override
   Rect getClip(Size size) {
     final clampedPosition = position.clamp(0.0, 1.0);

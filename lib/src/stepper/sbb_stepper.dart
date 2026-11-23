@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
@@ -81,11 +81,10 @@ class SBBStepper extends StatelessWidget {
     required this.activeStep,
     required this.onStepPressed,
     required this.semanticValueBuilder,
-    required bool isFilledStyle,
+    required this._isFilledStyle,
     this.style,
   }) : assert(steps.length >= 2, 'needs at least two steps to work'),
-       assert(activeStep >= 0 && activeStep < steps.length, 'activeStep needs to be in range of steps'),
-       _isFilledStyle = isFilledStyle;
+       assert(activeStep >= 0 && activeStep < steps.length, 'activeStep needs to be in range of steps');
 
   /// The list of steps shown by this stepper.
   ///
@@ -380,20 +379,12 @@ class _StepCircleState extends State<_StepCircle> {
 ///
 /// Used to center the active step's label under the circle while
 /// preventing the label from overflowing past the stepper's edges.
-class _EdgeClampedCentered extends SingleChildRenderObjectWidget {
-  const _EdgeClampedCentered({
-    required this.activeStep,
-    required this.stepCount,
-    required this.stepCircleSize,
-    super.child,
-  });
-
-  final double stepCircleSize;
-
-  final int activeStep;
-
-  final int stepCount;
-
+class const _EdgeClampedCentered({
+  required final int activeStep,
+  required final int stepCount,
+  required final double stepCircleSize,
+  super.child,
+}) extends SingleChildRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) =>
       _RenderEdgeClampedCenterX(activeStep: activeStep, stepsCount: stepCount, stepCircleSize: stepCircleSize);
@@ -407,22 +398,13 @@ class _EdgeClampedCentered extends SingleChildRenderObjectWidget {
 }
 
 /// Render object used by [_EdgeClampedCentered].
-class _RenderEdgeClampedCenterX extends RenderShiftedBox {
-  _RenderEdgeClampedCenterX({
-    required int activeStep,
-    required int stepsCount,
-    required double stepCircleSize,
-    RenderBox? child,
-  }) : _stepCircleSize = stepCircleSize,
-       _activeStep = activeStep,
-       _stepsCount = stepsCount,
-       super(child);
-
-  double _stepCircleSize;
-
-  int _activeStep;
-
-  int _stepsCount;
+class _RenderEdgeClampedCenterX({
+  required var int _activeStep,
+  required var int _stepsCount,
+  required var double _stepCircleSize,
+  RenderBox? child,
+}) extends RenderShiftedBox {
+  this : super(child);
 
   /// Desired horizontal center of the child in the parent's coordinate space.
   double get centerX =>

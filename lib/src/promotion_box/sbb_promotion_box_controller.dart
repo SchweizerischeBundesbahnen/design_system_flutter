@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 ///
 /// Provide an instance via [SBBPromotionBox.controller]. If no controller is
 /// provided, [SBBPromotionBox] creates one internally.
-class SBBPromotionBoxController extends ValueNotifier<bool> {
-  SBBPromotionBoxController({bool initialValue = true}) : super(initialValue);
+class SBBPromotionBoxController({bool initialValue = true}) extends ValueNotifier<bool> {
+  this : super(initialValue);
 
   /// Shows the promotion box with an animation.
   void show() => value = true;

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
@@ -272,8 +272,8 @@ class _SBBSliderState extends State<SBBSlider> {
   }
 
   Widget _slider(SBBSliderStyle effectiveStyle) {
-    final Set<WidgetState> enabledStates = {..._statesController.value}..remove(WidgetState.disabled);
-    final Set<WidgetState> disabledStates = {..._statesController.value, WidgetState.disabled};
+    final enabledStates = <WidgetState>{..._statesController.value}..remove(WidgetState.disabled);
+    final disabledStates = <WidgetState>{..._statesController.value, WidgetState.disabled};
 
     final inactiveTrackColor = effectiveStyle.trackColor?.resolve(enabledStates);
     final disabledInactiveTrackColor = effectiveStyle.trackColor?.resolve(disabledStates);

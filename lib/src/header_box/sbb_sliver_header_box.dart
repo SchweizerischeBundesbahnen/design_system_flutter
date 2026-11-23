@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/header_box/header_box_app_bar_inset.dart';
 import 'package:sbb_design_system_mobile/src/header_box/header_box_content.dart';
@@ -422,15 +422,13 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     if (kIsWeb) return;
 
     assert(position != null);
-    final RenderSliverPinnedFloatingWidget? renderer = context
-        .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+    final renderer = context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
     renderer?.onScrollingUpdate(position!);
   }
 
   Future<void> onSnapRequested(bool expand) async {
-    final RenderSliverPinnedFloatingWidget? renderer = context
-        .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+    final renderer = context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
     await renderer?.snap(expand ? .forward : .reverse);
   }

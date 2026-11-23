@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 const _thumbBoxShadows = <BoxShadow>[
@@ -66,7 +66,7 @@ class CircleBorderThumbShape extends SliderComponentShape {
 
   void _paintShadow(Offset center, Canvas canvas) {
     final thumbRect = Rect.fromCircle(center: center, radius: radius);
-    for (final BoxShadow shadow in _thumbBoxShadows) {
+    for (final shadow in _thumbBoxShadows) {
       final shadowRect = thumbRect.shift(shadow.offset);
       final shadowPaint = shadow.toPaint();
       canvas.drawOval(shadowRect, shadowPaint);

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -23,23 +23,26 @@ void main() {
               selectedItem: null,
               items: items,
               onChanged: (_) {},
-              triggerDecoration: SBBInputDecoration(borderType: .standalone),
+              triggerDecoration: SBBDecoration(style: SBBDecorationStyle(borderType: .standalone)),
             ),
             SBBDropdown<int>(
               selectedItem: 1,
               items: items,
               onChanged: (_) {},
-              triggerDecoration: SBBInputDecoration(
+              triggerDecoration: SBBDecoration(
                 labelText: 'Default Value',
                 leadingIconData: SBBIcons.dog_small,
-                borderType: .standalone,
+                style: SBBDecorationStyle(borderType: .standalone),
               ),
             ),
             SBBDropdown<int>(
               selectedItem: 1,
               items: items,
               onChanged: null,
-              triggerDecoration: SBBInputDecoration(labelText: 'Disabled', borderType: .standalone),
+              triggerDecoration: SBBDecoration(
+                labelText: 'Disabled',
+                style: SBBDecorationStyle(borderType: .standalone),
+              ),
             ),
             SBBListHeader('Listed'),
             SBBContentBox(
@@ -54,7 +57,7 @@ void main() {
                       selectedItem: 1,
                       items: items,
                       onChanged: (_) {},
-                      triggerDecoration: SBBInputDecoration(
+                      triggerDecoration: SBBDecoration(
                         labelText: 'Default Value',
                         leadingIconData: SBBIcons.dog_small,
                       ),
@@ -63,7 +66,7 @@ void main() {
                       selectedItem: 1,
                       items: items,
                       onChanged: null,
-                      triggerDecoration: SBBInputDecoration(labelText: 'Disabled'),
+                      triggerDecoration: SBBDecoration(labelText: 'Disabled'),
                     ),
                   ],
                 ),

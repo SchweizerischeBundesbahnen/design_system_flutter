@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -13,9 +13,12 @@ void main() {
   const overridePadding = EdgeInsets.symmetric(horizontal: SBBSpacing.xxSmall);
 
   testWidgets('input_decoration_theme_boxed', (WidgetTester tester) async {
-    const inputDecorationTheme = SBBInputDecorationThemeData(contentPadding: themedPadding);
-    const overrideDecoration = SBBInputDecoration(labelText: 'Component padding', contentPadding: overridePadding);
-    const themedDecoration = SBBInputDecoration(labelText: 'Themed padding');
+    const decorationTheme = SBBDecorationThemeData(style: SBBDecorationStyle(contentPadding: themedPadding));
+    const overrideDecoration = SBBDecoration(
+      labelText: 'Component padding',
+      style: SBBDecorationStyle(contentPadding: overridePadding),
+    );
+    const themedDecoration = SBBDecoration(labelText: 'Themed padding');
 
     final widget = Padding(
       padding: const .symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
@@ -45,13 +48,13 @@ void main() {
       tester,
       'input_decoration_theme_boxed',
       find.byType(Column).first,
-      wrap: (w) => _ThemedTestApp(inputDecorationTheme: inputDecorationTheme, child: w),
+      wrap: (w) => _ThemedTestApp(decorationTheme: decorationTheme, child: w),
     );
   });
 
   testWidgets('picker_theme_inputs', (WidgetTester tester) async {
     const pickerTheme = SBBPickerThemeData(
-      triggerDecorationTheme: SBBInputDecorationThemeData(contentPadding: themedPadding),
+      triggerDecorationStyle: SBBDecorationStyle(contentPadding: themedPadding),
       triggerStyle: SBBDecoratedTextStyle(
         valueTextStyle: TextStyle(fontSize: 24.0, height: 1.0, fontStyle: .italic),
         valueForegroundColor: WidgetStatePropertyAll(SBBColors.violet),
@@ -60,8 +63,11 @@ void main() {
     );
     final date = DateTime(2024, 1, 1, 12, 30);
     const time = TimeOfDay(hour: 12, minute: 30);
-    const overrideDecoration = SBBInputDecoration(labelText: 'Component padding', contentPadding: overridePadding);
-    const themedDecoration = SBBInputDecoration(labelText: 'Themed padding');
+    const overrideDecoration = SBBDecoration(
+      labelText: 'Component padding',
+      style: SBBDecorationStyle(contentPadding: overridePadding),
+    );
+    const themedDecoration = SBBDecoration(labelText: 'Themed padding');
 
     final widget = Padding(
       padding: const .symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
@@ -102,17 +108,17 @@ void main() {
 
 /// Like [TestApp], but with custom SBB theme data applied to both brightnesses.
 class _ThemedTestApp extends StatelessWidget {
-  const _ThemedTestApp({required this.child, this.inputDecorationTheme, this.pickerTheme});
+  const _ThemedTestApp({required this.child, this.decorationTheme, this.pickerTheme});
 
   final Widget child;
-  final SBBInputDecorationThemeData? inputDecorationTheme;
+  final SBBDecorationThemeData? decorationTheme;
   final SBBPickerThemeData? pickerTheme;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: SBBTheme.light(inputDecorationTheme: inputDecorationTheme, pickerTheme: pickerTheme),
-      darkTheme: SBBTheme.dark(inputDecorationTheme: inputDecorationTheme, pickerTheme: pickerTheme),
+      theme: SBBTheme.light(decorationTheme: decorationTheme, pickerTheme: pickerTheme),
+      darkTheme: SBBTheme.dark(decorationTheme: decorationTheme, pickerTheme: pickerTheme),
       debugShowCheckedModeBanner: false,
       locale: const Locale('en'),
       builder: (_, navigator) => MediaQuery(

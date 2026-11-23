@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -42,13 +42,13 @@ class _DecoratedPageState extends State<DecoratedPage> {
                 context: context,
                 items: [
                   SBBDecorated(
-                    decoration: SBBInputDecoration(labelText: 'Empty'),
+                    decoration: SBBDecoration(labelText: 'Empty'),
                     isEmpty: true,
                     onTap: () => sbbToast.show(titleText: 'Empty'),
                     child: const _Route(from: 'Bern', to: 'Zürich HB'),
                   ),
                   SBBDecorated(
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'With Placeholder',
                       placeholderText: 'Nothing selected',
                     ),
@@ -57,7 +57,7 @@ class _DecoratedPageState extends State<DecoratedPage> {
                     child: const _Route(from: 'Bern', to: 'Zürich HB'),
                   ),
                   SBBDecorated(
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'Status',
                       leadingIconData: SBBIcons.dog_small,
                     ),
@@ -66,7 +66,7 @@ class _DecoratedPageState extends State<DecoratedPage> {
                     child: SBBStatus(state: .success, labelText: 'On time\nsd'),
                   ),
                   SBBDecorated(
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'Custom Layout',
                       leadingIconData: SBBIcons.dog_small,
                       trailingIconData: SBBIcons.chevron_small_right_circle_small,
@@ -75,7 +75,7 @@ class _DecoratedPageState extends State<DecoratedPage> {
                     child: const _Route(from: 'Bern', to: 'Zürich HB'),
                   ),
                   SBBDecorated(
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'Error',
                       errorText: 'This is an error!',
                       leadingIconData: SBBIcons.dog_small,
@@ -84,17 +84,19 @@ class _DecoratedPageState extends State<DecoratedPage> {
                     child: const _Route(from: 'Bern', to: 'Zürich HB'),
                   ),
                   SBBDecorated(
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'Disabled',
                       leadingIconData: SBBIcons.dog_small,
                     ),
                     child: const _Route(from: 'Bern', to: 'Zürich HB'),
                   ),
                   SBBDecorated(
-                    decoration: SBBInputDecoration(
+                    decoration: SBBDecoration(
                       labelText: 'Top Aligned Affixes',
                       leadingIconData: SBBIcons.dog_small,
-                      contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+                      style: SBBDecorationStyle(
+                        contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+                      ),
                     ),
                     topAlignAffixes: true,
                     onTap: () => sbbToast.show(titleText: 'Top Aligned Affixes'),
@@ -111,10 +113,12 @@ class _DecoratedPageState extends State<DecoratedPage> {
                   SizedBox(
                     height: 120.0,
                     child: SBBDecorated(
-                      decoration: SBBInputDecoration(
+                      decoration: SBBDecoration(
                         labelText: 'Expands',
                         leadingIconData: SBBIcons.dog_small,
-                        contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+                        style: SBBDecorationStyle(
+                          contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+                        ),
                       ),
                       expands: true,
                       topAlignAffixes: true,
@@ -132,7 +136,7 @@ class _DecoratedPageState extends State<DecoratedPage> {
             spacing: SBBSpacing.xSmall,
             children: [
               SBBDecoratedBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'Empty',
                   leadingIconData: SBBIcons.unicorn_small,
                 ),
@@ -141,7 +145,7 @@ class _DecoratedPageState extends State<DecoratedPage> {
                 child: const _Route(from: 'Bern', to: 'Zürich HB'),
               ),
               SBBDecoratedBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'Status',
                   leadingIconData: SBBIcons.unicorn_small,
                   trailingIconData: SBBIcons.circle_information_small_small,
@@ -150,7 +154,7 @@ class _DecoratedPageState extends State<DecoratedPage> {
                 child: SBBStatus(state: .warning, labelText: 'Delayed by 5 min'),
               ),
               SBBDecoratedBoxed(
-                decoration: SBBInputDecoration(
+                decoration: SBBDecoration(
                   labelText: 'With Error',
                   errorText: 'Error Text',
                   leadingIconData: SBBIcons.unicorn_small,
@@ -159,7 +163,7 @@ class _DecoratedPageState extends State<DecoratedPage> {
                 child: const _Route(from: 'Bern', to: 'Zürich HB'),
               ),
               SBBDecoratedBoxed(
-                decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
+                decoration: SBBDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
                 child: const _Route(from: 'Bern', to: 'Zürich HB'),
               ),
             ],
@@ -168,9 +172,11 @@ class _DecoratedPageState extends State<DecoratedPage> {
           SBBListHeader('With an interactive child'),
           SBBContentBox(
             child: SBBDecorated(
-              decoration: SBBInputDecoration(
+              decoration: SBBDecoration(
                 labelText: 'Tags',
-                contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall, bottom: SBBSpacing.xSmall),
+                style: SBBDecorationStyle(
+                  contentPadding: .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall, bottom: SBBSpacing.xSmall),
+                ),
               ),
               topAlignAffixes: true,
               // The child handles its own taps. An empty callback keeps the field

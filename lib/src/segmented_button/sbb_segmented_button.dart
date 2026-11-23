@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/semantics.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
@@ -118,7 +118,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     final backgroundColor = style.backgroundColor?.resolve(_states);
     final borderColor = style.borderColor?.resolve(_states);
 
-    final List<Widget> children = [];
+    final children = <Widget>[];
     for (var i = 0; i < widget.segments.length; i++) {
       final segment = widget.segments[i];
       children.add(

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const sbbIconSizeSmall = 24.0;
 const sbbIconSizeMedium = 36.0;

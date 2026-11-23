@@ -1,6 +1,5 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
 
 /// A widget that wraps the [SBBAutocompletion] text field and continuously
@@ -31,14 +30,10 @@ class AutocompletionTarget extends StatelessWidget {
   }
 }
 
-class _RenderAutocompletionTargetWidget extends SingleChildRenderObjectWidget {
-  const _RenderAutocompletionTargetWidget({
-    required this.link,
-    super.child,
-  });
-
-  final AutocompletionLink link;
-
+class const _RenderAutocompletionTargetWidget({
+  required final AutocompletionLink link,
+  super.child,
+}) extends SingleChildRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) => _RenderAutocompletionTarget(link: link);
 
@@ -51,11 +46,7 @@ class _RenderAutocompletionTargetWidget extends SingleChildRenderObjectWidget {
   }
 }
 
-class _RenderAutocompletionTarget extends RenderProxyBox {
-  _RenderAutocompletionTarget({required AutocompletionLink link}) : _link = link;
-
-  AutocompletionLink _link;
-
+class _RenderAutocompletionTarget({required var AutocompletionLink _link}) extends RenderProxyBox {
   AutocompletionLink get link => _link;
 
   set link(AutocompletionLink value) {

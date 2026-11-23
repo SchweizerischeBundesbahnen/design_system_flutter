@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -46,83 +46,92 @@ void main() {
   });
 }
 
-List<Widget> _dateInputItems({required SBBInputBorderType borderType}) {
+List<Widget> _dateInputItems({required SBBDecorationBorderType borderType}) {
   final initialDate = DateTime(2024, 07, 03);
   final minimumDate = DateTime(2024, 08, 01);
   final maximumDate = DateTime(2024, 07, 01);
   return [
     SBBDateInput(
       onDateChanged: (_) {},
-      triggerDecoration: SBBInputDecoration(borderType: borderType),
+      triggerDecoration: SBBDecoration(style: SBBDecorationStyle(borderType: borderType)),
     ),
     SBBDateInput(
       value: initialDate,
       onDateChanged: (_) {},
-      triggerDecoration: SBBInputDecoration(borderType: borderType),
+      triggerDecoration: SBBDecoration(style: SBBDecorationStyle(borderType: borderType)),
     ),
     SBBDateInput(
-      triggerDecoration: SBBInputDecoration(placeholderText: 'Hint only', borderType: borderType),
+      triggerDecoration: SBBDecoration(
+        placeholderText: 'Hint only',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onDateChanged: (_) {},
     ),
     SBBDateInput(
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Label and Hint',
         placeholderText: 'Label and Hint',
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateChanged: (_) {},
     ),
     SBBDateInput(
       value: initialDate,
-      triggerDecoration: SBBInputDecoration(labelText: 'Label and Value', borderType: borderType),
+      triggerDecoration: SBBDecoration(
+        labelText: 'Label and Value',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onDateChanged: (_) {},
     ),
     SBBDateInput(
       value: initialDate,
-      triggerDecoration: SBBInputDecoration(labelText: 'Custom date format', borderType: borderType),
+      triggerDecoration: SBBDecoration(
+        labelText: 'Custom date format',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       dateFormat: DateFormat('dd.MM.yy'),
       onDateChanged: (_) {},
     ),
     SBBDateInput(
       value: initialDate,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Error',
         errorText: 'Error',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateChanged: (_) {},
     ),
     SBBDateInput(
       value: initialDate,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Disabled',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateChanged: null,
     ),
     SBBDateInput(
       value: initialDate,
       minimumDate: minimumDate,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Initial date before minimum date',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateChanged: (_) {},
     ),
     SBBDateInput(
       value: initialDate,
       maximumDate: maximumDate,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Initial date after maximum date',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onDateChanged: (_) {},
     ),

@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Defines the visual properties of [SBBHeaderBox].
@@ -43,7 +43,7 @@ class SBBHeaderBoxStyle {
     this.margin,
   });
 
-  factory SBBHeaderBoxStyle.$default({required SBBBaseStyle baseStyle}) {
+  factory $default({required SBBBaseStyle baseStyle}) {
     return SBBHeaderBoxStyle(
       titleTextStyle: baseStyle.textTheme.mediumBold?.copyWith(overflow: .ellipsis),
       titleForegroundColor: baseStyle.colorScheme.textPrimary,

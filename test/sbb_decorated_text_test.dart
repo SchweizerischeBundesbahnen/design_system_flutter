@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -91,7 +91,7 @@ void main() {
           SBBDecoratedTextBoxed(
             key: tappableKey,
             value: 'Value',
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Default',
               leadingIconData: SBBIcons.unicorn_small,
             ),
@@ -99,7 +99,7 @@ void main() {
           ),
           SBBDecoratedTextBoxed(
             value: '',
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'With Placeholder',
               placeholderText: 'Placeholder',
               leadingIconData: SBBIcons.unicorn_small,
@@ -108,7 +108,7 @@ void main() {
           ),
           SBBDecoratedTextBoxed(
             value: 'Value',
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'With Trailing Icon',
               leadingIconData: SBBIcons.unicorn_small,
               trailingIconData: SBBIcons.circle_information_small_small,
@@ -117,7 +117,7 @@ void main() {
           ),
           SBBDecoratedTextBoxed(
             value: 'With Error',
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Error',
               errorText: 'Error Text',
               leadingIconData: SBBIcons.unicorn_small,
@@ -127,7 +127,7 @@ void main() {
           SBBDecoratedTextBoxed(
             value: 'Disabled',
             onTap: null,
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Disabled',
               leadingIconData: SBBIcons.unicorn_small,
             ),
@@ -157,65 +157,76 @@ void main() {
   });
 }
 
-List<Widget> _decoratedTextItems({required ValueKey<String> tappableItemKey, required SBBInputBorderType borderType}) {
+List<Widget> _decoratedTextItems({
+  required ValueKey<String> tappableItemKey,
+  required SBBDecorationBorderType borderType,
+}) {
   return [
     SBBDecoratedText(
       key: tappableItemKey,
       value: 'Value',
-      decoration: SBBInputDecoration(labelText: 'Default', borderType: borderType),
+      decoration: SBBDecoration(
+        labelText: 'Default',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onTap: () {},
     ),
     SBBDecoratedText(
       value: '',
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Placeholder',
         placeholderText: 'Placeholder',
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTap: () {},
     ),
     SBBDecoratedText(
       value: 'Value',
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Leading Icon',
         leadingIconData: SBBIcons.dog_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTap: () {},
     ),
     SBBDecoratedText(
       value: 'Value',
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'With Trailing Icon',
         leadingIconData: SBBIcons.dog_small,
         trailingIconData: SBBIcons.chevron_small_right_circle_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTap: () {},
     ),
     SBBDecoratedText(
       value: 'Value',
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'Error',
         errorText: 'This is an error!',
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTap: () {},
     ),
     SBBDecoratedText(
       value: 'Value',
-      decoration: SBBInputDecoration(labelText: 'Disabled', borderType: borderType),
+      decoration: SBBDecoration(
+        labelText: 'Disabled',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onTap: null,
     ),
     SBBDecoratedText(
       value: 'I am \nmulti \nline',
       maxLines: 3,
       minLines: 3,
-      decoration: SBBInputDecoration(
+      decoration: SBBDecoration(
         labelText: 'Multiline',
         leadingIconData: SBBIcons.dog_small,
-        contentPadding: EdgeInsets.only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
-        borderType: borderType,
+        style: SBBDecorationStyle(
+          contentPadding: EdgeInsets.only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+          borderType: borderType,
+        ),
       ),
       onTap: () {},
     ),

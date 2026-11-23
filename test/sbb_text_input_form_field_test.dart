@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -23,27 +23,27 @@ void main() {
                       context: context,
                       items: [
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'Default',
                             leadingIconData: SBBIcons.unicorn_small,
                           ),
                         ),
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'With Trailing Icon',
                             leadingIconData: SBBIcons.unicorn_small,
                             trailingIconData: SBBIcons.circle_information_small_small,
                           ),
                         ),
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'With Placeholder',
                             placeholderText: 'Placeholder',
                             leadingIconData: SBBIcons.unicorn_small,
                           ),
                         ),
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'With Validation',
                             leadingIconData: SBBIcons.unicorn_small,
                           ),

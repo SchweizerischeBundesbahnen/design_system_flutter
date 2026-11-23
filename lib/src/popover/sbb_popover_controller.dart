@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 ///
 /// Provide an instance via [SBBPopover.controller]. If no controller is
 /// provided, [SBBPopover] creates one internally.
-class SBBPopoverController extends ValueNotifier<bool> {
-  SBBPopoverController({bool initialValue = false}) : super(initialValue);
+class SBBPopoverController({bool initialValue = false}) extends ValueNotifier<bool> {
+  this : super(initialValue);
 
   /// Shows the popover with an animation.
   void show() => value = true;

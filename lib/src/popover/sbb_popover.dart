@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' show FlutterView;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
@@ -286,7 +286,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     final renderBox = _targetKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null || !renderBox.attached || !renderBox.hasSize) return;
     // Use renderBox overlay as ancestor for multiple navigator positioning
-    final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+    final overlay = Overlay.of(context).context.findRenderObject();
     _targetPosition = renderBox.localToGlobal(.zero, ancestor: overlay);
     _targetSize = renderBox.size;
   }
@@ -341,7 +341,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
   /// Assembles the popover content: an optional header row (mirroring
   /// [SBBBottomSheet]'s contract) above the [SBBPopover.builder] body.
   Widget _buildContent(BuildContext context, SBBPopoverStyle style) {
-    final EdgeInsets padding = style.padding ?? .zero;
+    final padding = style.padding ?? .zero;
 
     final body = widget.builder(context, _effectiveController.hide);
 

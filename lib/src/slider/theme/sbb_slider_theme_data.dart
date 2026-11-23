@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBSlider].
@@ -9,9 +9,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbSliderTheme`.
 @immutable
 class SBBSliderThemeData extends ThemeExtension<SBBSliderThemeData> with Diagnosticable {
-  /// Creates an [SBBSliderThemeData].
-  ///
-  /// The [style] may be null.
   const SBBSliderThemeData({this.style});
 
   /// Overrides for the slider's default style.

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:intl/intl.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
@@ -17,7 +17,6 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 /// * [SBBTimePicker], variant for time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBDatePicker extends StatefulWidget {
-  /// Constructs an [SBBDatePicker].
   SBBDatePicker({
     super.key,
     required this.onDateChanged,

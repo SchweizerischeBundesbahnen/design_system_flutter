@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
 
 /// Signature for a function that builds a single suggestion list item.
-typedef AutocompletionItemBuilder =
-    Widget Function({
-      required VoidCallback onPressed,
-      required VoidCallback onCallToAction,
-      required bool isFavorite,
-    });
+typedef AutocompletionItemBuilder = Widget Function({
+  required VoidCallback onPressed,
+  required VoidCallback onCallToAction,
+  required bool isFavorite,
+});
 
 /// Manages the [OverlayPortal]-based suggestions drop-down for
 /// [SBBAutocompletion].

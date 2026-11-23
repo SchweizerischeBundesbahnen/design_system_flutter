@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_design_system_mobile_example/native_app.dart';
 import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -18,7 +18,7 @@ class ThemeContextDropdown extends StatelessWidget {
       builder: (context, appState, _) {
         return SBBDropdown<SBBThemeContext>(
           sheetTitleText: "Choose the theme's context",
-          triggerDecoration: const SBBInputDecoration(labelText: 'Context'),
+          triggerDecoration: const SBBDecoration(labelText: 'Context'),
           selectedItem: appState.themeContext,
           items: _themeContexts,
           onChanged: (value) => Provider.of<AppState>(context, listen: false).updateThemeContext(value!),

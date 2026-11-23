@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The theme data for [SBBPicker], [SBBDatePicker], [SBBTimePicker],
@@ -13,7 +13,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 class SBBPickerThemeData extends ThemeExtension<SBBPickerThemeData> with Diagnosticable {
   const SBBPickerThemeData({
     this.pickerStyle,
-    this.triggerDecorationTheme,
+    this.triggerDecorationStyle,
     this.triggerStyle,
     this.sheetStyle,
   });
@@ -25,23 +25,24 @@ class SBBPickerThemeData extends ThemeExtension<SBBPickerThemeData> with Diagnos
   /// If [pickerStyle] is null, then this theme doesn't override anything.
   final SBBPickerStyle? pickerStyle;
 
-  /// Overrides for the trigger's decoration default theme.
+  /// Overrides for the trigger's decoration style.
   ///
-  /// Non-null properties override the default values.
+  /// Non-null properties override the values of [SBBDecoratedTextThemeData.decorationStyle]
+  /// and [SBBDecorationThemeData.style].
   ///
-  /// If [triggerDecorationTheme] is null, then this theme doesn't override anything.
-  final SBBInputDecorationThemeData? triggerDecorationTheme;
+  /// If [triggerDecorationStyle] is null, then this theme doesn't override anything.
+  final SBBDecorationStyle? triggerDecorationStyle;
 
-  /// Overrides for the trigger's decorated text default style.
+  /// Overrides for the trigger's decorated text style.
   ///
-  /// Non-null properties override the default values.
+  /// Non-null properties override the values of [SBBDecoratedTextThemeData.style].
   ///
   /// If [triggerStyle] is null, then this theme doesn't override anything.
   final SBBDecoratedTextStyle? triggerStyle;
 
-  /// Overrides for the bottom sheet's default style.
+  /// Overrides for the bottom sheet's style.
   ///
-  /// Non-null properties override the default values.
+  /// Non-null properties override the values of [SBBBottomSheetThemeData.style].
   ///
   /// If [sheetStyle] is null, then this theme doesn't override anything.
   final SBBBottomSheetStyle? sheetStyle;
@@ -49,13 +50,13 @@ class SBBPickerThemeData extends ThemeExtension<SBBPickerThemeData> with Diagnos
   @override
   SBBPickerThemeData copyWith({
     SBBPickerStyle? pickerStyle,
-    SBBInputDecorationThemeData? triggerDecorationTheme,
+    SBBDecorationStyle? triggerDecorationStyle,
     SBBDecoratedTextStyle? triggerStyle,
     SBBBottomSheetStyle? sheetStyle,
   }) {
     return SBBPickerThemeData(
       pickerStyle: pickerStyle ?? this.pickerStyle,
-      triggerDecorationTheme: triggerDecorationTheme ?? this.triggerDecorationTheme,
+      triggerDecorationStyle: triggerDecorationStyle ?? this.triggerDecorationStyle,
       triggerStyle: triggerStyle ?? this.triggerStyle,
       sheetStyle: sheetStyle ?? this.sheetStyle,
     );
@@ -66,14 +67,14 @@ class SBBPickerThemeData extends ThemeExtension<SBBPickerThemeData> with Diagnos
     if (other == null) return this;
     return SBBPickerThemeData(
       pickerStyle: pickerStyle?.lerp(other.pickerStyle, t),
-      triggerDecorationTheme: triggerDecorationTheme?.lerp(other.triggerDecorationTheme, t),
+      triggerDecorationStyle: SBBDecorationStyle.lerp(triggerDecorationStyle, other.triggerDecorationStyle, t),
       triggerStyle: SBBDecoratedTextStyle.lerp(triggerStyle, other.triggerStyle, t),
       sheetStyle: SBBBottomSheetStyle.lerp(sheetStyle, other.sheetStyle, t),
     );
   }
 
   @override
-  int get hashCode => Object.hash(pickerStyle, triggerDecorationTheme, triggerStyle, sheetStyle);
+  int get hashCode => Object.hash(pickerStyle, triggerDecorationStyle, triggerStyle, sheetStyle);
 
   @override
   bool operator ==(Object other) {
@@ -81,7 +82,7 @@ class SBBPickerThemeData extends ThemeExtension<SBBPickerThemeData> with Diagnos
     if (other.runtimeType != runtimeType) return false;
     return other is SBBPickerThemeData &&
         other.pickerStyle == pickerStyle &&
-        other.triggerDecorationTheme == triggerDecorationTheme &&
+        other.triggerDecorationStyle == triggerDecorationStyle &&
         other.triggerStyle == triggerStyle &&
         other.sheetStyle == sheetStyle;
   }
@@ -92,8 +93,8 @@ extension SBBPickerThemeDataX on SBBPickerThemeData {
     if (other == null) return this;
     return copyWith(
       pickerStyle: pickerStyle?.merge(other.pickerStyle) ?? other.pickerStyle,
-      triggerDecorationTheme:
-          triggerDecorationTheme?.merge(other.triggerDecorationTheme) ?? other.triggerDecorationTheme,
+      triggerDecorationStyle:
+          triggerDecorationStyle?.merge(other.triggerDecorationStyle) ?? other.triggerDecorationStyle,
       triggerStyle: triggerStyle?.merge(other.triggerStyle) ?? other.triggerStyle,
       sheetStyle: sheetStyle?.merge(other.sheetStyle) ?? other.sheetStyle,
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/sbb_switch_style.dart';
 
 /// The ThemeData for the [SBBSwitch].
@@ -9,9 +9,6 @@ import 'package:sbb_design_system_mobile/src/switch/theme/sbb_switch_style.dart'
 /// To access this in your application, use `Theme.of(context).sbbSwitchTheme`.
 @immutable
 class SBBSwitchThemeData extends ThemeExtension<SBBSwitchThemeData> with Diagnosticable {
-  /// Creates an [SBBSwitchThemeData].
-  ///
-  /// The [style] may be null.
   const SBBSwitchThemeData({this.style});
 
   /// Overrides for the switch's default style.

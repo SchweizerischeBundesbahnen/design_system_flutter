@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
@@ -64,7 +64,7 @@ class SBBStatus extends StatelessWidget {
   /// Creates an alert status indicator.
   ///
   /// The default icon is [SBBIcons.circle_cross_small].
-  factory SBBStatus.alert({
+  factory alert({
     Key? key,
     Widget? label,
     String? labelText,
@@ -86,7 +86,7 @@ class SBBStatus extends StatelessWidget {
   /// Creates a warning status indicator.
   ///
   /// The default icon is [SBBIcons.circle_exclamation_point_small].
-  factory SBBStatus.warning({
+  factory warning({
     Key? key,
     Widget? label,
     String? labelText,
@@ -108,7 +108,7 @@ class SBBStatus extends StatelessWidget {
   /// Creates a success status indicator.
   ///
   /// The default icon is [SBBIcons.circle_tick_small].
-  factory SBBStatus.success({
+  factory success({
     Key? key,
     Widget? label,
     String? labelText,
@@ -130,7 +130,7 @@ class SBBStatus extends StatelessWidget {
   /// Creates an information status indicator.
   ///
   /// The default icon is [SBBIcons.circle_information_small].
-  factory SBBStatus.information({
+  factory information({
     Key? key,
     Widget? label,
     String? labelText,

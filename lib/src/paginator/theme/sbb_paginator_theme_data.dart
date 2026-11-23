@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBPaginator].
@@ -9,9 +9,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbPaginatorTheme`.
 @immutable
 class SBBPaginatorThemeData extends ThemeExtension<SBBPaginatorThemeData> with Diagnosticable {
-  /// Creates an [SBBPaginatorThemeData].
-  ///
-  /// The [style] may be null.
   const SBBPaginatorThemeData({this.style});
 
   /// Overrides for the paginator's default style.

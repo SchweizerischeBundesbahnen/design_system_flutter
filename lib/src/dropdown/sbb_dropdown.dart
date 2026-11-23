@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
@@ -75,14 +75,14 @@ class SBBDropdown<T> extends StatelessWidget {
   /// Decoration applied to the trigger field.
   ///
   /// Customises the label, placeholder, icons, error text, and other visual
-  /// elements of the trigger. See [SBBInputDecoration] for available options.
+  /// elements of the trigger. See [SBBDecoration] for available options.
   ///
-  /// When neither [SBBInputDecoration.trailing] nor
-  /// [SBBInputDecoration.trailingIconData] is set, a
+  /// When neither [SBBDecoration.trailing] nor
+  /// [SBBDecoration.trailingIconData] is set, a
   /// [SBBIcons.chevron_small_down_small] icon is added automatically.
   ///
-  /// Theme defaults are applied from [SBBDropdownThemeData.triggerDecorationTheme].
-  final SBBInputDecoration? triggerDecoration;
+  /// Theme defaults are applied from [SBBDropdownThemeData.triggerDecorationStyle].
+  final SBBDecoration? triggerDecoration;
 
   /// Customizes the visual appearance of the trigger field.
   ///
@@ -160,13 +160,14 @@ class SBBDropdown<T> extends StatelessWidget {
   }
 
   SBBDecoratedTextStyle? _effectiveTriggerStyle(BuildContext context) {
-    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme.triggerStyle!;
-    return themeTriggerStyle.merge(triggerStyle);
+    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme.triggerStyle;
+    return themeTriggerStyle?.merge(triggerStyle) ?? triggerStyle;
   }
 
-  SBBInputDecoration _effectiveTriggerDecoration(BuildContext context) {
-    final themeDecoration = Theme.of(context).sbbDropdownTheme.triggerDecorationTheme!;
-    final base = (triggerDecoration ?? const SBBInputDecoration()).applyThemeValues(themeDecoration);
+  SBBDecoration _effectiveTriggerDecoration(BuildContext context) {
+    final themeDecorationStyle = Theme.of(context).sbbDropdownTheme.triggerDecorationStyle;
+    final decoration = triggerDecoration ?? const SBBDecoration();
+    final base = decoration.copyWith(style: themeDecorationStyle?.merge(decoration.style));
 
     if (base.trailing != null || base.trailingIconData != null) return base;
 
@@ -235,8 +236,8 @@ class SBBDropdown<T> extends StatelessWidget {
     );
   }
 
-  static SBBBottomSheetStyle _effectiveSheetStyle(SBBBottomSheetStyle? sheetStyle, BuildContext context) {
-    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme.sheetStyle!;
-    return themeDropdownSheetStyle.merge(sheetStyle);
+  static SBBBottomSheetStyle? _effectiveSheetStyle(SBBBottomSheetStyle? sheetStyle, BuildContext context) {
+    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme.sheetStyle;
+    return themeDropdownSheetStyle?.merge(sheetStyle) ?? sheetStyle;
   }
 }

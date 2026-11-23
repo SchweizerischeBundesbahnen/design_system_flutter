@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -49,70 +49,79 @@ void main() {
   });
 }
 
-List<Widget> _timeInputItems({required SBBInputBorderType borderType}) {
+List<Widget> _timeInputItems({required SBBDecorationBorderType borderType}) {
   const initialTime = TimeOfDay(hour: 12, minute: 33);
   const minimumTime = TimeOfDay(hour: 16, minute: 12);
   const maximumTime = TimeOfDay(hour: 08, minute: 43);
   return [
     SBBTimeInput(
       onTimeChanged: (_) {},
-      triggerDecoration: SBBInputDecoration(borderType: borderType),
+      triggerDecoration: SBBDecoration(style: SBBDecorationStyle(borderType: borderType)),
     ),
     SBBTimeInput(
       value: initialTime,
       onTimeChanged: (_) {},
-      triggerDecoration: SBBInputDecoration(borderType: borderType),
+      triggerDecoration: SBBDecoration(style: SBBDecorationStyle(borderType: borderType)),
     ),
     SBBTimeInput(
-      triggerDecoration: SBBInputDecoration(placeholderText: 'Hint only', borderType: borderType),
+      triggerDecoration: SBBDecoration(
+        placeholderText: 'Hint only',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onTimeChanged: (_) {},
     ),
     SBBTimeInput(
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Label and Hint',
         placeholderText: 'Label and Hint',
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTimeChanged: (_) {},
     ),
     SBBTimeInput(
       value: initialTime,
-      triggerDecoration: SBBInputDecoration(labelText: 'Label and Value', borderType: borderType),
+      triggerDecoration: SBBDecoration(
+        labelText: 'Label and Value',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onTimeChanged: (_) {},
     ),
     SBBTimeInput(
       value: initialTime,
-      triggerDecoration: SBBInputDecoration(labelText: 'Custom date format', borderType: borderType),
+      triggerDecoration: SBBDecoration(
+        labelText: 'Custom date format',
+        style: SBBDecorationStyle(borderType: borderType),
+      ),
       onTimeChanged: (_) {},
     ),
     SBBTimeInput(
       value: initialTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Error',
         errorText: 'Error',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTimeChanged: (_) {},
     ),
     SBBTimeInput(
       value: initialTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Disabled',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTimeChanged: null,
     ),
     SBBTimeInput(
       value: initialTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Minute interval',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       minuteInterval: 15,
       onTimeChanged: (_) {},
@@ -120,22 +129,22 @@ List<Widget> _timeInputItems({required SBBInputBorderType borderType}) {
     SBBTimeInput(
       value: initialTime,
       minimumTime: minimumTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Initial date before minimum date',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTimeChanged: (_) {},
     ),
     SBBTimeInput(
       value: initialTime,
       maximumTime: maximumTime,
-      triggerDecoration: SBBInputDecoration(
+      triggerDecoration: SBBDecoration(
         labelText: 'Initial date after maximum date',
         leadingIconData: SBBIcons.calendar_small,
         trailingIconData: SBBIcons.arrow_circle_reset_small,
-        borderType: borderType,
+        style: SBBDecorationStyle(borderType: borderType),
       ),
       onTimeChanged: (_) {},
     ),

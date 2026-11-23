@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_scope.dart';
@@ -254,7 +254,7 @@ class _SBBPickerState extends State<SBBPicker> {
     final relativeHighlightedAreaHeight = highlightedAreaHeight / scrollAreaHeight;
     final highlightStart = center - relativeHighlightedAreaHeight * 0.5;
 
-    final List<double> topStops = [start, relativeItemHeight, ...List.filled(3, highlightStart)];
+    final topStops = <double>[start, relativeItemHeight, ...List.filled(3, highlightStart)];
 
     // bottom half mirrors the top
     final bottomStops = topStops.reversed.map((s) => end - s).toList();

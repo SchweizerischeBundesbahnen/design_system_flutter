@@ -146,9 +146,9 @@ class _FloatingPageState extends State<FloatingPage> {
                     child: OverflowBox(
                       maxHeight: .infinity,
                       child: SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          borderType: .standalone,
+                        decoration: SBBDecoration(
                           labelText: 'Origin',
+                          style: SBBDecorationStyle(borderType: .standalone),
                         ),
                       ),
                     ),
@@ -157,9 +157,9 @@ class _FloatingPageState extends State<FloatingPage> {
                     child: OverflowBox(
                       maxHeight: .infinity,
                       child: SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          borderType: .standalone,
+                        decoration: SBBDecoration(
                           labelText: 'Destination',
+                          style: SBBDecorationStyle(borderType: .standalone),
                         ),
                       ),
                     ),

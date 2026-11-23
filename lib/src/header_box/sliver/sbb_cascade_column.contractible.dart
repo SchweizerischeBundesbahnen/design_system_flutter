@@ -1,11 +1,10 @@
 part of 'sbb_cascade_column.dart';
 
-typedef ContractibleBuilder =
-    Widget Function(
-      BuildContext context,
-      SBBContractibleState state,
-      Widget? child,
-    );
+typedef ContractibleBuilder = Widget Function(
+  BuildContext context,
+  SBBContractibleState state,
+  Widget? child,
+);
 
 /// Describes how an [SBBContractible] reacts as its available height decreases.
 enum SBBContractionBehavior {
@@ -314,14 +313,10 @@ class SBBContractibleCrossfade extends StatelessWidget {
   }
 }
 
-class _SBBContractible extends ParentDataWidget<_CascadeColumnParentData> {
-  const _SBBContractible({
-    required super.child,
-    this.stateNotifier,
-  });
-
-  final ValueNotifier<SBBContractibleState>? stateNotifier;
-
+class const _SBBContractible({
+  required super.child,
+  final ValueNotifier<SBBContractibleState>? stateNotifier,
+}) extends ParentDataWidget<_CascadeColumnParentData> {
   @override
   void applyParentData(RenderObject renderObject) {
     final parentData = renderObject.parentData as _CascadeColumnParentData;

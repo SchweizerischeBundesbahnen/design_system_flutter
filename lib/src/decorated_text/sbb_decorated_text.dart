@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorator.dart';
+import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decorator.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Decorated Text.
@@ -38,7 +38,7 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 ///
 /// See also:
 /// * [SBBTextInput] for an editable text field with similar styling
-/// * [SBBInputDecoration] for customizing the decoration surrounding the text
+/// * [SBBDecoration] for customizing the decoration surrounding the text
 /// * [SBBDecoratedTextStyle] for customizing the visual appearance
 /// * [digital.sbb.ch documentation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
 /// * [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236) (internal only)
@@ -74,8 +74,8 @@ class SBBDecoratedText extends StatefulWidget {
   /// The decoration surrounding the displayed text field.
   ///
   /// Includes styling for labels, icons, error states, and other visual elements.
-  /// See [SBBInputDecoration] for customization options.
-  final SBBInputDecoration? decoration;
+  /// See [SBBDecoration] for customization options.
+  final SBBDecoration? decoration;
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
@@ -167,27 +167,18 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
     _statesController.update(WidgetState.error, _hasError);
   }
 
-  /// Returns the effective decoration, automatically setting [SBBFloatingLabelBehavior.always]
-  /// if no [floatingLabelBehavior] is provided, the value is empty, and a placeholder is present.
-  SBBInputDecoration get _effectiveDecoration {
-    final decoration = widget.decoration ?? SBBInputDecoration();
-    if (decoration.floatingLabelBehavior == null &&
-        widget.value.isEmpty &&
-        (decoration.placeholder != null || decoration.placeholderText != null)) {
-      return decoration.copyWith(floatingLabelBehavior: SBBFloatingLabelBehavior.always);
-    }
-    return decoration;
-  }
-
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final bool isMultiline = (widget.maxLines ?? 0) != 1;
+    final isMultiline = (widget.maxLines ?? 0) != 1;
 
-    final themeStyle = Theme.of(context).sbbDecoratedTextTheme.style!;
-    final effectiveStyle = themeStyle.merge(widget.style);
+    final theme = Theme.of(context).sbbDecoratedTextTheme;
+    final effectiveStyle = theme.style!.merge(widget.style);
+
+    final decoration = widget.decoration ?? const SBBDecoration();
+    final decorationStyle = resolveDecorationStyle(context, theme.decorationStyle, decoration.style);
 
     final effectiveInputTextStyle = _effectiveInputTextStyle(effectiveStyle);
     final child = Text(widget.value, maxLines: widget.maxLines, style: effectiveInputTextStyle);
@@ -205,8 +196,9 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
         child: ListenableBuilder(
           listenable: _effectiveFocusNode,
           builder: (context, Widget? child) {
-            return SBBInputDecorator(
-              decoration: _effectiveDecoration,
+            return SBBDecorator(
+              decoration: decoration,
+              style: decorationStyle,
               expands: widget.expands,
               minInputHeight:
                   effectiveInputTextStyle.height! * effectiveInputTextStyle.fontSize! * (widget.minLines ?? 1),
@@ -245,8 +237,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
 /// This variant applies special border styling for a contained appearance:
 /// the border only displays when in an error state, showing a surrounding box.
 ///
-/// The content padding is resolved from [decoration.contentPadding], falling back
-/// to [SBBInputDecorationThemeData.contentPadding].
+/// The content padding is taken from the [SBBDecorationStyle.contentPadding] of the decoration style.
 ///
 /// This is useful for creating grouped form-like layouts with consistent spacing.
 class SBBDecoratedTextBoxed extends SBBDecoratedText {

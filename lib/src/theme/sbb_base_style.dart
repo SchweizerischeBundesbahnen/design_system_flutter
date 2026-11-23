@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Base style used in [SBBTheme].
@@ -13,7 +13,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// * [SBBColorScheme], the color values used by this base style.
 /// * [SBBTheme], helpers to create full ThemeData from an SBB base style.
 class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
-  SBBBaseStyle({
+  const SBBBaseStyle({
     required this.brightness,
     required this.colorScheme,
     required this.textTheme,
@@ -22,18 +22,18 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.textSelectionTheme,
   });
 
-  factory SBBBaseStyle.$default({required Brightness brightness, required SBBThemeContext themeContext}) =>
+  factory $default({required Brightness brightness, required SBBThemeContext themeContext}) =>
       SBBBaseStyle.fromThemeContext(brightness: brightness, context: themeContext);
 
   /// Creates the base style from the provided [SBBThemeContext]
-  factory SBBBaseStyle.fromThemeContext({required Brightness brightness, required SBBThemeContext context}) =>
+  factory fromThemeContext({required Brightness brightness, required SBBThemeContext context}) =>
       SBBBaseStyle.fromColorScheme(
         brightness: brightness,
         colorScheme: context.colorScheme(brightness: brightness),
       );
 
   /// Creates the base style from the provided [SBBColorScheme]
-  factory SBBBaseStyle.fromColorScheme({required Brightness brightness, required SBBColorScheme colorScheme}) {
+  factory fromColorScheme({required Brightness brightness, required SBBColorScheme colorScheme}) {
     return SBBBaseStyle(
       brightness: brightness,
       colorScheme: colorScheme,
@@ -118,14 +118,13 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
 
   SBBBaseStyle merge(SBBBaseStyle? other) {
     return copyWith(
-          brightness: other?.brightness,
-          colorScheme: other?.colorScheme,
-          textTheme: textTheme.merge(other?.textTheme),
-          iconTheme: iconTheme?.merge(other?.iconTheme) ?? other?.iconTheme,
-          dividerTheme: dividerTheme?.merge(other?.dividerTheme) ?? other?.dividerTheme,
-          textSelectionTheme: textSelectionTheme?.merge(other?.textSelectionTheme) ?? other?.textSelectionTheme,
-        )
-        as SBBBaseStyle;
+      brightness: other?.brightness,
+      colorScheme: other?.colorScheme,
+      textTheme: textTheme.merge(other?.textTheme),
+      iconTheme: iconTheme?.merge(other?.iconTheme) ?? other?.iconTheme,
+      dividerTheme: dividerTheme?.merge(other?.dividerTheme) ?? other?.dividerTheme,
+      textSelectionTheme: textSelectionTheme?.merge(other?.textSelectionTheme) ?? other?.textSelectionTheme,
+    ) as SBBBaseStyle;
   }
 }
 

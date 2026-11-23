@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class TabItemWidget extends StatelessWidget {
@@ -46,9 +46,9 @@ class TabItemWidget extends StatelessWidget {
     final warningBgColor = effectiveStyle?.warningItemBackgroundColor ?? SBBColors.red;
     final warningFgColor = effectiveStyle?.warningItemForegroundColor ?? SBBColors.white;
 
-    Color color = SBBColors.transparent;
-    IconData resolvedIcon = icon;
-    Color resolvedIconColor = iconColor ?? SBBColors.transparent;
+    var color = SBBColors.transparent;
+    var resolvedIcon = icon;
+    var resolvedIconColor = iconColor ?? SBBColors.transparent;
 
     if (warning != null && !warning!.shown) {
       color = warningBgColor;

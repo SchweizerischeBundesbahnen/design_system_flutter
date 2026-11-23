@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
@@ -65,7 +65,7 @@ Future<T?> showSBBPopup<T>({
   assert(debugCheckHasSBBBaseStyle(context));
 
   final themeStyle = Theme.of(context).sbbPopupTheme.style!;
-  final SBBPopupStyle resolvedStyle = themeStyle.merge(style);
+  final resolvedStyle = themeStyle.merge(style);
 
   return showDialog<T>(
     context: context,
@@ -196,7 +196,7 @@ class SBBPopup extends StatelessWidget {
     assert(debugCheckHasSBBBaseStyle(context));
 
     final themeStyle = Theme.of(context).sbbPopupTheme.style!;
-    final SBBPopupStyle resolvedStyle = themeStyle.merge(style);
+    final resolvedStyle = themeStyle.merge(style);
 
     // Build actual widgets from convenience parameters
     Widget? leadingWidget = leading;

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// SBB Design System Mobile text theme.
@@ -29,7 +29,7 @@ class SBBTextTheme extends ThemeExtension<SBBTextTheme> {
     this.xxLargeBold,
   });
 
-  factory SBBTextTheme.$default({required SBBColorScheme colorScheme}) {
+  factory $default({required SBBColorScheme colorScheme}) {
     final textColor = colorScheme.textPrimary;
     return SBBTextTheme(
       xxSmallLight: SBBTextStyles.xxSmallLight.copyWith(color: textColor),

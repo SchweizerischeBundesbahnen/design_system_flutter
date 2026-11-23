@@ -8,11 +8,8 @@ typedef AutocompletionInfo = ({
 });
 
 /// Connects a [_AutocompletionTarget] with a [_AutocompletionOverlay].
-class AutocompletionLink extends ValueNotifier<AutocompletionInfo> {
-  AutocompletionLink()
-    : super(
-        (size: Size.zero, offset: Offset.zero),
-      );
+class AutocompletionLink() extends ValueNotifier<AutocompletionInfo> {
+  this : super((size: Size.zero, offset: Offset.zero));
 
   /// Used by [CompositedTransformTarget] / [CompositedTransformFollower] to
   /// keep the overlay pinned to the text field during scroll and layout changes.
