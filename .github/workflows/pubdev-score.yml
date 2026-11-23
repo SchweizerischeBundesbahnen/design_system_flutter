@@ -1,4 +1,4 @@
-# Calculates the PANA score of the package and makes it available after the action has run.
+# Calculates the pana score of the package and writes the report to the job summary.
 
 name: pubdev_score
 
@@ -10,10 +10,18 @@ on:
 jobs:
   scoring:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v7
 
-      - uses: axel-op/dart-package-analyzer@v3
+      - uses: subosito/flutter-action@v2
         with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          channel: stable
+          flutter-version: 3.50.x
+          cache: true
+
+      - name: Install pana
+        run: dart pub global activate pana
+
+      - name: Run pana
+        run: dart pub global run pana --no-warning . | tee -a "$GITHUB_STEP_SUMMARY"
