@@ -10,9 +10,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbTabBarTheme`.
 @immutable
 class SBBTabBarThemeData extends ThemeExtension<SBBTabBarThemeData> with Diagnosticable {
-  /// Creates an [SBBTabBarThemeData].
-  ///
-  /// The [style] may be null.
   const SBBTabBarThemeData({this.style});
 
   /// Overrides for the tab bar's default style.

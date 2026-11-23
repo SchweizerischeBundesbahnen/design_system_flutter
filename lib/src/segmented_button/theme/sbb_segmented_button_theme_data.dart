@@ -11,9 +11,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbSegmentedButtonTheme`.
 @immutable
 class SBBSegmentedButtonThemeData extends ThemeExtension<SBBSegmentedButtonThemeData> with Diagnosticable {
-  /// Creates an [SBBSegmentedButtonThemeData].
-  ///
-  /// The [style] may be null.
   const SBBSegmentedButtonThemeData({this.style, this.filledStyle, this.leadingHorizontalGapWidth});
 
   /// Overrides for the segmented button's default style.

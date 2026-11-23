@@ -14,7 +14,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbDecorationTheme`.
 @immutable
 class SBBDecorationThemeData extends ThemeExtension<SBBDecorationThemeData> with Diagnosticable {
-  /// Creates an [SBBDecorationThemeData].
   const SBBDecorationThemeData({
     this.style,
   });

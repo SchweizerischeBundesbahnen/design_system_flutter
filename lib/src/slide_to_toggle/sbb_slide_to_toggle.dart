@@ -75,7 +75,6 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// * [SBBSlideToToggleTriggerMode], defines when the [onChanged] callback is triggered.
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=6666-1023)
 class SBBSlideToToggle extends StatefulWidget {
-  /// Creates an SBB Slide-To-Toggle.
   const SBBSlideToToggle({
     super.key,
     required this.value,

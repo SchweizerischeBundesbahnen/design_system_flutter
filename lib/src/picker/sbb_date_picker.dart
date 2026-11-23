@@ -17,7 +17,6 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 /// * [SBBTimePicker], variant for time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBDatePicker extends StatefulWidget {
-  /// Constructs an [SBBDatePicker].
   SBBDatePicker({
     super.key,
     required this.onDateChanged,

@@ -26,7 +26,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// For complete control over action appearance and behavior, pass a custom widget
 /// to [SBBToast.show] via the [action] parameter instead.
 class SBBToastAction extends StatefulWidget {
-  /// Creates a [SBBToastAction].
   const SBBToastAction({
     required this.onTap,
     required this.title,

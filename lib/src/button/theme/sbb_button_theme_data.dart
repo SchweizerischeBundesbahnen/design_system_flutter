@@ -11,9 +11,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// This will effectively replace the [FilledButtonThemeData] within the current Theme.
 @immutable
 class SBBPrimaryButtonThemeData extends ThemeExtension<SBBPrimaryButtonThemeData> with Diagnosticable {
-  /// Creates an [SBBPrimaryButtonThemeData].
-  ///
-  /// The [style] may be null.
   const SBBPrimaryButtonThemeData({this.style});
 
   /// Overrides for the button's default style.
@@ -57,9 +54,6 @@ class SBBPrimaryButtonThemeData extends ThemeExtension<SBBPrimaryButtonThemeData
 /// This will effectively replace the [OutlinedButtonThemeData] within the current Theme.
 @immutable
 class SBBSecondaryButtonThemeData extends ThemeExtension<SBBSecondaryButtonThemeData> with Diagnosticable {
-  /// Creates an [SBBSecondaryButtonThemeData].
-  ///
-  /// The [style] may be null.
   const SBBSecondaryButtonThemeData({this.style});
 
   /// Overrides for the button's default style.
@@ -104,9 +98,6 @@ class SBBSecondaryButtonThemeData extends ThemeExtension<SBBSecondaryButtonTheme
 /// This will effectively replace the [TextButtonThemeData] within the current Theme.
 @immutable
 class SBBTertiaryButtonThemeData extends ThemeExtension<SBBTertiaryButtonThemeData> with Diagnosticable {
-  /// Creates an [SBBTertiaryButtonThemeData].
-  ///
-  /// The [style] may be null.
   const SBBTertiaryButtonThemeData({this.style});
 
   /// Overrides for the button's default style.
@@ -148,9 +139,6 @@ class SBBTertiaryButtonThemeData extends ThemeExtension<SBBTertiaryButtonThemeDa
 /// To access this in your application, use `Theme.of(context).accentButtonTheme`.
 @immutable
 class SBBAccentButtonThemeData extends ThemeExtension<SBBAccentButtonThemeData> with Diagnosticable {
-  /// Creates an [SBBAccentButtonThemeData].
-  ///
-  /// The [style] may be null.
   const SBBAccentButtonThemeData({this.style});
 
   /// Overrides for the button's default style.

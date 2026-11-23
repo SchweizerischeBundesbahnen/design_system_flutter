@@ -9,9 +9,6 @@ import 'package:sbb_design_system_mobile/src/switch/theme/sbb_switch_style.dart'
 /// To access this in your application, use `Theme.of(context).sbbSwitchTheme`.
 @immutable
 class SBBSwitchThemeData extends ThemeExtension<SBBSwitchThemeData> with Diagnosticable {
-  /// Creates an [SBBSwitchThemeData].
-  ///
-  /// The [style] may be null.
   const SBBSwitchThemeData({this.style});
 
   /// Overrides for the switch's default style.

@@ -9,7 +9,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbToastTheme`.
 @immutable
 class SBBToastThemeData extends ThemeExtension<SBBToastThemeData> with Diagnosticable {
-  /// Creates an [SBBToastThemeData].
   const SBBToastThemeData({
     this.style,
   });

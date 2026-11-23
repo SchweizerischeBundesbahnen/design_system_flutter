@@ -10,10 +10,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbListItemTheme`.
 @immutable
 class SBBListItemThemeData extends ThemeExtension<SBBListItemThemeData> with Diagnosticable {
-  /// Creates an [SBBListItemThemeData].
-  ///
-  /// The [style], [padding], [trailingHorizontalGapWidth], [leadingHorizontalGapWidth],
-  /// and [subtitleVerticalGapHeight] may be null.
   const SBBListItemThemeData({
     this.style,
   });

@@ -9,7 +9,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbTextInputTheme`.
 @immutable
 class SBBTextInputThemeData extends ThemeExtension<SBBTextInputThemeData> with Diagnosticable {
-  /// Creates an [SBBTextInputThemeData].
   const SBBTextInputThemeData({
     this.style,
     this.decorationStyle,
