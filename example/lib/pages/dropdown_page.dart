@@ -47,8 +47,8 @@ class _DropdownPageState extends State<DropdownPage> {
   }
 
   Widget _componentConfig(BuildContext context) {
-    final inputLabelTextStyle = Theme.of(context).sbbInputDecorationTheme.floatingLabelTextStyle;
-    final inputLabelColor = Theme.of(context).sbbInputDecorationTheme.labelForegroundColor;
+    final inputLabelTextStyle = Theme.of(context).sbbDecorationTheme.style!.floatingLabelTextStyle;
+    final inputLabelColor = Theme.of(context).sbbDecorationTheme.style!.labelForegroundColor;
     return Column(
       mainAxisSize: .min,
       children: SBBDivider.divideItems(
@@ -105,7 +105,7 @@ class _DropdownPageState extends State<DropdownPage> {
             ),
           ),
           SBBTextInput(
-            decoration: SBBInputDecoration(
+            decoration: SBBDecoration(
               labelText: 'Bottom Sheet Title',
             ),
             autofocus: false,
@@ -134,7 +134,7 @@ class _DropdownPageState extends State<DropdownPage> {
           context: context,
           items: [
             SBBDropdown<int>(
-              triggerDecoration: const SBBInputDecoration(labelText: 'Label', placeholderText: 'Placeholder'),
+              triggerDecoration: const SBBDecoration(labelText: 'Label', placeholderText: 'Placeholder'),
               sheetConfig: SBBBottomSheetConfig(
                 leadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
                 showCloseButton: _showCloseButton,
@@ -148,7 +148,7 @@ class _DropdownPageState extends State<DropdownPage> {
               },
             ),
             SBBDropdown<int>(
-              triggerDecoration: const SBBInputDecoration(
+              triggerDecoration: const SBBDecoration(
                 labelText: 'Default Value',
                 leadingIconData: SBBIcons.dog_small,
               ),
@@ -165,7 +165,7 @@ class _DropdownPageState extends State<DropdownPage> {
               },
             ),
             SBBDropdown<int>(
-              triggerDecoration: const SBBInputDecoration(
+              triggerDecoration: const SBBDecoration(
                 labelText: 'Disabled',
                 leadingIconData: SBBIcons.dog_small,
               ),
@@ -186,7 +186,7 @@ class _DropdownPageState extends State<DropdownPage> {
           context: context,
           items: [
             SBBMultiDropdown<int>(
-              triggerDecoration: const SBBInputDecoration(labelText: 'Label', placeholderText: 'Placeholder'),
+              triggerDecoration: const SBBDecoration(labelText: 'Label', placeholderText: 'Placeholder'),
               sheetConfig: SBBBottomSheetConfig(
                 leadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
                 showCloseButton: _showCloseButton,
@@ -200,7 +200,7 @@ class _DropdownPageState extends State<DropdownPage> {
               },
             ),
             SBBMultiDropdown<int>(
-              triggerDecoration: const SBBInputDecoration(
+              triggerDecoration: const SBBDecoration(
                 labelText: 'Default Value',
                 leadingIconData: SBBIcons.dog_small,
               ),
@@ -216,7 +216,7 @@ class _DropdownPageState extends State<DropdownPage> {
               },
             ),
             SBBMultiDropdown<int>(
-              triggerDecoration: const SBBInputDecoration(
+              triggerDecoration: const SBBDecoration(
                 labelText: 'Disabled',
                 leadingIconData: SBBIcons.dog_small,
               ),

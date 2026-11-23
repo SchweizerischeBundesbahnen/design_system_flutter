@@ -9,7 +9,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbMessageTheme`.
 @immutable
 class SBBMessageThemeData extends ThemeExtension<SBBMessageThemeData> with Diagnosticable {
-  /// Creates an [SBBMessageThemeData].
   const SBBMessageThemeData({
     this.style,
   });

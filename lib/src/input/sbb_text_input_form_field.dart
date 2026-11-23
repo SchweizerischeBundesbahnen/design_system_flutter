@@ -27,7 +27,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// Form(
 ///   key: _formKey,
 ///   child: SBBTextInputFormField(
-///     decoration: SBBInputDecoration(
+///     decoration: SBBDecoration(
 ///       label: 'Username',
 ///     ),
 ///     validator: (value) {
@@ -46,7 +46,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// See also:
 ///
 /// * [SBBTextInput], the underlying text input widget
-/// * [SBBInputDecoration] for customizing the decoration
+/// * [SBBDecoration] for customizing the decoration
 /// * [SBBTextInputBoxedFormField], for the boxed variant
 class SBBTextInputFormField extends FormField<String> {
   SBBTextInputFormField({
@@ -54,7 +54,7 @@ class SBBTextInputFormField extends FormField<String> {
     // FIELDS FROM SBBTextInput
     this.controller,
     Object groupId = EditableText,
-    SBBInputDecoration? decoration,
+    SBBDecoration? decoration,
     FocusNode? focusNode,
     TextInputType? keyboardType,
     TextInputAction? textInputAction,
@@ -80,9 +80,7 @@ class SBBTextInputFormField extends FormField<String> {
     TapRegionUpCallback? onTapUpOutside,
     ScrollController? scrollController,
     Iterable<String>? autofillHints,
-    TextStyle? inputTextStyle,
-    WidgetStateProperty<Color?>? inputForegroundColor,
-    bool? enableClearButton,
+    SBBTextInputStyle? style,
     // FIELDS FROM FormField
     String? initialValue,
     this.onChanged,
@@ -116,7 +114,7 @@ class SBBTextInputFormField extends FormField<String> {
              (FormFieldState<String> field) {
                final state = field as _SBBTextInputFormFieldState;
 
-               var effectiveDecoration = decoration ?? const SBBInputDecoration();
+               var effectiveDecoration = decoration ?? const SBBDecoration();
                final errorText = field.errorText;
                if (errorText != null) {
                  effectiveDecoration = errorBuilder != null
@@ -161,9 +159,7 @@ class SBBTextInputFormField extends FormField<String> {
                  onTapUpOutside: onTapUpOutside,
                  scrollController: scrollController,
                  autofillHints: autofillHints,
-                 inputTextStyle: inputTextStyle,
-                 inputForegroundColor: inputForegroundColor,
-                 enableClearButton: enableClearButton,
+                 style: style,
                );
              },
        );
@@ -306,9 +302,7 @@ class SBBTextInputBoxedFormField extends SBBTextInputFormField {
     super.onTapUpOutside,
     super.scrollController,
     super.autofillHints,
-    super.inputTextStyle,
-    super.inputForegroundColor,
-    super.enableClearButton,
+    super.style,
     // FIELDS FROM FormField
     super.initialValue,
     super.onChanged,
@@ -325,7 +319,7 @@ class SBBTextInputBoxedFormField extends SBBTextInputFormField {
          builder: (FormFieldState<String> field) {
            final state = field as _SBBTextInputFormFieldState;
 
-           var effectiveDecoration = decoration ?? const SBBInputDecoration();
+           var effectiveDecoration = decoration ?? const SBBDecoration();
            final errorText = field.errorText;
            if (errorText != null) {
              effectiveDecoration = errorBuilder != null
@@ -370,9 +364,7 @@ class SBBTextInputBoxedFormField extends SBBTextInputFormField {
              onTapUpOutside: onTapUpOutside,
              scrollController: scrollController,
              autofillHints: autofillHints,
-             inputTextStyle: inputTextStyle,
-             inputForegroundColor: inputForegroundColor,
-             enableClearButton: enableClearButton,
+             style: style,
              margin: margin,
            );
          },

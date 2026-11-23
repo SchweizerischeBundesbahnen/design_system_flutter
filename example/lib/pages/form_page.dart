@@ -56,21 +56,21 @@ class _FormPageState extends State<FormPage> {
                       context: context,
                       items: [
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'Default',
                             leadingIconData: SBBIcons.unicorn_small,
                           ),
                           controller: defaultTextEditingController,
                         ),
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'With Trailing Icon',
                             leadingIconData: SBBIcons.unicorn_small,
                             trailingIconData: SBBIcons.circle_information_small_small,
                           ),
                         ),
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             labelText: 'Field with validation',
                             leadingIconData: SBBIcons.unicorn_small,
                           ),
@@ -86,7 +86,7 @@ class _FormPageState extends State<FormPage> {
                           },
                         ),
                         SBBTextInputFormField(
-                          decoration: SBBInputDecoration(
+                          decoration: SBBDecoration(
                             leadingIconData: SBBIcons.unicorn_small,
                             labelText: 'Disabled',
                           ),
@@ -108,14 +108,14 @@ class _FormPageState extends State<FormPage> {
               spacing: SBBSpacing.xSmall,
               children: [
                 SBBTextInputBoxedFormField(
-                  decoration: SBBInputDecoration(
+                  decoration: SBBDecoration(
                     labelText: 'Simple Field',
                     leadingIconData: SBBIcons.unicorn_small,
                   ),
                   controller: defaultTextEditingController,
                 ),
                 SBBTextInputBoxedFormField(
-                  decoration: SBBInputDecoration(
+                  decoration: SBBDecoration(
                     labelText: 'Email (with Validator)',
                     leadingIconData: SBBIcons.unicorn_small,
                   ),
@@ -131,7 +131,7 @@ class _FormPageState extends State<FormPage> {
                   },
                 ),
                 SBBTextInputBoxedFormField(
-                  decoration: SBBInputDecoration(
+                  decoration: SBBDecoration(
                     labelText: 'With Trailing Icon',
                     leadingIconData: SBBIcons.unicorn_small,
                     trailingIconData: SBBIcons.circle_information_small_small,

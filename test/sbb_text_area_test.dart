@@ -23,22 +23,22 @@ void main() {
                     items: [
                       SBBTextInput(
                         key: pressableKey,
-                        decoration: SBBInputDecoration(
-                          contentPadding: .only(top: SBBSpacing.xSmall),
+                        decoration: SBBDecoration(
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                           labelText: 'Label',
+                          style: SBBDecorationStyle(contentPadding: .only(top: SBBSpacing.xSmall)),
                         ),
                         controller: TextEditingController(text: 'Value'),
                         maxLines: 3,
                       ),
                       SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          contentPadding: .only(top: SBBSpacing.xSmall),
+                        decoration: SBBDecoration(
                           errorText: 'This is an error!',
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                           labelText: 'Label',
+                          style: SBBDecorationStyle(contentPadding: .only(top: SBBSpacing.xSmall)),
                         ),
                         controller: TextEditingController(text: 'Value'),
                         maxLines: 2,
@@ -51,28 +51,32 @@ void main() {
               SBBListHeader('Boxed'),
               SBBTextInputBoxed(
                 key: boxedPressableKey,
-                decoration: SBBInputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: SBBSpacing.small,
-                    horizontal: SBBSpacing.medium,
-                  ).copyWith(bottom: 0),
+                decoration: SBBDecoration(
                   leadingIconData: SBBIcons.unicorn_small,
                   trailingIconData: SBBIcons.circle_information_small_small,
                   labelText: 'Label',
+                  style: SBBDecorationStyle(
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: SBBSpacing.small,
+                      horizontal: SBBSpacing.medium,
+                    ).copyWith(bottom: 0),
+                  ),
                 ),
                 controller: TextEditingController(text: 'Value'),
                 maxLines: 3,
               ),
               SBBTextInputBoxed(
-                decoration: SBBInputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: SBBSpacing.small,
-                    horizontal: SBBSpacing.medium,
-                  ).copyWith(bottom: 0),
+                decoration: SBBDecoration(
                   leadingIconData: SBBIcons.unicorn_small,
                   trailingIconData: SBBIcons.circle_information_small_small,
                   labelText: 'Label',
                   errorText: 'This is an error',
+                  style: SBBDecorationStyle(
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: SBBSpacing.small,
+                      horizontal: SBBSpacing.medium,
+                    ).copyWith(bottom: 0),
+                  ),
                 ),
                 controller: TextEditingController(text: 'Value'),
                 maxLines: 3,

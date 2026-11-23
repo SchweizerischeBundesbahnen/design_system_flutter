@@ -9,9 +9,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbSlideToToggleTheme`.
 @immutable
 class SBBSlideToToggleThemeData extends ThemeExtension<SBBSlideToToggleThemeData> with Diagnosticable {
-  /// Creates an [SBBSlideToToggleThemeData].
-  ///
-  /// The [style] may be null.
   const SBBSlideToToggleThemeData({this.style});
 
   /// Overrides for the Slide-To-Toggle's default style.

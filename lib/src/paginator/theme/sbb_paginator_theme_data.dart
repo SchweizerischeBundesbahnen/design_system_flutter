@@ -9,9 +9,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbPaginatorTheme`.
 @immutable
 class SBBPaginatorThemeData extends ThemeExtension<SBBPaginatorThemeData> with Diagnosticable {
-  /// Creates an [SBBPaginatorThemeData].
-  ///
-  /// The [style] may be null.
   const SBBPaginatorThemeData({this.style});
 
   /// Overrides for the paginator's default style.

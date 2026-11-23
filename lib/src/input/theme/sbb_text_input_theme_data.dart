@@ -9,38 +9,31 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// To access this in your application, use `Theme.of(context).sbbTextInputTheme`.
 @immutable
 class SBBTextInputThemeData extends ThemeExtension<SBBTextInputThemeData> with Diagnosticable {
-  /// Creates an [SBBTextInputThemeData].
   const SBBTextInputThemeData({
-    this.inputTextStyle,
-    this.inputForegroundColor,
-    this.enableClearButton,
+    this.style,
+    this.decorationStyle,
   });
 
-  /// The text style for the input text.
+  /// Overrides for the default style of the text input.
   ///
-  /// This applies to the text entered by the user in the text field.
-  final TextStyle? inputTextStyle;
+  /// Non-null properties override the default values.
+  final SBBTextInputStyle? style;
 
-  /// The color of the input text.
+  /// Overrides for the decoration style of all text inputs.
   ///
-  /// This affects the color of the text entered by the user.
-  final WidgetStateProperty<Color?>? inputForegroundColor;
-
-  /// Whether to replace the trailingIconData with a clear button when the input is focused and has content.
+  /// Non-null properties override the values of [SBBDecorationThemeData.style].
   ///
-  /// Defaults to `true`.
-  final bool? enableClearButton;
+  /// If [decorationStyle] is null, then this theme doesn't override anything.
+  final SBBDecorationStyle? decorationStyle;
 
   @override
   SBBTextInputThemeData copyWith({
-    TextStyle? inputTextStyle,
-    WidgetStateProperty<Color?>? inputForegroundColor,
-    bool? enableClearButton,
+    SBBTextInputStyle? style,
+    SBBDecorationStyle? decorationStyle,
   }) {
     return SBBTextInputThemeData(
-      inputTextStyle: inputTextStyle ?? this.inputTextStyle,
-      inputForegroundColor: inputForegroundColor ?? this.inputForegroundColor,
-      enableClearButton: enableClearButton ?? this.enableClearButton,
+      style: style ?? this.style,
+      decorationStyle: decorationStyle ?? this.decorationStyle,
     );
   }
 
@@ -48,32 +41,19 @@ class SBBTextInputThemeData extends ThemeExtension<SBBTextInputThemeData> with D
   SBBTextInputThemeData lerp(SBBTextInputThemeData? other, double t) {
     if (other == null) return this;
     return SBBTextInputThemeData(
-      inputTextStyle: TextStyle.lerp(
-        inputTextStyle,
-        other.inputTextStyle,
-        t,
-      ),
-      inputForegroundColor: WidgetStateProperty.lerp<Color?>(
-        inputForegroundColor,
-        other.inputForegroundColor,
-        t,
-        Color.lerp,
-      ),
-      enableClearButton: t < 0.5 ? enableClearButton : other.enableClearButton,
+      style: SBBTextInputStyle.lerp(style, other.style, t),
+      decorationStyle: SBBDecorationStyle.lerp(decorationStyle, other.decorationStyle, t),
     );
   }
 
   @override
-  int get hashCode => Object.hash(inputTextStyle, inputForegroundColor, enableClearButton);
+  int get hashCode => Object.hash(style, decorationStyle);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
-    return other is SBBTextInputThemeData &&
-        other.inputTextStyle == inputTextStyle &&
-        other.inputForegroundColor == inputForegroundColor &&
-        other.enableClearButton == enableClearButton;
+    return other is SBBTextInputThemeData && other.style == style && other.decorationStyle == decorationStyle;
   }
 }
 
@@ -81,14 +61,13 @@ extension SBBTextInputThemeDataX on SBBTextInputThemeData {
   SBBTextInputThemeData merge(SBBTextInputThemeData? other) {
     if (other == null) return this;
     return copyWith(
-      inputTextStyle: other.inputTextStyle,
-      inputForegroundColor: other.inputForegroundColor,
-      enableClearButton: other.enableClearButton,
+      style: style?.merge(other.style) ?? other.style,
+      decorationStyle: decorationStyle?.merge(other.decorationStyle) ?? other.decorationStyle,
     );
   }
 }
 
 extension SBBTextInputThemeDataThemeDataX on ThemeData {
-  /// Access the [SBBHeaderThemeData] from the current theme.
+  /// Access the [SBBTextInputThemeData] from the current theme.
   SBBTextInputThemeData get sbbTextInputTheme => extension<SBBTextInputThemeData>()!;
 }

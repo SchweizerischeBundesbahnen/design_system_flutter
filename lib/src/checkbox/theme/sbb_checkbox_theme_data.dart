@@ -9,9 +9,6 @@ import 'package:sbb_design_system_mobile/src/checkbox/theme/sbb_checkbox_style.d
 /// To access this in your application, use `Theme.of(context).sbbCheckboxTheme`.
 @immutable
 class SBBCheckboxThemeData extends ThemeExtension<SBBCheckboxThemeData> with Diagnosticable {
-  /// Creates an [SBBCheckboxThemeData].
-  ///
-  /// The [style] may be null.
   const SBBCheckboxThemeData({this.style});
 
   /// Overrides for the checkbox's default style.

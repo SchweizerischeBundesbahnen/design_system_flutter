@@ -1,75 +1,137 @@
-import 'package:flutter/widgets.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-/// Defines the visual properties of an [_SBBDecorator].
+/// Defines the content and the visual properties of the decoration around a decorated component.
 ///
-/// Analog to [SBBInputDecoration] for the [_SBBDecorator].
+/// The decoration consists of a label, a leading and a trailing widget, a placeholder,
+/// an error and a border. It is drawn by the following components:
+///
+/// * [SBBTextInput] and its variants, to enter text
+/// * [SBBDecoratedText], to display a read-only text value
+/// * [SBBDecorated], to decorate an arbitrary widget
+/// * [SBBDropdown] and [SBBMultiDropdown], whose trigger is an [SBBDecoratedText]
+/// * [SBBDateInput], [SBBTimeInput] and [SBBDateTimeInput], whose trigger is an [SBBDecoratedText]
+///
+/// The content is set on this class. The look is set with [style], see
+/// [SBBDecorationStyle] for the order in which widget, component theme and
+/// [SBBDecorationThemeData] values are applied.
 @immutable
 class SBBDecoration {
   const SBBDecoration({
     this.leading,
-    this.trailing,
-    this.placeholder,
+    this.leadingIconData,
     this.label,
+    this.labelText,
+    this.trailing,
+    this.trailingIconData,
+    this.placeholder,
+    this.placeholderText,
     this.error,
-    this.container,
-    this.input,
-  });
+    this.errorText,
+    this.style,
+  }) : assert(
+         leading == null || leadingIconData == null,
+         'leading and leadingIconData are mutually exclusive. Provide only one.',
+       ),
+       assert(
+         label == null || labelText == null,
+         'label and labelText are mutually exclusive. Provide only one.',
+       ),
+       assert(
+         placeholder == null || placeholderText == null,
+         'placeholder and placeholderText are mutually exclusive. Provide only one.',
+       ),
+       assert(
+         error == null || errorText == null,
+         'error and errorText are mutually exclusive. Provide only one.',
+       );
 
   /// An optional widget to display before the input field.
   ///
-  /// The leading widget will be vertically centered on the first baseline
-  /// of the input field.
+  /// Mutually exclusive with [leadingIconData]. Only one of the two can be provided.
   final Widget? leading;
+
+  /// An optional icon to display before the input field.
+  ///
+  /// Mutually exclusive with [leading]. Only one of the two can be provided.
+  final IconData? leadingIconData;
+
+  /// An optional widget to display as the label above the input field.
+  ///
+  /// Mutually exclusive with [labelText]. Only one of the two can be provided.
+  final Widget? label;
+
+  /// Text to display as the label above the input field.
+  ///
+  /// Mutually exclusive with [label]. Only one of the two can be provided.
+  final String? labelText;
 
   /// An optional widget to display after the input field.
   ///
-  /// The trailing widget will be vertically aligned with the baseline
-  /// of the input field.
+  /// Mutually exclusive with [trailingIconData]. If both are provided, trailing takes precedence.
   final Widget? trailing;
 
-  /// An optional widget to display in place of the input when the field
-  /// is focused and empty.
+  /// An optional icon to display after the input field.
   ///
-  /// The placeholder widget is baseline-aligned with where the input would be.
+  /// Mutually exclusive with [trailing]. If both are provided, trailing takes precedence.
+  final IconData? trailingIconData;
+
+  /// An optional widget to display as a hint/placeholder in the input field.
+  ///
+  /// Mutually exclusive with [placeholderText]. Only one of the two can be provided.
   final Widget? placeholder;
 
-  /// An optional widget to display above the input field.
+  /// Text to display as a hint/placeholder in the input field.
   ///
-  /// The label widget is displayed at the top of the decorator box,
-  /// with the same width constraints and x offset as the input field.
-  final Widget? label;
+  /// Mutually exclusive with [placeholder]. Only one of the two can be provided.
+  final String? placeholderText;
 
-  /// An optional error widget to display below the input field.
+  /// An optional widget to display as an error message below the input field.
   ///
-  /// The error widget is displayed at the left edge of the decorator box,
-  /// below the main content (input, leading, trailing).
+  /// Mutually exclusive with [errorText]. Only one of the two can be provided.
   final Widget? error;
 
-  /// The container surrounding the decoration.
-  final Widget? container;
+  /// Text to display as an error message below the input field.
+  ///
+  /// Mutually exclusive with [error]. Only one of the two can be provided.
+  final String? errorText;
 
-  /// The input widget at the center of the decoration.
-  final Widget? input;
+  /// Customizes the visual appearance of this decoration.
+  ///
+  /// Non-null properties override the corresponding properties of the
+  /// component theme and of [SBBDecorationThemeData.style].
+  final SBBDecorationStyle? style;
 
-  /// Creates a copy of this decoration with the given fields replaced
-  /// by the new values.
+  /// The minimum height for input fields.
+  ///
+  /// This value will scale when text scaling is applied.
+  static const double minInputFieldHeight = 48.0;
+
   SBBDecoration copyWith({
     Widget? leading,
-    Widget? trailing,
-    Widget? placeholder,
+    IconData? leadingIconData,
     Widget? label,
+    String? labelText,
+    Widget? trailing,
+    IconData? trailingIconData,
+    Widget? placeholder,
+    String? placeholderText,
     Widget? error,
-    Widget? container,
-    Widget? input,
+    String? errorText,
+    SBBDecorationStyle? style,
   }) {
     return SBBDecoration(
       leading: leading ?? this.leading,
-      trailing: trailing ?? this.trailing,
-      placeholder: placeholder ?? this.placeholder,
+      leadingIconData: leadingIconData ?? this.leadingIconData,
       label: label ?? this.label,
+      labelText: labelText ?? this.labelText,
+      trailing: trailing ?? this.trailing,
+      trailingIconData: trailingIconData ?? this.trailingIconData,
+      placeholder: placeholder ?? this.placeholder,
+      placeholderText: placeholderText ?? this.placeholderText,
       error: error ?? this.error,
-      container: container ?? this.container,
-      input: input ?? this.input,
+      errorText: errorText ?? this.errorText,
+      style: style ?? this.style,
     );
   }
 
@@ -79,14 +141,30 @@ class SBBDecoration {
     if (other.runtimeType != runtimeType) return false;
     return other is SBBDecoration &&
         other.leading == leading &&
-        other.trailing == trailing &&
-        other.placeholder == placeholder &&
+        other.leadingIconData == leadingIconData &&
         other.label == label &&
+        other.labelText == labelText &&
+        other.trailing == trailing &&
+        other.trailingIconData == trailingIconData &&
+        other.placeholder == placeholder &&
+        other.placeholderText == placeholderText &&
         other.error == error &&
-        other.container == container &&
-        other.input == input;
+        other.errorText == errorText &&
+        other.style == style;
   }
 
   @override
-  int get hashCode => Object.hash(leading, trailing, placeholder, label, error, container, input);
+  int get hashCode => Object.hash(
+    leading,
+    leadingIconData,
+    label,
+    labelText,
+    trailing,
+    trailingIconData,
+    placeholder,
+    placeholderText,
+    error,
+    errorText,
+    style,
+  );
 }

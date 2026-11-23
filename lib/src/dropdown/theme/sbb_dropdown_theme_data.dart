@@ -11,40 +11,41 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 @immutable
 class SBBDropdownThemeData extends ThemeExtension<SBBDropdownThemeData> with Diagnosticable {
   const SBBDropdownThemeData({
-    this.triggerDecorationTheme,
+    this.triggerDecorationStyle,
     this.triggerStyle,
     this.sheetStyle,
   });
 
-  /// Overrides for the trigger's decoration default theme.
+  /// Overrides for the trigger's decoration style.
   ///
-  /// Non-null properties override the default values.
+  /// Non-null properties override the values of [SBBDecoratedTextThemeData.decorationStyle]
+  /// and [SBBDecorationThemeData.style].
   ///
-  /// If [triggerDecorationTheme] is null, then this theme doesn't override anything.
-  final SBBInputDecorationThemeData? triggerDecorationTheme;
+  /// If [triggerDecorationStyle] is null, then this theme doesn't override anything.
+  final SBBDecorationStyle? triggerDecorationStyle;
 
-  /// Overrides for the trigger's decorated text default style.
+  /// Overrides for the trigger's decorated text style.
   ///
-  /// Non-null properties override the default values.
+  /// Non-null properties override the values of [SBBDecoratedTextThemeData.style].
   ///
   /// If [triggerStyle] is null, then this theme doesn't override anything.
   final SBBDecoratedTextStyle? triggerStyle;
 
-  /// Overrides for the bottom sheet's default style.
+  /// Overrides for the bottom sheet's style.
   ///
-  /// Non-null properties override the default values.
+  /// Non-null properties override the values of [SBBBottomSheetThemeData.style].
   ///
   /// If [sheetStyle] is null, then this theme doesn't override anything.
   final SBBBottomSheetStyle? sheetStyle;
 
   @override
   SBBDropdownThemeData copyWith({
-    SBBInputDecorationThemeData? triggerDecorationTheme,
+    SBBDecorationStyle? triggerDecorationStyle,
     SBBDecoratedTextStyle? triggerStyle,
     SBBBottomSheetStyle? sheetStyle,
   }) {
     return SBBDropdownThemeData(
-      triggerDecorationTheme: triggerDecorationTheme ?? this.triggerDecorationTheme,
+      triggerDecorationStyle: triggerDecorationStyle ?? this.triggerDecorationStyle,
       triggerStyle: triggerStyle ?? this.triggerStyle,
       sheetStyle: sheetStyle ?? this.sheetStyle,
     );
@@ -54,21 +55,21 @@ class SBBDropdownThemeData extends ThemeExtension<SBBDropdownThemeData> with Dia
   SBBDropdownThemeData lerp(SBBDropdownThemeData? other, double t) {
     if (other == null) return this;
     return SBBDropdownThemeData(
-      triggerDecorationTheme: triggerDecorationTheme?.lerp(other.triggerDecorationTheme, t),
+      triggerDecorationStyle: SBBDecorationStyle.lerp(triggerDecorationStyle, other.triggerDecorationStyle, t),
       triggerStyle: SBBDecoratedTextStyle.lerp(triggerStyle, other.triggerStyle, t),
       sheetStyle: SBBBottomSheetStyle.lerp(sheetStyle, other.sheetStyle, t),
     );
   }
 
   @override
-  int get hashCode => Object.hash(triggerDecorationTheme, triggerStyle, sheetStyle);
+  int get hashCode => Object.hash(triggerDecorationStyle, triggerStyle, sheetStyle);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
     return other is SBBDropdownThemeData &&
-        other.triggerDecorationTheme == triggerDecorationTheme &&
+        other.triggerDecorationStyle == triggerDecorationStyle &&
         other.triggerStyle == triggerStyle &&
         other.sheetStyle == sheetStyle;
   }
@@ -78,8 +79,8 @@ extension SBBDropdownThemeDataX on SBBDropdownThemeData {
   SBBDropdownThemeData merge(SBBDropdownThemeData? other) {
     if (other == null) return this;
     return copyWith(
-      triggerDecorationTheme:
-          triggerDecorationTheme?.merge(other.triggerDecorationTheme) ?? other.triggerDecorationTheme,
+      triggerDecorationStyle:
+          triggerDecorationStyle?.merge(other.triggerDecorationStyle) ?? other.triggerDecorationStyle,
       triggerStyle: triggerStyle?.merge(other.triggerStyle) ?? other.triggerStyle,
       sheetStyle: sheetStyle?.merge(other.sheetStyle) ?? other.sheetStyle,
     );

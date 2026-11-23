@@ -4,9 +4,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 class DefaultSBBPickerThemeData extends SBBPickerThemeData {
   DefaultSBBPickerThemeData({
     required SBBBaseStyle baseStyle,
-    required SBBInputDecorationThemeData inputDecorationTheme,
-    required SBBDecoratedTextStyle? decoratedTextStyle,
-    required SBBBottomSheetStyle? bottomSheetStyle,
   }) : super(
          pickerStyle: SBBPickerStyle(
            highlightBackgroundColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
@@ -17,8 +14,5 @@ class DefaultSBBPickerThemeData extends SBBPickerThemeData {
              height: 26.0 / SBBTextStyles.xLargeFontSize,
            ),
          ),
-         triggerDecorationTheme: inputDecorationTheme,
-         triggerStyle: decoratedTextStyle,
-         sheetStyle: bottomSheetStyle,
        );
 }

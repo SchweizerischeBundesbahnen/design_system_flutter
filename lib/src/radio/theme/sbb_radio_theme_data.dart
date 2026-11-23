@@ -9,9 +9,6 @@ import 'package:sbb_design_system_mobile/src/radio/theme/sbb_radio_style.dart';
 /// To access this in your application, use `Theme.of(context).sbbRadioTheme`.
 @immutable
 class SBBRadioThemeData extends ThemeExtension<SBBRadioThemeData> with Diagnosticable {
-  /// Creates an [SBBRadioThemeData].
-  ///
-  /// The [style] may be null.
   const SBBRadioThemeData({this.style});
 
   /// Overrides for the radio's default style.
